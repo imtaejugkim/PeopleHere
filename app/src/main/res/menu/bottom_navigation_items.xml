@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_home"
+        android:title="@string/menu_search"
+        android:icon="@drawable/selector_bnv_search" />
+    <item android:id="@+id/menu_wish"
+        android:title="@string/menu_wish"
+        android:icon="@drawable/selector_bnv_wish" />
+    <item android:id="@+id/menu_my_tour"
+        android:title="@string/menu_my_tour"
+        android:icon="@drawable/selector_bnv_my_tour" />
+    <item android:id="@+id/menu_making_tour"
+        android:title="@string/menu_making_tour"
+        android:icon="@drawable/selector_bnv_making_tour" />
+    <item android:id="@+id/menu_profile"
+        android:title="@string/menu_profile"
+        android:icon="@drawable/selector_bnv_profile" />
+</menu>

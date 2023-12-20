@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--GrayScale 정리-->
+    <color name="Gray1">#F8F8F9</color>
+    <color name="Gray1.5">#F4F5F7</color>
+    <color name="Gray2">#E9EBED</color>
+    <color name="Gray3">#DBDBE0</color>
+    <color name="Gray4">#CACDD2</color>
+    <color name="Gray5">#9FA4A9</color>
+    <color name="Gray6">#464C52</color>
+    <color name="Gray7">#26282B</color>
+    <color name="Gray8">#1B1D1F</color>
+
+
 </resources>

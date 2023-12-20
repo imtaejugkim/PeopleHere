@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.people_here.MakingTour.MakingTourFragment
 import com.example.people_here.MyTour.MyTourFragment
 import com.example.people_here.Profile.ProfileFragment
-import com.example.people_here.Search.SearchFragment
+import com.example.people_here.Search.MainFragment
 import com.example.people_here.WishList.WishFragment
 import com.example.people_here.databinding.ActivityMainBinding
 
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menu_home -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, SearchFragment()).commit()
+                        .replace(R.id.main_frm, MainFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
 

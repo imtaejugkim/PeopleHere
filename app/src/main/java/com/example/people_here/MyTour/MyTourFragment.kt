@@ -1,6 +1,7 @@
 package com.example.people_here.MyTour
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ class MyTourFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyTourBinding.inflate(layoutInflater)
+        Log.d("test","test")
         return binding.root
     }
 }

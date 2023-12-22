@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:text="@string/dialog_help_example"
-            android:textColor="@color/gray_0"
+            android:textColor="@color/Gray6"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/ib_help"
             app:layout_constraintTop_toTopOf="@id/ib_help" />

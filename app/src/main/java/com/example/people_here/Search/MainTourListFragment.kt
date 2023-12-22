@@ -45,7 +45,6 @@ class MainTourListFragment : Fragment() {
             )
         )
 
-        mainTourListAdapter?.notifyDataSetChanged()
     }
 
     private fun createDummyInnerData(index: Int): ArrayList<MainTourListCourseData> {

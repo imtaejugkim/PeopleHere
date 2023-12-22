@@ -3,6 +3,13 @@
     <!-- 텍스트 크기 정의 -->
     <dimen name="main_tour_list">16sp</dimen>
     <dimen name="main_tour_course">16sp</dimen>
+    <dimen name="main_search">16sp</dimen>
+    <dimen name="main_search_hint">14sp</dimen>
+    <dimen name="main_search_recent">14sp</dimen>
+    <dimen name="main_search_recent_region">16sp</dimen>
+    <dimen name="main_search_recent_place">12sp</dimen>
+
+
     <dimen name="item_main_tour_list_title">18sp</dimen>
     <dimen name="item_main_tour_list_time">12sp</dimen>
     <dimen name="item_main_tour_list_cost">12sp</dimen>

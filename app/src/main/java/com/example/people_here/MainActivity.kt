@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d("test","test")
-        Log.d("test","test")
+
         binding.navigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {

@@ -18,8 +18,9 @@ class MyTourFragment : Fragment() {
     ): View? {
         Log.d("test","test")
         binding = FragmentMyTourBinding.inflate(layoutInflater)
-
-
+        
         return binding.root
     }
+
+
 }

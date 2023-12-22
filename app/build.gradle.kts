@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation ("io.coil-kt:coil:1.2.0")
+    implementation ("io.coil-kt:coil-svg:1.2.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

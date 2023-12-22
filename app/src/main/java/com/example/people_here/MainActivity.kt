@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.navigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {

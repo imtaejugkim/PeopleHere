@@ -14,6 +14,9 @@ class MyTourFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyTourBinding.inflate(layoutInflater)
+
         return binding.root
     }
+
+
 }

@@ -8,6 +8,30 @@
     <string name="menu_making_tour">투어 만들기</string>
     <string name="menu_profile">프로필</string>
 
+    <!--making_tour 투어 유형 이름 정리 -->
+    <string name="making_tour_exit">저장 후 나가기</string>
+    <string name="making_tour_headline">어떤 유형의 투어를 만들까요?</string>
+    <string name="making_tour_supporting">최대 3개까지 선택하세요</string>
+    <string name="making_tour_road_tour">로드 투어</string>
+    <string name="making_tour_cafe_tour">카페 투어</string>
+    <string name="making_tour_food_tour">맛집 투어</string>
+    <string name="making_tour_exhibition">전시·관람</string>
+    <string name="making_tour_activity">액티비티</string>
+    <string name="making_tour_picnic">피크닉</string>
+    <string name="making_tour_landmark">랜드마크</string>
+    <string name="making_tour_healing_tour">힐링투어</string>
+    <string name="making_tour_party">파티</string>
+    <string name="making_tour_night_view">야경 투어</string>
+    <string name="making_tour_amusement">유원지</string>
+    <string name="making_tour_shopping">쇼핑</string>
+    <string name="making_tour_no_choice">해당하는 유형이 없어요</string>
+    <string name="making_tour_next">다음</string>
+
+    <!--dialog_help 투어 유형 이름 정리 -->
+    <string name="dialog_help_example">투어 유형 예시</string>
+    <string name="dialog_help_ok">확인</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

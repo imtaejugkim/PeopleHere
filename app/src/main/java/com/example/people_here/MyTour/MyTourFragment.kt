@@ -9,13 +9,17 @@ import androidx.fragment.app.Fragment
 import com.example.people_here.databinding.FragmentMyTourBinding
 
 class MyTourFragment : Fragment() {
+
     private lateinit var binding : FragmentMyTourBinding
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMyTourBinding.inflate(layoutInflater)
         Log.d("test","test")
+        binding = FragmentMyTourBinding.inflate(layoutInflater)
+
+
         return binding.root
     }
 }

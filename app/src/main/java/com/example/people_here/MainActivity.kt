@@ -11,7 +11,7 @@ import com.example.people_here.WishList.WishFragment
 import com.example.people_here.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    val gittest:String
+
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

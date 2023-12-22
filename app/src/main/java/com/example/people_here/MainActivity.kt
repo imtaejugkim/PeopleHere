@@ -1,6 +1,7 @@
 package com.example.people_here
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.people_here.MakingTour.MakingTourFragment
 import com.example.people_here.MyTour.MyTourFragment
@@ -10,12 +11,14 @@ import com.example.people_here.WishList.WishFragment
 import com.example.people_here.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    val gittest:String
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Log.d("test","test")
+        Log.d("test","test")
         binding.navigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {

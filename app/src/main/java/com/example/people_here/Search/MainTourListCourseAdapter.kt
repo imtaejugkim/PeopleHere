@@ -20,7 +20,7 @@ class MainTourListCourseAdapter(private val mainTourListCourseData: ArrayList<Ma
 
     inner class FirstItemViewHolder(val binding: ItemMainTourListCourse1Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourListInfo: MainTourListCourseData) {
-            binding.ivMainTourListUserImage.setImageResource(tourListInfo.userImage)
+            binding.ivMainTourListUser.setImageResource(tourListInfo.userImage)
             binding.tvMainTourListUserName.text = tourListInfo.userName
             binding.tvMainTourListUserRating.text = tourListInfo.userRating.toString()
         }

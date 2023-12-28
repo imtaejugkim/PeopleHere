@@ -3,7 +3,7 @@ package com.example.people_here
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.people_here.MakingTour.MakingTourFragment
+import com.example.people_here.MakingTour.MakingTourAddListFragment
 import com.example.people_here.MyTour.MyTourFragment
 import com.example.people_here.Profile.ProfileFragment
 import com.example.people_here.Search.MainFragment
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.menu_my_tour -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MakingTourFragment()).commit()
+                        .replace(R.id.main_frm, MakingTourAddListFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
 

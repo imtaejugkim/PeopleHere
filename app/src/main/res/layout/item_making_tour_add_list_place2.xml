@@ -80,6 +80,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/ic_making_tour_add_list_dots"/>
 
+        <ImageView
+            android:id="@+id/iv_making_tour_add_list_place_hamburger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            android:src="@drawable/making_tour_add_list_hamburger"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -9,7 +9,7 @@ import com.example.people_here.databinding.ItemMakingTourAddListPlace2Binding
 import com.example.people_here.databinding.ItemMakingTourAddListPlace3Binding
 
 class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddListData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+    var editSequence = true
     companion object {
         const val TYPE_FIRST = 0
         const val TYPE_SECOND = 1
@@ -18,6 +18,15 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
 
     override fun getItemViewType(position: Int): Int {
         return addListData[position].itemType
+    }
+
+    fun toggleItemViewType() {
+        addListData.forEach {
+            if (it.itemType == TYPE_SECOND) {
+                it.ha = !it.isHamburgurVisible
+            }
+        }
+        notifyItemRangeChanged(0, itemCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -38,6 +38,7 @@ class MakingTourAddListFragment : Fragment() {
         binding.btnMakingTourAddListEditSequence.isGone = true
         binding.btnMakingTourAddListFinishSequence.isVisible = true
 
+
     }
 
     private fun initDummyData() {

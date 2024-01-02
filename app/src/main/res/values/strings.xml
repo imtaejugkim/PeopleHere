@@ -50,7 +50,12 @@
     <string name="making_tour_add_list_place_plus">장소 추가</string>
     <string name="making_tour_add_list_place_cancel">취소</string>
     <string name="making_tour_add_list_place_delete">장소 삭제</string>
-
+    <string name="making_tour_add_list_sequence_headline">순서 편집 나가기</string>
+    <string name="making_tour_add_list_sequence_subtitle">편집한 순서를 저장하지 않고 나갑니다.</string>
+    <string name="making_tour_add_list_sequence_continue">계속 편집</string>
+    <string name="making_tour_add_list_sequence_exit">나가기</string>
+    <string name="making_tour_add_list_delete_cancel">취소</string>
+    <string name="making_tour_add_list_delete_confirm">삭제</string>
     <!--making tour 소요 시간 시간 / 분 정리 -->
     <string-array name="minute_values">
         <item>00</item>

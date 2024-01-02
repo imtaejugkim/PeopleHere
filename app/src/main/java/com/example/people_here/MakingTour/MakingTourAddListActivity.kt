@@ -1,7 +1,12 @@
 package com.example.people_here.MakingTour
 
 import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -10,17 +15,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MakingTourAddListData
 import com.example.people_here.R
-import com.example.people_here.databinding.FragmentMakingTourAddListBinding
+import com.example.people_here.databinding.ActivityMakingTourAddListBinding
+import com.example.people_here.databinding.DialogMakingTourAddListSequenceBinding
 
 class MakingTourAddListActivity : AppCompatActivity() {
-    lateinit var binding: FragmentMakingTourAddListBinding
+    lateinit var binding: ActivityMakingTourAddListBinding
     private var addListAdapter: MakingTourAddListAdapter? = null
     private var addListData: ArrayList<MakingTourAddListData> = arrayListOf()
     private var isEditMode: Boolean = false
+    private var sequenceDialog: Dialog? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentMakingTourAddListBinding.inflate(layoutInflater)
+        binding = ActivityMakingTourAddListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initRecyclerView()
@@ -34,6 +42,11 @@ class MakingTourAddListActivity : AppCompatActivity() {
         binding.btnMakingTourAddListFinishSequence.setOnClickListener {
             initEditSequence()
         }
+
+        binding.btnAddListNext.setOnClickListener {
+            val intent = Intent(this@MakingTourAddListActivity, MakingTourTimeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed() {
@@ -45,18 +58,24 @@ class MakingTourAddListActivity : AppCompatActivity() {
     }
 
     private fun showExitEditDialog() {
-        AlertDialog.Builder(this).apply {
-            setTitle("편집 종료")
-            setMessage("순서 편집을 종료하시겠습니까?")
-            setPositiveButton("예") { dialog, which ->
-                isEditMode = false
-                // 필요한 경우 다른 UI 업데이트 로직 추가
-                dialog.dismiss()
-            }
-            setNegativeButton("아니오") { dialog, which ->
-                dialog.dismiss()
-            }
-            show()
+        val dlgBinding = DialogMakingTourAddListSequenceBinding.inflate(layoutInflater)
+        val dialogBuilder = AlertDialog.Builder(this)
+        sequenceDialog = dialogBuilder.setView(dlgBinding.root).show()
+
+        val density = resources.displayMetrics.density
+        val widthPx = (272 * density).toInt()
+        val heightPx = (160 * density).toInt()
+
+        sequenceDialog?.window?.setLayout(widthPx, heightPx)
+        sequenceDialog?.window?.setGravity(Gravity.CENTER)
+        sequenceDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dlgBinding.btnKeepGoing.setOnClickListener {
+            sequenceDialog?.dismiss()
+        }
+
+        dlgBinding.btnExit.setOnClickListener {
+            sequenceDialog?.dismiss()
         }
     }
 
@@ -77,7 +96,7 @@ class MakingTourAddListActivity : AppCompatActivity() {
     private fun setupItemTouchHelper() {
         val itemTouchHelperCallback = object : ItemTouchHelper.Callback() {
             override fun isLongPressDragEnabled(): Boolean {
-                return isEditMode  // 에디트 모드일 때만 드래그 가능
+                return isEditMode  // edit mode 일때만 드래그
             }
 
             override fun getMovementFlags(

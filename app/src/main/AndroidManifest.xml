@@ -17,6 +17,8 @@
         <activity
             android:name=".MakingTour.MakingTourAddListActivity"/>
         <activity
+            android:name=".MakingTour.MakingTourTimeActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

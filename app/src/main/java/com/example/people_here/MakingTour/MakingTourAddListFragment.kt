@@ -2,70 +2,50 @@ package com.example.people_here.MakingTour
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MakingTourAddListData
 import com.example.people_here.R
 import com.example.people_here.databinding.FragmentMakingTourAddListBinding
-import java.util.Collections
 
-class MakingTourAddListFragment : Fragment() {
-    lateinit var binding : FragmentMakingTourAddListBinding
-    private var addListAdapter : MakingTourAddListAdapter?= null
-    private var addListData : ArrayList<MakingTourAddListData> = arrayListOf()
-    private var isEditMode : Boolean = false
+class MakingTourAddListActivity : AppCompatActivity() {
+    lateinit var binding: FragmentMakingTourAddListBinding
+    private var addListAdapter: MakingTourAddListAdapter? = null
+    private var addListData: ArrayList<MakingTourAddListData> = arrayListOf()
+    private var isEditMode: Boolean = false
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = FragmentMakingTourAddListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initRecyclerView()
-        //API 통신 시 데이터 수정
         initDummyData()
         setupItemTouchHelper()
 
-        binding.btnMakingTourAddListEditSequence.setOnClickListener{
+        binding.btnMakingTourAddListEditSequence.setOnClickListener {
             initEditSequence()
         }
 
         binding.btnMakingTourAddListFinishSequence.setOnClickListener {
             initEditSequence()
         }
-
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (isEditMode) {
-                    // 슌서 편집 시 다이얼로그
-                    showExitEditDialog()
-                } else {
-                    // 일반 뒤로가기
-                    isEnabled = false
-                    requireActivity().onBackPressed()
-                }
-            }
+    override fun onBackPressed() {
+        if (isEditMode) {
+            showExitEditDialog()
+        } else {
+            super.onBackPressed()
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun showExitEditDialog() {
-        AlertDialog.Builder(requireContext()).apply {
+        AlertDialog.Builder(this).apply {
             setTitle("편집 종료")
             setMessage("순서 편집을 종료하시겠습니까?")
             setPositiveButton("예") { dialog, which ->
@@ -154,7 +134,7 @@ class MakingTourAddListFragment : Fragment() {
     private fun initRecyclerView() {
         addListAdapter = MakingTourAddListAdapter(addListData)
         binding.rvMakingTourAddListPlace.adapter = addListAdapter
-        binding.rvMakingTourAddListPlace.layoutManager = LinearLayoutManager(requireContext(),
+        binding.rvMakingTourAddListPlace.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
     }
 }

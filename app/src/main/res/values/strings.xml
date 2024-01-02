@@ -48,6 +48,8 @@
     <string name="making_tour_add_list_finish_sequence">순서 저장</string>
     <string name="making_tour_add_list_place_first">여행자와 처음 만나는 장소</string>
     <string name="making_tour_add_list_place_plus">장소 추가</string>
+    <string name="making_tour_add_list_place_cancel">취소</string>
+    <string name="making_tour_add_list_place_delete">장소 삭제</string>
 
     <!--making tour 소요 시간 시간 / 분 정리 -->
     <string-array name="minute_values">

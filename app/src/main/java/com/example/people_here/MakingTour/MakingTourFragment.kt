@@ -1,13 +1,11 @@
 package com.example.people_here.MakingTour
 
+import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.people_here.R
 import com.example.people_here.databinding.FragmentMakingTourBinding
@@ -23,6 +21,11 @@ class MakingTourFragment : Fragment() {
         binding = FragmentMakingTourBinding.inflate(layoutInflater)
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
 
+        //임의로 버튼 눌렀을 때 넘어가게
+        binding.cvFoodTour.setOnClickListener{
+            val intent = Intent(activity, MakingTourAddListActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 

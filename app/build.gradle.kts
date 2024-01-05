@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    //place API 사용
+    implementation ("com.google.android.gms:play-services-places:15.0.1")
+
     implementation ("io.coil-kt:coil:1.2.0")
     implementation ("io.coil-kt:coil-svg:1.2.0")
     implementation ("de.hdodenhof:circleimageview:3.1.0")

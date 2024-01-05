@@ -10,6 +10,7 @@ import com.example.people_here.Search.MainFragment
 import com.example.people_here.WishList.WishFragment
 import com.example.people_here.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

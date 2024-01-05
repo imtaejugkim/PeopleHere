@@ -8,8 +8,136 @@
     <string name="menu_making_tour">투어 만들기</string>
     <string name="menu_profile">프로필</string>
 
+    <!--making_tour process 정리 -->
+    <string name="making_tour_progress_1">1/8</string>
+    <string name="making_tour_progress_2">2/8</string>
+    <string name="making_tour_progress_3">3/8</string>
+    <string name="making_tour_progress_4">4/8</string>
+    <string name="making_tour_progress_5">5/8</string>
+    <string name="making_tour_progress_6">6/8</string>
+    <string name="making_tour_progress_7">7/8</string>
+    <string name="making_tour_progress_8">8/8</string>
+
+    <!--making_tour 투어 유형 이름 정리 -->
+    <string name="making_tour_exit">저장 후 나가기</string>
+    <string name="making_tour_headline">어떤 유형의 투어를 만들까요?</string>
+    <string name="making_tour_supporting">최대 3개까지 선택하세요</string>
+    <string name="making_tour_road_tour">로드 투어</string>
+    <string name="making_tour_cafe_tour">카페 투어</string>
+    <string name="making_tour_food_tour">맛집 투어</string>
+    <string name="making_tour_exhibition">전시·관람</string>
+    <string name="making_tour_activity">액티비티</string>
+    <string name="making_tour_picnic">피크닉</string>
+    <string name="making_tour_landmark">랜드마크</string>
+    <string name="making_tour_healing_tour">힐링투어</string>
+    <string name="making_tour_party">파티</string>
+    <string name="making_tour_night_view">야경 투어</string>
+    <string name="making_tour_amusement">유원지</string>
+    <string name="making_tour_shopping">쇼핑</string>
+    <string name="making_tour_no_choice">해당하는 유형이 없어요</string>
+    <string name="making_tour_next">다음</string>
+
+    <!--making_tour 소요 시간 이름 정리 -->
+    <string name="making_tour_time_headline">전체 소요 시간을 알려주세요</string>
+    <string name="making_tour_time_subtitle">장소간 이동과 여유 시간을 고려하세요.</string>
+
+    <!--making_tour 장소 추가 목록 이름 정리 -->
+    <string name="making_tour_add_list_headline">투어 코스를 계획하세요</string>
+    <string name="making_tour_add_list_subtitle">장소를 추가하고 나만의 코스를 만들어요</string>
+    <string name="making_tour_add_list_edit_sequence">순서 편집</string>
+    <string name="making_tour_add_list_finish_sequence">순서 저장</string>
+    <string name="making_tour_add_list_place_first">여행자와 처음 만나는 장소</string>
+    <string name="making_tour_add_list_place_plus">장소 추가</string>
+    <string name="making_tour_add_list_place_cancel">취소</string>
+    <string name="making_tour_add_list_place_delete">장소 삭제</string>
+    <string name="making_tour_add_list_sequence_headline">순서 편집 나가기</string>
+    <string name="making_tour_add_list_sequence_subtitle">편집한 순서를 저장하지 않고 나갑니다.</string>
+    <string name="making_tour_add_list_sequence_continue">계속 편집</string>
+    <string name="making_tour_add_list_sequence_exit">나가기</string>
+    <string name="making_tour_add_list_delete_cancel">취소</string>
+    <string name="making_tour_add_list_delete_confirm">삭제</string>
+    <!--making tour 소요 시간 시간 / 분 정리 -->
+    <string-array name="minute_values">
+        <item>00</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="hour_values">
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+
+    </string-array>
+
+    <!--dialog_help 투어 유형 이름 정리 -->
+    <string name="dialog_help_example">투어 유형 예시</string>
+    <string name="dialog_help_ok">확인</string>
+
+
+    <!--main 이름 정리 -->
+    <string name="main_tour_list">투어 리스트</string>
+    <string name="main_tour_course">투어 코스</string>
+    <string name="main_search">검색</string>
+    <string name="main_search_hint">장소명, 지역명, 주소 검색</string>
+    <string name="main_search_recent">최근 검색 내역</string>
+    <string name="main_tour_search_headline">어떤 투어를 할까요?</string>
+    <string name="main_tour_search_subtitle">대한민국·모든투어</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--CostInputActivty 이름 정리 -->
+    <string name="cost_input_exit">저장 후 나가기</string>
+    <string name="cost_input_total_notice">1인당 총 경비를 알려주세요</string>
+    <string name="cost_input_explain_1">각 장소의 이용료, 식비, 기념품 구매 비용 등</string>
+    <string name="cost_input_explain_2">여행자가 지참해야 하는 경비의 예상 금액을 입력하세요</string>
+    <string name="cost_input_total_cost">총 경비:</string>
+    <string name="cost_input_total_cost_input">\0원</string>
+    <!--CostInputitem 이름 정리 -->
+    <string name="cost_input_item_cost_input">\경비 입력</string>
+    <string name="cost_input_item_cost_no">\경비 없음</string>
+    <string name="cost_input_item_next">\다음</string>
+    <!--Fragment_cost 이름 정리 -->
+    <string name="cost_keep">\저장</string>
+    <string name="cost_add">\여행자에 따라 추가 금액이 발생할 수 있어요</string>
+    <!--dialog_cost_eix 이름-->
+    <string name="dialog_cost_exit_text_exit">\경비 입력 나가기</string>
+    <string name="dialog_cost_exit_explain">\입력한 금액을 저장하지 않고 나갑니다.</string>
+    <string name="dialog_cost_exit_keep_going">\계속 입력</string>
+    <string name="dialog_cost_exit_btn_exit">\나가기</string>
+    <!--activity_introduce 이름-->
+    <string name="activity_introduce_exit">\저장 후 나가기</string>
+    <string name="activity_introduce_headline">\투어 소개를 작성하세요</string>
+    <string name="activity_introduce_guideline">\여행자가 어떤 투어 경험을 하게 되는지 알려주세요.</string>
+    <!--activity_caution 이름-->
+    <string name="activity_caution_exit">\저장 후 나가기</string>
+    <string name="activity_caution_headline">\투어 주의사항을 작성하세요</string>
+    <string name="activity_caution_guideline">\여행자가 투어 전에 알아두어야 할 사항들을 알려주세요.</string>
 
 </resources>

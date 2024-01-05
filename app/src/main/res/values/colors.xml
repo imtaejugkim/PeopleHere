@@ -2,8 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="orangeO5">#FF7834</color>
-
 
     <color name="Gray1">#F8F8F9</color>
     <color name="Gray1.5">#F4F5F7</color>
@@ -21,4 +19,9 @@
     <color name="Orange4">#FFA375</color>
     <color name="Orange5">#FF7834</color>
     <color name="Orange6">#F66015</color>
+
+    <color name="Red1">#FFF0ED</color>
+    <color name="Red2"></color>
+    <color name="Red3">#F17272</color>
+
 </resources>

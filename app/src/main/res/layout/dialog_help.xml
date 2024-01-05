@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="272dp"
+        android:layout_height="428dp">
+
+        <ImageView
+            android:id="@+id/ib_help"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/filled_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_tour_example"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/dialog_help_example"
+            android:textColor="@color/Gray6"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/ib_help"
+            app:layout_constraintTop_toTopOf="@id/ib_help" />
+
+        <!--textview 여러개 작성하기-->
+
+        <!--BTN 커스터마이징(왜안되는겨) 작성하기-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:layout_width="232dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/dialog_help_ok"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/dialog_help_button_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

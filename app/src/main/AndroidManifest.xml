@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.People_Here"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB3WLa8PNBaMOK2OQm1U64Hb6RetEu-E1g"/>
+        <activity
+            android:name=".IntroduceCaution.CautionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IntroduceCaution.IntroduceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CostInput.CostInputActivity"
+            android:exported="false" />
+        <activity android:name=".Search.MainSearchActivity" />
+        <activity
+            android:name=".MakingTour.MakingTourAddListActivity"/>
+        <activity
+            android:name=".MakingTour.MakingTourTimeActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,5 +43,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>

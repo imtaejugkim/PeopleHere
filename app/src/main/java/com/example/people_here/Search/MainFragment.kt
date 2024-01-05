@@ -1,7 +1,6 @@
 package com.example.people_here.Search
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.example.people_here.R
 import com.example.people_here.databinding.FragmentMainBinding
@@ -24,6 +22,8 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(layoutInflater)
+        binding.vpMainTourSelect.isUserInputEnabled = false
+
 
         binding.viewMtSearch.setOnClickListener {
             initSearchView()

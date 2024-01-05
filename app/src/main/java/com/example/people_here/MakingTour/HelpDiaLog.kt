@@ -16,8 +16,9 @@ class HelpDiaLog(context: Context) : Dialog(context) {//커스텀 다이어 로�
         super.onCreate(savedInstanceState)
         binding=DialogHelpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.btnOk.setOnClickListener {
-            dismiss()
+            dismiss()//ok누르면 나가지게 하는
 
         }
 

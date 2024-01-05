@@ -43,5 +43,32 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--CostInputActivty 이름 정리 -->
+    <string name="cost_input_exit">저장 후 나가기</string>
+    <string name="cost_input_total_notice">1인당 총 경비를 알려주세요</string>
+    <string name="cost_input_explain_1">각 장소의 이용료, 식비, 기념품 구매 비용 등</string>
+    <string name="cost_input_explain_2">여행자가 지참해야 하는 경비의 예상 금액을 입력하세요</string>
+    <string name="cost_input_total_cost">총 경비:</string>
+    <string name="cost_input_total_cost_input">\0원</string>
+    <!--CostInputitem 이름 정리 -->
+    <string name="cost_input_item_cost_input">\경비 입력</string>
+    <string name="cost_input_item_cost_no">\경비 없음</string>
+    <string name="cost_input_item_next">\다음</string>
+    <!--Fragment_cost 이름 정리 -->
+    <string name="cost_keep">\저장</string>
+    <string name="cost_add">\여행자에 따라 추가 금액이 발생할 수 있어요</string>
+    <!--dialog_cost_eix 이름-->
+    <string name="dialog_cost_exit_text_exit">\경비 입력 나가기</string>
+    <string name="dialog_cost_exit_explain">\입력한 금액을 저장하지 않고 나갑니다.</string>
+    <string name="dialog_cost_exit_keep_going">\계속 입력</string>
+    <string name="dialog_cost_exit_btn_exit">\나가기</string>
+    <!--activity_introduce 이름-->
+    <string name="activity_introduce_exit">\저장 후 나가기</string>
+    <string name="activity_introduce_headline">\투어 소개를 작성하세요</string>
+    <string name="activity_introduce_guideline">\여행자가 어떤 투어 경험을 하게 되는지 알려주세요.</string>
+    <!--activity_caution 이름-->
+    <string name="activity_caution_exit">\저장 후 나가기</string>
+    <string name="activity_caution_headline">\투어 주의사항을 작성하세요</string>
+    <string name="activity_caution_guideline">\여행자가 투어 전에 알아두어야 할 사항들을 알려주세요.</string>
 
 </resources>

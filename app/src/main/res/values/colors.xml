@@ -15,8 +15,9 @@
     <color name="Gray8">#1B1D1F</color>
 
 
-    <color name="orange">#F66015</color>
-    <color name="orange_2">#FF7834</color>
-    <color name="orange_3">#FFA375</color>
+    <color name="Orange3">#FFC5A8</color>
+    <color name="Orange4">#FFA375</color>
+    <color name="Orange5">#FF7834</color>
+    <color name="Orange6">#F66015</color>
 
 </resources>

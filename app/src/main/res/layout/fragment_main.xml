@@ -13,61 +13,96 @@
         android:layout_height="match_parent">
 
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp"/>
 
-    <View
-        android:id="@+id/view_mt_search"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/rectangle_main_1"/>
+        <View
+            android:id="@+id/view_mt_search"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rectangle_main_1"/>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="@id/view_mt_search"
-        app:layout_constraintTop_toTopOf="@id/view_mt_search"
-        app:layout_constraintBottom_toBottomOf="@id/view_mt_search"
-        android:src="@drawable/ic_main_search"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/view_mt_search"
+            app:layout_constraintBottom_toBottomOf="@id/view_mt_search"
+            app:layout_constraintStart_toStartOf="@id/view_mt_search"
+            app:layout_constraintEnd_toEndOf="@id/view_mt_search"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="20dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tl_main_tour_select"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintTop_toBottomOf="@id/view_mt_search"
-        android:layout_marginTop="12dp"
-        app:tabIndicatorAnimationMode="linear"
-        app:tabIndicatorColor="@color/black"
-        app:tabIndicatorFullWidth="true"
-        app:tabRippleColor="@color/black"
-        app:tabSelectedTextColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_main_search_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_tour_search_headline"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_main_search_region"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp_main_tour_select"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_main_tour_select"/>
+            <TextView
+                android:id="@+id/tv_main_search_region"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_tour_search_subtitle"
+                android:textSize="12sp"
+                android:textColor="@color/Gray5"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_search_place"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_main_search"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_main_tour_select"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintTop_toBottomOf="@id/view_mt_search"
+            android:layout_marginTop="12dp"
+            app:tabIndicatorAnimationMode="linear"
+            app:tabIndicatorColor="@color/black"
+            app:tabIndicatorFullWidth="true"
+            app:tabRippleColor="@color/black"
+            app:tabSelectedTextColor="@color/black"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_main_tour_select"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_main_tour_select"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

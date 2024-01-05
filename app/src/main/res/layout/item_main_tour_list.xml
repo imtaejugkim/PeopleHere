@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_main_time"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -66,7 +67,9 @@
             android:src="@drawable/ic_main_credit_card"
             android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@id/tv_main_tour_list_time"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/tv_main_tour_list_cost"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/tv_main_tour_list_cost"

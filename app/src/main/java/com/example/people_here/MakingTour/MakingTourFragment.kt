@@ -2,14 +2,11 @@ package com.example.people_here.MakingTour
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.people_here.CostInput.CostFragment
 import com.example.people_here.CostInput.CostInputActivity
@@ -32,11 +29,13 @@ class MakingTourFragment : Fragment() {
 
 
 
+
             //실제론 화면 다르게 전환
             Log.d("ButtonClick", "Button clicked")
             val myIntent = Intent(requireContext(), CostInputActivity::class.java)
             // startActivity를 해야 화면이동
             startActivity(myIntent)
+
         }
         return binding.root
     }

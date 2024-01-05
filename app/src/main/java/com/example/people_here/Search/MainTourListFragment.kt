@@ -54,7 +54,7 @@ class MainTourListFragment : Fragment() {
             val userRating = (index + i) % 5 + 1.0 // 예시로 평점 계산
             dataList.add(
                 MainTourListCourseData(
-                    R.drawable.ic_example_user_avatar,
+                    R.drawable.img_example_user,
                     userName,
                     userRating,
                     R.drawable.img_example,

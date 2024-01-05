@@ -3,7 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!--GrayScale 정리-->
     <color name="Gray1">#F8F8F9</color>
     <color name="Gray1.5">#F4F5F7</color>
     <color name="Gray2">#E9EBED</color>
@@ -15,13 +14,11 @@
     <color name="Gray8">#1B1D1F</color>
 
 
-    
     <color name="Orange1">#FFF2EB</color>
     <color name="Orange3">#FFC5A8</color>
     <color name="Orange4">#FFA375</color>
     <color name="Orange5">#FF7834</color>
     <color name="Orange6">#F66015</color>
-
 
     <color name="Red1">#FFF0ED</color>
     <color name="Red2"></color>

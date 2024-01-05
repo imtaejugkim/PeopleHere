@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/making_tour_progress_2"
-        android:textColor="@color/orange"
+        android:textColor="@color/Orange6"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         app:layout_constraintTop_toTopOf="@+id/cv_making_tour_time_exit"/>

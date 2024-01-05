@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/making_tour_progress_1"
-        android:textColor="@color/orange"
+        android:textColor="@color/Orange6"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         app:layout_constraintTop_toTopOf="@+id/cv_making_tour_time_exit"/>
@@ -96,7 +96,7 @@
         android:text="@string/making_tour_add_list_finish_sequence"
         android:background="@drawable/making_tour_add_list_finish_sequence"
         android:textSize="12sp"
-        android:textColor="@color/orange_2"
+        android:textColor="@color/Orange5"
         app:layout_constraintTop_toBottomOf="@id/tv_making_tour_time_headline"
         app:layout_constraintBottom_toBottomOf="@id/tv_making_tour_time_subtitle"
         app:layout_constraintStart_toEndOf="@id/tv_making_tour_time_subtitle"
@@ -139,7 +139,7 @@
             android:background="@drawable/making_tour_time_button_before"
             android:src="@drawable/ic_making_tour_before"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_making_tour_time_next"
+            app:layout_constraintEnd_toStartOf="@id/btn_add_list_next"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

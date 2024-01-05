@@ -28,7 +28,7 @@
             android:layout_marginStart="8dp"
             android:text="@string/making_tour_add_list_place_plus"
             android:textSize="14sp"
-            android:textColor="@color/orange_2"
+            android:textColor="@color/Orange5"
             app:layout_constraintStart_toEndOf="@id/iv_making_tour_add_list_place_plus"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -37,7 +37,7 @@
             android:id="@+id/tv_making_tour_add_list_place_progress"
             android:text="(n/8)"
             android:textSize="14sp"
-            android:textColor="@color/orange_2"
+            android:textColor="@color/Orange5"
             android:layout_marginStart="4dp"
             app:layout_constraintStart_toEndOf="@id/tv_making_tour_add_list_place_plus"
             app:layout_constraintTop_toTopOf="@id/tv_making_tour_add_list_place_plus"

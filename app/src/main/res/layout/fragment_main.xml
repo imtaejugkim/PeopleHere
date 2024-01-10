@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fl_main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".Search.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

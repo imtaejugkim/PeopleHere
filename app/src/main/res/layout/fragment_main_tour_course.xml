@@ -34,12 +34,12 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
     
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_main_tour_course"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintBottom_toTopOf="@id/guide_bottom"
-        tools:listitem="@layout/item_main_course_map"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

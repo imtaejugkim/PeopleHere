@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,8 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
     private var googleMap: GoogleMap? = null
     private var polyline: Polyline? = null
     private val markers = mutableListOf<Marker>()
+    private var isRecyclerViewMoved = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,34 +56,82 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
         initRecyclerview()
         initDummyData()
 
-        initSwipeRecyclerView()
+        initMoveRecyclerView()
 
         return binding.root
     }
 
+    private fun mapListener(){
+        googleMap?.setOnMapClickListener {
+            resetMarker()
+            polyline?.remove()
+            Log.d("map 클릭됨","map 클릭됨")
+            moveRecyclerView(true, 400f)
+        }
+    }
+
+    private fun markerListener(){
+        googleMap?.setOnMarkerClickListener { marker ->
+            resetMarker()
+            moveRecyclerView(true, 200f)
+            marker.setIcon(vectorToBitmap(R.drawable.ic_main_marker_clicked))
+
+            Log.d("marker 클릭됨","marker 클릭됨")
+            true
+        }
+    }
+
+    private fun resetMarker() {
+        for (marker in markers) {
+            marker.setIcon(vectorToBitmap(R.drawable.ic_main_marker_unclicked))
+        }
+    }
+
+    private fun moveRecyclerView(moveDown: Boolean, distance: Float) {
+        isRecyclerViewMoved = moveDown
+        val translationY = if (moveDown) distance
+        else distance
+
+        // RecyclerView 이동 애니메이션
+        binding.rvMainTourCourse.animate()
+            .translationY(translationY)
+            .setDuration(300)
+            .start()
+    }
+
     private val locationSets = listOf(
         listOf(
-            LatLng(37.5409, 127.078),   // 1번째 아이템, 1세트
-            LatLng(37.5416, 127.085),
-            LatLng(37.5424, 127.0799),
-            LatLng(37.5429, 127.0793)
+            LatLng(37.5421, 127.0736),
+            LatLng(37.5405, 127.0745),
+            LatLng(37.5419, 127.0777),
+            LatLng(37.5402, 127.0803)
         ),
         listOf(
-            LatLng(37.5419, 127.088),   // 1번째 아이템, 1세트
-            LatLng(37.5426, 127.095),
-            LatLng(37.5434, 127.0899),
-            LatLng(37.5439, 127.0893)
+            LatLng(37.5514, 127.0725),
+            LatLng(37.5497, 127.0739),
+            LatLng(37.5517, 127.0761),
+            LatLng(37.55, 127.0792)
         ),
         listOf(
-            LatLng(37.5429, 127.098),   // 1번째 아이템, 1세트
-            LatLng(37.5436, 127.105),
-            LatLng(37.5444, 127.0999),
-            LatLng(37.5449, 127.0993)
+            LatLng(37.5521, 127.0836),
+            LatLng(37.5505, 127.0845),
+            LatLng(37.5519, 127.0877),
+            LatLng(37.5502, 127.0903)
         )
     )
 
-    private fun initSwipeRecyclerView() {
+    private fun initMoveRecyclerView() {
+
+        mainTourCourseAdapter?.setOnItemClickListener(object : MainTourCourseAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                if (isRecyclerViewMoved) {
+                    moveRecyclerView(false, 0f)
+                }
+            }
+        })
+
         binding.rvMainTourCourse.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -94,24 +145,24 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
+
     private fun updateMap(position: Int) {
-        // 기존 마커와 폴리라인 제거
+        // 기존 마커와 선 제거
         markers.forEach { it.remove() }
         markers.clear()
         polyline?.remove()
 
-        // 새로운 마커와 폴리라인 추가
+        // 새로운 마커와 선 추가
         if (position < locationSets.size) {
             val points = locationSets[position]
             points.forEach {
-                val marker = googleMap?.addMarker(MarkerOptions().position(it))
-                marker?.let { markers.add(it) }
+                val marker = addCustomMarker(it, R.drawable.ic_main_marker_unclicked)
+                markers.add(marker)
             }
 
-            // 폴리라인 그리기
-            polyline = googleMap?.addPolyline(PolylineOptions().addAll(points).color(Color.RED))
+            polyline = googleMap?.addPolyline(PolylineOptions().addAll(points).color(Color.BLACK).width(3f))
 
-            // 지도를 첫 번째 마커의 위치로 이동시키기
+            // 지도는 첫번 째 코스 기준 이동
             if (points.isNotEmpty()) {
                 googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(points[0], 15f))
             }
@@ -154,9 +205,19 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
+
+    private fun addCustomMarker(location: LatLng, drawableId: Int): Marker {
+        val markerOptions = MarkerOptions()
+            .position(location)
+            .icon(vectorToBitmap(drawableId))
+        return googleMap?.addMarker(markerOptions) ?: throw IllegalStateException("구글 맵 오류 예외 처리")
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
         updateMap(0)
-    }
 
+        mapListener()
+        markerListener()
+    }
 }

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MainCourseMapData
 import com.example.people_here.databinding.ItemMainCourseMapBinding
-import com.example.people_here.databinding.ItemMainTourListBinding
 
 class MainTourCourseAdapter(val mainCourseMapData : ArrayList<MainCourseMapData>) : RecyclerView.Adapter<MainTourCourseAdapter.ViewHolder>(){
 
@@ -47,4 +46,10 @@ class MainTourCourseAdapter(val mainCourseMapData : ArrayList<MainCourseMapData>
     }
 
     override fun getItemCount(): Int = mainCourseMapData.size
+
+    fun setData(data: List<MainCourseMapData>) {
+        mainCourseMapData.clear()
+        mainCourseMapData.addAll(data)
+        notifyDataSetChanged()
+    }
 }

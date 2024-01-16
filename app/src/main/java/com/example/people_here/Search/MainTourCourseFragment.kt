@@ -34,12 +34,14 @@ import com.google.android.gms.maps.model.PolylineOptions
 class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentMainTourCourseBinding
     private var mainCourseMapData : ArrayList<MainCourseMapData> = arrayListOf()
+    private val markerDataMap = hashMapOf<Marker, List<MainCourseMapData>>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var mainTourCourseAdapter: MainTourCourseAdapter?= null
     private var googleMap: GoogleMap? = null
     private var polyline: Polyline? = null
     private val markers = mutableListOf<Marker>()
     private var isRecyclerViewMoved = false
+
 
 
     override fun onCreateView(
@@ -76,6 +78,12 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
             moveRecyclerView(true, 200f)
             marker.setIcon(vectorToBitmap(R.drawable.ic_main_marker_clicked))
 
+            val dataForMarker = markerDataMap[marker]
+            dataForMarker?.let {
+                mainTourCourseAdapter?.setData(it)
+            }
+
+            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 15f));
             Log.d("marker 클릭됨","marker 클릭됨")
             true
         }
@@ -85,6 +93,25 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
         for (marker in markers) {
             marker.setIcon(vectorToBitmap(R.drawable.ic_main_marker_unclicked))
         }
+    }
+
+    private fun initMarkerData() {
+        for (i in dummyLocation.indices) {
+            val markerDataList = generateDataForMarker(i) // i번째 마커에 대한 데이터 리스트 생성
+            val marker = addCustomMarker(dummyLocation[i][0],
+                if (i == 0) R.drawable.ic_main_marker_clicked else R.drawable.ic_main_marker_unclicked)
+            markers.add(marker)
+            markerDataMap[marker] = markerDataList
+        }
+    }
+    private fun generateDataForMarker(index: Int): List<MainCourseMapData> {
+        return arrayListOf(
+            MainCourseMapData("데이터 $index-1", "1시간", "10000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index"),
+            MainCourseMapData("데이터 $index-2", "2시간", "20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index") ,
+            MainCourseMapData("데이터 $index-3", "2시간", "20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index") ,
+            MainCourseMapData("데이터 $index-4", "2시간", "20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index")
+
+        )
     }
 
     private fun moveRecyclerView(moveDown: Boolean, distance: Float) {
@@ -99,7 +126,7 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
             .start()
     }
 
-    private val locationSets = listOf(
+    private val dummyLocation = listOf(
         listOf(
             LatLng(37.5421, 127.0736),
             LatLng(37.5405, 127.0745),
@@ -107,13 +134,13 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
             LatLng(37.5402, 127.0803)
         ),
         listOf(
-            LatLng(37.5514, 127.0725),
-            LatLng(37.5497, 127.0739),
-            LatLng(37.5517, 127.0761),
-            LatLng(37.55, 127.0792)
+            LatLng(37.5421, 127.0736),
+            LatLng(37.5431, 127.0716),
+            LatLng(37.5442, 127.0753),
+            LatLng(37.5456, 127.0726)
         ),
         listOf(
-            LatLng(37.5521, 127.0836),
+            LatLng(37.5421, 127.0736),
             LatLng(37.5505, 127.0845),
             LatLng(37.5519, 127.0877),
             LatLng(37.5502, 127.0903)
@@ -153,10 +180,16 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
         polyline?.remove()
 
         // 새로운 마커와 선 추가
-        if (position < locationSets.size) {
-            val points = locationSets[position]
-            points.forEach {
-                val marker = addCustomMarker(it, R.drawable.ic_main_marker_unclicked)
+        if (position < dummyLocation.size) {
+            val points = dummyLocation[position]
+            for (i in points.indices) {
+                val markerIcon = if (i == 0) {
+                    R.drawable.ic_main_marker_clicked
+                } else {
+                    R.drawable.ic_main_marker_unclicked
+                }
+
+                val marker = addCustomMarker(points[i], markerIcon)
                 markers.add(marker)
             }
 
@@ -164,7 +197,7 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
 
             // 지도는 첫번 째 코스 기준 이동
             if (points.isNotEmpty()) {
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(points[0], 15f))
+                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(points[0], 15f));
             }
         }
     }
@@ -217,7 +250,10 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
         this.googleMap = googleMap
         updateMap(0)
 
+        initMarkerData()
+
         mapListener()
         markerListener()
+
     }
 }

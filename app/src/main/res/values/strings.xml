@@ -98,6 +98,10 @@
     <!--투어 컨텐츠 이름 정리 -->
     <string name="tour_contents_meeting_people">만나게 될 사람</string>
     <string name="tour_contents_meeting_people_language">구사 언어</string>
+    <string name="tour_contents_meeting_course">코스 소개</string>
+    <string name="tour_contents_more">더보기</string>
+    <string name="tour_contents_meeting_place">장소 소개</string>
+    <string name="tour_contents_review">님에 대한 후기</string>
 
     <!--dialog_help 투어 유형 이름 정리 -->
     <string name="dialog_help_example">투어 유형 예시</string>

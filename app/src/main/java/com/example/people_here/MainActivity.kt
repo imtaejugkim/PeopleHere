@@ -1,14 +1,14 @@
 package com.example.people_here
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.people_here.MakingTour.MakingTourFragment
-import com.example.people_here.MyTour.MyTourFragment
+import com.example.people_here.MyTour.MakingCourseFragment
 import com.example.people_here.Profile.ProfileFragment
 import com.example.people_here.Search.MainFragment
 import com.example.people_here.WishList.WishFragment
 import com.example.people_here.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,17 +32,19 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_making_tour -> {
+
+                R.id.menu_making_course -> {//코스 만들기 고쳤다아
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MyTourFragment()).commit()
+                        .replace(R.id.main_frm, MakingCourseFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_my_tour -> {
+                R.id.menu_message -> {//
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, MakingTourFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
+
 
                 R.id.menu_profile -> {
                     supportFragmentManager.beginTransaction()

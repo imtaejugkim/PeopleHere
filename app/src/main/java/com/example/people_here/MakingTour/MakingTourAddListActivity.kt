@@ -17,9 +17,18 @@ import com.example.people_here.Data.MakingTourAddListData
 import com.example.people_here.R
 import com.example.people_here.databinding.ActivityMakingTourAddListBinding
 import com.example.people_here.databinding.DialogMakingTourAddListSequenceBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 
-class MakingTourAddListActivity : AppCompatActivity() {
+class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
     lateinit var binding: ActivityMakingTourAddListBinding
+    private var googleMap: GoogleMap?= null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var addListAdapter: MakingTourAddListAdapter? = null
     private var addListData: ArrayList<MakingTourAddListData> = arrayListOf()
     private var isEditMode: Boolean = false
@@ -29,6 +38,11 @@ class MakingTourAddListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMakingTourAddListBinding.inflate(layoutInflater)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         setContentView(binding.root)
 
         initRecyclerView()
@@ -139,14 +153,15 @@ class MakingTourAddListActivity : AppCompatActivity() {
         addListData.addAll(
             arrayListOf(
                 MakingTourAddListData(1,R.drawable.img_example, "로니로티 건대점",0),
-                MakingTourAddListData(2,R.drawable.img_example, "로니로티 홍대점",1),
+                MakingTourAddListData(2,R.drawable.img_example, "로니로티 홍대점인데 text가 길어질 때 어떻게 표시 되는지 확인해보는 데이터",1),
                 MakingTourAddListData(3,R.drawable.img_example, "로니로티 숙대점",1),
                 MakingTourAddListData(4,R.drawable.img_example, "로니로티 성대점",1),
                 MakingTourAddListData(5,R.drawable.img_example, "로니로티 이대점",1),
                 MakingTourAddListData(6,R.drawable.img_example, "로니로티 연대점",1),
                 MakingTourAddListData(7,R.drawable.img_example, "로니로티 고대점",1),
-                MakingTourAddListData(8,R.drawable.img_example, "로니로티 중대점",2)
-            )
+                MakingTourAddListData(8,R.drawable.img_example, "로니로티 중대점",1),
+                MakingTourAddListData(8,R.drawable.img_example, "로니로티 중대점",2),
+                )
         )
     }
 
@@ -155,5 +170,12 @@ class MakingTourAddListActivity : AppCompatActivity() {
         binding.rvMakingTourAddListPlace.adapter = addListAdapter
         binding.rvMakingTourAddListPlace.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        this.googleMap = googleMap
+
+        val seoulCityHall = LatLng(37.5663, 126.9779)
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(seoulCityHall, 15f));
     }
 }

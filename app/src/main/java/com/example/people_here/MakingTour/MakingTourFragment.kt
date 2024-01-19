@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.people_here.CostInput.CostFragment
 import com.example.people_here.CostInput.CostInputActivity
 import com.example.people_here.R
 import com.example.people_here.databinding.FragmentMakingTourBinding
@@ -26,15 +25,6 @@ class MakingTourFragment : Fragment() {
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
         binding.btnNext.setOnClickListener{
             //확인하기 위해 이렇게 해놨습니다
-
-
-
-
-            //실제론 화면 다르게 전환
-            Log.d("ButtonClick", "Button clicked")
-            val myIntent = Intent(requireContext(), CostInputActivity::class.java)
-            // startActivity를 해야 화면이동
-            startActivity(myIntent)
 
         }
         return binding.root
@@ -81,6 +71,9 @@ class MakingTourFragment : Fragment() {
             binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
         }
     }
+
+
+
     fun onDialogBtnClicked() {//눌리면 다이어로그 보이게
         val helpDialog = HelpDiaLog(requireContext())
         helpDialog.show()

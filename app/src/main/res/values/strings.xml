@@ -4,8 +4,8 @@
     <!--menu 이름 정리 -->
     <string name="menu_search">둘러보기</string>
     <string name="menu_wish">위시리스트</string>
-    <string name="menu_my_tour">나의 투어</string>
-    <string name="menu_making_tour">투어 만들기</string>
+    <string name="menu_making_course">코스 만들기</string>
+    <string name="menu_message">메세지</string>
     <string name="menu_profile">프로필</string>
 
     <!--making_tour process 정리 -->
@@ -48,6 +48,7 @@
     <string name="making_tour_add_list_finish_sequence">순서 저장</string>
     <string name="making_tour_add_list_place_first">여행자와 처음 만나는 장소</string>
     <string name="making_tour_add_list_place_plus">장소 추가</string>
+    <string name="making_tour_add_list_nothing">더 이상 장소를 추가할 수 없어요</string>
     <string name="making_tour_add_list_place_cancel">취소</string>
     <string name="making_tour_add_list_place_delete">장소 삭제</string>
     <string name="making_tour_add_list_sequence_headline">순서 편집 나가기</string>
@@ -94,6 +95,10 @@
 
     </string-array>
 
+    <!--투어 컨텐츠 이름 정리 -->
+    <string name="tour_contents_meeting_people">만나게 될 사람</string>
+    <string name="tour_contents_meeting_people_language">구사 언어</string>
+
     <!--dialog_help 투어 유형 이름 정리 -->
     <string name="dialog_help_example">투어 유형 예시</string>
     <string name="dialog_help_ok">확인</string>
@@ -139,5 +144,19 @@
     <string name="activity_caution_exit">\저장 후 나가기</string>
     <string name="activity_caution_headline">\투어 주의사항을 작성하세요</string>
     <string name="activity_caution_guideline">\여행자가 투어 전에 알아두어야 할 사항들을 알려주세요.</string>
+
+    <!--activity_add_picture  이름 정리 -->
+    <string name="activity_add_picture_explain">\관련 사진을 추가하세요</string>
+    <string name="activity_add_picture_drag">\사진을 드래그 해서 순서를 변경하세요.</string>
+    <string name="activity_add_picture_minimum">\최소 한 장 이상의 장소별 사진을 추가하세요.</string>
+    <string name="activity_add_picture_add">\사진 추가</string>
+    <string name="activity_add_picture_right_introduce">\저작권법을 위반한 사진은 임의로 삭제될 수 있습니다.</string>
+
+    <!--fragment_location_choose 이름 정리 -->
+    <string name="fragment_location_choose_choose_location">\사진을 추가할 장소를 선택하세요.</string>
+    <string name="fragment_location_choose_choose">\선택</string>
+    <!--dialog_select_picture 이름 정리 -->
+    <string name="dialog_select_picture_my_gallery">\앨범에서 ✨내가 찍은 사진✨ 추가</string>
+    <string name="dialog_select_picture_basic_pic">\구글 기본 이미지 사용</string>
 
 </resources>

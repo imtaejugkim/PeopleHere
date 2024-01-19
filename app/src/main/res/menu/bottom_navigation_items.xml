@@ -6,11 +6,11 @@
     <item android:id="@+id/menu_wish"
         android:title="@string/menu_wish"
         android:icon="@drawable/selector_bnv_wish" />
-    <item android:id="@+id/menu_my_tour"
-        android:title="@string/menu_my_tour"
+    <item android:id="@+id/menu_making_course"
+        android:title="@string/menu_making_course"
         android:icon="@drawable/selector_bnv_my_tour" />
-    <item android:id="@+id/menu_making_tour"
-        android:title="@string/menu_making_tour"
+    <item android:id="@+id/menu_message"
+        android:title="@string/menu_message"
         android:icon="@drawable/selector_bnv_making_tour" />
     <item android:id="@+id/menu_profile"
         android:title="@string/menu_profile"

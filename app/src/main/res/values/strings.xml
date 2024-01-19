@@ -4,8 +4,8 @@
     <!--menu 이름 정리 -->
     <string name="menu_search">둘러보기</string>
     <string name="menu_wish">위시리스트</string>
-    <string name="menu_my_tour">나의 투어</string>
-    <string name="menu_making_tour">투어 만들기</string>
+    <string name="menu_making_course">코스 만들기</string>
+    <string name="menu_message">메세지</string>
     <string name="menu_profile">프로필</string>
 
     <!--making_tour process 정리 -->

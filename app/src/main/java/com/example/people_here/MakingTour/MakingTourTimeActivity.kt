@@ -1,7 +1,9 @@
 package com.example.people_here.MakingTour
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.people_here.AddPicture.AddPictureActivity
 import com.example.people_here.databinding.ActivityMakingTourTimeBinding
 
 class MakingTourTimeActivity : AppCompatActivity() {
@@ -10,6 +12,12 @@ class MakingTourTimeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMakingTourTimeBinding.inflate(layoutInflater)
+
+        binding.btnMakingTourTimeNext.setOnClickListener {
+            val intent = Intent(this, AddPictureActivity::class.java)
+            startActivity(intent)
+        }
+
         setContentView(binding.root)
     }
 }

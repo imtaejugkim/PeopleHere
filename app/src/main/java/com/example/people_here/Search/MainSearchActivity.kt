@@ -40,6 +40,7 @@ class MainSearchActivity : AppCompatActivity() {
             }
         })
 
+
         setContentView(binding.root)
     }
 

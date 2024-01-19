@@ -19,6 +19,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="64dp" />
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_making_tour_place_number"
             android:layout_width="24dp"

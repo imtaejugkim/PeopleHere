@@ -63,6 +63,12 @@
             app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_headline"
             />
 
+    <ViewStub
+        android:id="@+id/stub_id"
+        android:layout="@layout/"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_re_select"

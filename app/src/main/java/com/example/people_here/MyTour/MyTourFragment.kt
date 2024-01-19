@@ -16,7 +16,7 @@ class MyTourFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("test","test")
+
         binding = FragmentMyTourBinding.inflate(layoutInflater)
         
         return binding.root

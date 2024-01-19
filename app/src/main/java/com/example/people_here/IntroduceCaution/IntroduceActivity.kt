@@ -17,9 +17,11 @@ class IntroduceActivity : AppCompatActivity() {
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
         ButtonOn()
         binding.btnNext.setOnClickListener {
-            val intent = Intent(this, CautionActivity::class.java)//화면전환
+        //TODO: 여기 넘어가는거 막음
+        /*    val intent = Intent(this, CautionActivity::class.java)//화면전환
             startActivity(intent)
-        }
+        */}
+
 
 
         setContentView(binding.root)

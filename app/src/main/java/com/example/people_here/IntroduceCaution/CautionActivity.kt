@@ -1,9 +1,11 @@
 package com.example.people_here.IntroduceCaution
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import com.example.people_here.AddPicture.AddPictureActivity
 import com.example.people_here.R
 import com.example.people_here.databinding.ActivityCautionBinding
 
@@ -14,8 +16,18 @@ class CautionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityCautionBinding.inflate(layoutInflater)
         ButtonOn()
+        binding.btnNext.setOnClickListener {
+        //TODO:이것도 막음
+        /*
+            val intent = Intent(this, AddPictureActivity::class.java)//화면전환
+            startActivity(intent)
+*/
+
+
+        }
         setContentView(binding.root)
     }
+
 
     private fun ButtonOn() {
         binding.etIntroduce.addTextChangedListener(object : TextWatcher {

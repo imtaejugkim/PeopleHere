@@ -3,9 +3,10 @@
     android:shape="rectangle">
 
     <size
-        android:layout_width="328dp"
-        android:layout_height="52dp"/>
+        android:layout_width="164dp"
+        android:layout_height="42dp"/>
     <solid android:color="@color/Gray4"/>
 
-    <corners android:radius="10dp" />
+
+    <corners android:radius="12dp" />
 </shape>

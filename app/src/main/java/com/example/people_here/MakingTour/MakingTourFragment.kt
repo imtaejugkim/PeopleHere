@@ -27,15 +27,6 @@ class MakingTourFragment : Fragment() {
         binding.btnNext.setOnClickListener{
             //확인하기 위해 이렇게 해놨습니다
 
-
-
-
-            //실제론 화면 다르게 전환
-            Log.d("ButtonClick", "Button clicked")
-            val myIntent = Intent(requireContext(), CostInputActivity::class.java)
-            // startActivity를 해야 화면이동
-            startActivity(myIntent)
-
         }
         return binding.root
     }
@@ -81,6 +72,9 @@ class MakingTourFragment : Fragment() {
             binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
         }
     }
+
+
+
     fun onDialogBtnClicked() {//눌리면 다이어로그 보이게
         val helpDialog = HelpDiaLog(requireContext())
         helpDialog.show()

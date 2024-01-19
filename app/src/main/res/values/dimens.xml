@@ -14,10 +14,11 @@
     <dimen name="item_main_tour_list_time">12sp</dimen>
     <dimen name="item_main_tour_list_cost">12sp</dimen>
     <dimen name="item_main_tour_list_user_name">14sp</dimen>
-    <dimen name="item_main_tour_list_user_rating">12sp</dimen>
+    <dimen name="item_main_tour_list_user_rating">10sp</dimen>
     <dimen name="item_main_tour_list_place">12sp</dimen>
 
 
+    <dimen name="image_width">156dp</dimen>
 
     <!-- 마진, 패딩 크기 정의 -->
 

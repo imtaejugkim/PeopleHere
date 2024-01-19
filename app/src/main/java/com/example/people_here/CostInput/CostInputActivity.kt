@@ -42,10 +42,10 @@ class CostInputActivity : AppCompatActivity() {
         placeCostAdapter!!.setOnItemClickListener(object : PlaceCostAdapter.OnItemClickListener {
             override fun onItemClick(placelist: PlaceCostData) {
                 //issue:근데 rv에 걸어놨는데 왜 경비 입력 눌러야 들어가지지??신기하넴
-
-                val bottomsheet=CostFragment()
+                //TODO:이것도 막음
+                /*val bottomsheet=CostFragment()
                 bottomsheet.show(supportFragmentManager, bottomsheet.tag)
-                //여기 프래그먼트 적용
+                *///여기 프래그먼트 적용
                 //bottomdialog 나오게
 
             }

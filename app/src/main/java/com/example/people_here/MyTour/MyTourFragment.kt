@@ -18,6 +18,7 @@ class MyTourFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentMyTourBinding.inflate(layoutInflater)
 
         //장소 검색 페이지로 넘어가기 구현

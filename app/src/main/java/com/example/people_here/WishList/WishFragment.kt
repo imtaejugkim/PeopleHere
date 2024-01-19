@@ -13,6 +13,7 @@ class WishFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         binding = FragmentWishBinding.inflate(layoutInflater)
         return binding.root

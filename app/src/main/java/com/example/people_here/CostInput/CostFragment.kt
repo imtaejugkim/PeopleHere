@@ -21,6 +21,7 @@ import java.text.DecimalFormat
 
 class CostFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentCostBinding
+
     private var isclicked: Int = 0
 
     private val decimalFormat = DecimalFormat("#,###")//원화 유니코드 추가시 팅긴다..?
@@ -41,6 +42,7 @@ class CostFragment : BottomSheetDialogFragment() {
                 binding.etCostInput.setSelection(result.length);
             }
         }
+
 
         override fun afterTextChanged(p0: Editable?) {
 
@@ -109,9 +111,10 @@ class CostFragment : BottomSheetDialogFragment() {
 
             //TODO:임의로 넘어가게
             binding.btnKeep2.setOnClickListener {
-                val intent = Intent(requireContext(), IntroduceActivity::class.java)//화면전환
+                //TODO:이것도 막음
+            /*    val intent = Intent(requireContext(), IntroduceActivity::class.java)//화면전환
                 startActivity(intent)
-            }
+            */}
 
         }
         return binding.root

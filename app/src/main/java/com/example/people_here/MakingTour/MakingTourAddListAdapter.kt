@@ -7,8 +7,11 @@ import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MakingTourAddListData
 import com.example.people_here.R
@@ -98,7 +101,9 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
 
     override fun getItemCount(): Int = addListData.size
 
-    fun changeBackgroundAndPlaceNumber(context: Context, layout1: ConstraintLayout, layout2: ConstraintLayout, isSelected: Boolean) {
+    fun changeBackgroundAndPlaceNumber(context: Context, layout1: ConstraintLayout, layout2: ConstraintLayout, textView: TextView, isSelected: Boolean) {
+        textView.isSingleLine = !isSelected
+
         val layoutBackground = if (isSelected)
             ContextCompat.getDrawable(context, R.drawable.making_tour_add_list_place_info_selected)
         else
@@ -119,14 +124,14 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
             binding.tvMakingTourListPlaceNumber.text = placeInfo.placeNumber.toString()
 
-            changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, isSelected)
+            changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, binding.tvMakingTourAddListPlaceName, isSelected)
 
             itemView.setOnClickListener {
                 selectItem(adapterPosition)
             }
 
             if (!isEditMode) {
-                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.ic_making_tour_add_list_dots)  // dots
+                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.ic_trash)  // dots
                 binding.ivMakingTourAddListPlaceDots.setOnClickListener {
                     val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
                     dialog.show()
@@ -145,14 +150,14 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
             binding.tvMakingTourListPlaceNumber.text = placeInfo.placeNumber.toString()
 
-            changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, isSelected)
+            changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, binding.tvMakingTourAddListPlaceName, isSelected)
 
             itemView.setOnClickListener {
                 selectItem(adapterPosition)
             }
 
             if (!isEditMode) {
-                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.ic_making_tour_add_list_dots)  // dots
+                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.ic_trash)  // dots
                 binding.ivMakingTourAddListPlaceDots.setOnClickListener {
                     val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
                     dialog.show()
@@ -168,6 +173,18 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
 
     inner class LastViewHolder(private val binding: ItemMakingTourAddListPlace3Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(placeInfo: MakingTourAddListData) {
+
+            val countItem = addListData.count {
+                it.itemType == TYPE_FIRST || it.itemType == TYPE_SECOND }
+
+            if (countItem >= 8) {
+                binding.clMakingTourAddListNothing.isVisible = true
+                binding.clMakingTourAddListPlacePlus.isGone = true
+            }else{
+                binding.clMakingTourAddListNothing.isGone= true
+                binding.clMakingTourAddListPlacePlus.isVisible = true
+            }
+
             binding.clMakingTourAddListPlacePlus.setOnClickListener {
                 val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
                 dialog.show()

@@ -103,12 +103,12 @@
         app:layout_constraintEnd_toEndOf="@id/guide_end"/>
 
 
-    <View
-        android:id="@+id/view_google_map"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@color/Gray2"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         app:layout_constraintTop_toBottomOf="@id/tv_making_tour_time_subtitle"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -118,7 +118,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@id/guide_start"
         app:layout_constraintEnd_toEndOf="@+id/guide_end"
-        app:layout_constraintTop_toBottomOf="@id/view_google_map"
+        app:layout_constraintTop_toBottomOf="@id/map"
         app:layout_constraintBottom_toTopOf="@id/cl_making_tour_bottom_bar"
         tools:listitem="@layout/item_making_tour_add_list_place1"/>
 

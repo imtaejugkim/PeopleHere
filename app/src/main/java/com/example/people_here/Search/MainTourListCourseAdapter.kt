@@ -31,7 +31,6 @@ class MainTourListCourseAdapter(private val mainTourListCourseData: ArrayList<Ma
 
             binding.ivMainTourListUserCourse.setImageResource(tourListInfo.courseImage)
             binding.tvItemMainTourListRegion.text = tourListInfo.courseRegion
-            binding.tvMainTourListPlace.text = tourListInfo.coursePlace
         }
     }
 

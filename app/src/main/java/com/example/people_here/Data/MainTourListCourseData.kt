@@ -6,5 +6,4 @@ data class MainTourListCourseData(
     var userRating: Double,
     var courseImage: Int,
     var courseRegion: String,
-    var coursePlace: String
 )

@@ -2,10 +2,10 @@ package com.example.people_here.Data
 
 data class MainCourseMapData (
     var courseTitle : String,
-    var courseTime : String,
-    var courseCost : String,
+    var courseRegion : ArrayList<String>,
+    var courseTime : Int,
     var userImage : Int,
     var userName : String,
-    var courseImage : Int,
+    var placeImage : Int,
     var placeName : String
 )

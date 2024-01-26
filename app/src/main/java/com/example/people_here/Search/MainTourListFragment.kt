@@ -58,9 +58,7 @@ class MainTourListFragment : Fragment() {
                     userName,
                     userRating,
                     R.drawable.img_example,
-                    "홍대역",
-                    "홍대개미"
-                )
+                    "홍대역")
             )
         }
         return dataList

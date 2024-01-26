@@ -5,11 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +29,7 @@ import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 
 
-class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
+class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: FragmentMainTourCourseBinding
     private var mainCourseMapData : ArrayList<MainCourseMapData> = arrayListOf()
     private val markerDataMap = hashMapOf<Marker, List<MainCourseMapData>>()
@@ -44,14 +42,12 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
 
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = FragmentMainTourCourseBinding.inflate(layoutInflater)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@MainCourseMapActivity)
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         //백앤드 통신 시 변경될 데이터 추가 방식입니다.
@@ -60,7 +56,7 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
 
         initMoveRecyclerView()
 
-        return binding.root
+        setContentView(binding.root)
     }
 
     private fun mapListener(){
@@ -206,16 +202,16 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
     private fun initDummyData() {
         mainCourseMapData.addAll(
             arrayListOf(
-                MainCourseMapData("홍대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","1시간","10000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("건대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","2시간","20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("이대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","3시간","30000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("중대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","4시간","40000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("고대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","5시간","5000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("연대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","6시간","60000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("성대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","7시간","70000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("서강대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","8시간","80000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("경희대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","9시간","90000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대"),
-                MainCourseMapData("시립대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","10시간","100000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "홍대")
+                MainCourseMapData("홍대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","1시간","10000원", R.drawable.img_example_user, "Alex", R.drawable.img_example, "홍대역 근처"),
+                MainCourseMapData("건대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","2시간","20000원", R.drawable.img_example_user, "Brian", R.drawable.img_example_user, "건대역"),
+                MainCourseMapData("이대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","3시간","30000원", R.drawable.img_example_user, "Cyan", R.drawable.img_example, "이대역"),
+                MainCourseMapData("중대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","4시간","40000원", R.drawable.img_example_user, "David", R.drawable.img_example_user, "중대역"),
+                MainCourseMapData("고대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","5시간","5000원", R.drawable.img_example_user, "Emily", R.drawable.img_example, "홍대"),
+                MainCourseMapData("연대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","6시간","60000원", R.drawable.img_example_user, "Frank", R.drawable.img_example_user, "홍대"),
+                MainCourseMapData("성대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","7시간","70000원", R.drawable.img_example_user, "Green", R.drawable.img_example, "홍대"),
+                MainCourseMapData("서강대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","8시간","80000원", R.drawable.img_example_user, "Harry", R.drawable.img_example_user, "홍대"),
+                MainCourseMapData("경희대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","9시간","90000원", R.drawable.img_example_user, "Iron", R.drawable.img_example, "홍대"),
+                MainCourseMapData("시립대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","10시간","100000원", R.drawable.img_example_user, "Jessica", R.drawable.img_example_user, "홍대")
             )
         )
     }
@@ -223,7 +219,7 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
     private fun initRecyclerview() {
         mainTourCourseAdapter = MainTourCourseAdapter(mainCourseMapData)
         binding.rvMainTourCourse.adapter = mainTourCourseAdapter
-        binding.rvMainTourCourse.layoutManager = LinearLayoutManager(requireContext(),
+        binding.rvMainTourCourse.layoutManager = LinearLayoutManager(this@MainCourseMapActivity,
             LinearLayoutManager.HORIZONTAL, false)
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvMainTourCourse)
@@ -231,7 +227,7 @@ class MainTourCourseFragment : Fragment(), OnMapReadyCallback {
 
     // SVG 파일을 Bitmap으로 변환
     private fun vectorToBitmap(drawableId: Int): BitmapDescriptor {
-        val vectorDrawable = ContextCompat.getDrawable(requireContext(), drawableId)
+        val vectorDrawable = ContextCompat.getDrawable(this, drawableId)
         vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
         val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)

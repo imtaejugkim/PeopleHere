@@ -27,7 +27,6 @@ class MainTourCourseAdapter(val mainCourseMapData : ArrayList<MainCourseMapData>
             binding.tvMainCourseListUserName.text = courseMapInfo.userName
             binding.ivMainCourseListUser.setImageResource(courseMapInfo.userImage)
             binding.ivMainCourseListUserCourse.setImageResource(courseMapInfo.courseImage)
-            binding.tvMainCourseListPlace.text = courseMapInfo.placeName
         }
     }
     override fun onCreateViewHolder(

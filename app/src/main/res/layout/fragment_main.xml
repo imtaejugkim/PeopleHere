@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/main_tour_search_headline"
                 android:textSize="16sp"
+                android:fontFamily="@font/suite_bold"
                 app:layout_constraintBottom_toTopOf="@id/tv_main_search_region"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -64,6 +65,7 @@
                 android:text="@string/main_tour_search_subtitle"
                 android:textSize="12sp"
                 android:textColor="@color/Gray5"
+                android:fontFamily="@font/pretendard_regular"
                 app:layout_constraintTop_toBottomOf="@id/tv_main_search_place"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -79,30 +81,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_main_tour_select"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/guide_start"
-            app:layout_constraintEnd_toEndOf="@id/guide_end"
-            app:layout_constraintTop_toBottomOf="@id/view_mt_search"
-            android:layout_marginTop="12dp"
-            app:tabIndicatorAnimationMode="linear"
-            app:tabIndicatorColor="@color/black"
-            app:tabIndicatorFullWidth="true"
-            app:tabRippleColor="@color/black"
-            app:tabSelectedTextColor="@color/black"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_main_tour_select"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_main_tour_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintTop_toBottomOf="@id/view_mt_search"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_main_tour_select"/>
+            tools:listitem="@layout/item_main_tour_list"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

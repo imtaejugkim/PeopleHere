@@ -3,6 +3,7 @@ package com.example.people_here.AddPicture
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.people_here.ApplicationClass
 import com.example.people_here.R
 import com.example.people_here.databinding.DialogSelectPictureBinding
@@ -19,7 +22,7 @@ import com.example.people_here.databinding.FragmentSelectPictureBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class SelectPictureFragment :  BottomSheetDialogFragment() {
+class SelectPictureFragment() :  BottomSheetDialogFragment() {
 
     private var imageUri: Uri? = null
 
@@ -60,20 +63,47 @@ class SelectPictureFragment :  BottomSheetDialogFragment() {
 
         binding.clFirst.setOnClickListener{
             //갤러리 호출
+            //TODO: 왜 요청 개같이뜨나요?
+            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+
+            requestPermissions()
+            //왜 한참뒤에 뜸?
+            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
 
             val intent = Intent(requireContext(), CustomAlbumActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
+
+
             //TODO:권한 요청 좀 다듬기
-            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+            //??왜안뜸?
 //            openGallery()//갤러리 열음
 
 
         }
 
 
+
         return binding.root
 
+    }
+    private fun requestPermissions() {
+
+        //sdk 버전 32이상인 경우만 READ_MEDIA_IMAGES
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_MEDIA_IMAGES)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // 권한이 없는 경우 권한 요청
+            //왜 이거 ActivityCompat 이 회색으로 뜨냐
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                99//이건 임의로 적은 것
+            )
+
+
+        }
     }
     private fun openGallery() {
         val gallery = Intent(

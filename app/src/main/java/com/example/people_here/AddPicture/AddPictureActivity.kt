@@ -1,5 +1,6 @@
 package com.example.people_here.AddPicture
 
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -9,9 +10,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.people_here.Data.AddPictureData
 import com.example.people_here.R
+import com.example.people_here.TitleCategory.TitleActivity
 import com.example.people_here.databinding.ActivityAddPictureBinding
 
 
@@ -65,8 +68,12 @@ class AddPictureActivity : AppCompatActivity() {
                 //TODO: Intent로 넘겼는데 이거 저장때문에 roomDB에 넣어야함
             }
         })
-
-        //TODO:1개 이상 추가 되면 화면 바뀌는..
+        binding.btnNext.setOnClickListener {
+            val intent = Intent(this, TitleActivity::class.java)
+            startActivity(intent)
+            //finish()
+        }
+           //TODO:1개 이상 추가 되면 화면 바뀌는..
         addPictureAdapter!!.notifyItemInserted(picturelist.size)
 
         binding.btnAddPicture.setOnClickListener {

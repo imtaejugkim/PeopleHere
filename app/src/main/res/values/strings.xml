@@ -37,6 +37,11 @@
     <string name="making_tour_no_choice">해당하는 유형이 없어요</string>
     <string name="making_tour_next">다음</string>
 
+    <!--activity_title  이름 정리 -->
+    <string name="activity_title_type_title">제목을 작성하세요</string>
+    <string name="activity_title_short">짧은 제목이 여행자들을 더 쉽게 사로잡아요.\n 나중에 언제든지 수정할 수 있어요.</string>
+
+
     <!--making_tour 소요 시간 이름 정리 -->
     <string name="making_tour_time_headline">전체 소요 시간을 알려주세요</string>
     <string name="making_tour_time_subtitle">장소간 이동과 여유 시간을 고려하세요.</string>
@@ -45,9 +50,6 @@
     <string name="dialog_max_picture_out_of_range">장소 별 최대 사진 개수 초과</string>
     <string name="dialog_max_picture_explain">한 장소에 최대 5장까지 추가할 수 있어요.</string>
     <string name="dialog_max_picture_ok">확인</string>
-
-
-
 
 
     <!--making_tour 장소 추가 목록 이름 정리 -->

@@ -7,16 +7,10 @@ import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.people_here.CostInput.CostExitDialog
 import com.example.people_here.Data.CustomAlbumData
-import com.example.people_here.Data.LocationChooseData
-import com.example.people_here.R
 import com.example.people_here.databinding.ItemCustoAlbumBinding
-import com.example.people_here.databinding.ItemLocationChooseBinding
 
 class CustomAlbumAdapter( private val context: Context,val picturelist: List<CustomAlbumData>) :
     RecyclerView.Adapter<CustomAlbumAdapter.ViewHolder>() {
@@ -37,9 +31,11 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
                 .load(Uri.parse(picturelist.imageUrl)) // URI 문자열을 URI로 변환
                 .into(binding.ivProfile)
             val color = ColorStateList.valueOf(Color.parseColor("#FF7834"))
+
             binding.ivProfile.setOnClickListener {
                 itemClickListener.onItemClick(picturelist)//하나의 객체 눌리게
                 //각각 true면 false되게, false면 true되게
+
 
 
                 if(CountItem==5 && !binding.selectRatioBT.isChecked){
@@ -104,6 +100,8 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
             }
         }
     }
-
+    override fun getItemViewType(position: Int): Int { // 재활용시 눌리는거 막아줌
+        return position
+    }
     // 이미지 리스트를 설정하
 }

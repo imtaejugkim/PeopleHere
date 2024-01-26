@@ -131,7 +131,9 @@
     <string name="main_search_recent">최근 검색 내역</string>
     <string name="main_tour_search_headline">어떤 투어를 할까요?</string>
     <string name="main_tour_search_subtitle">대한민국·모든투어</string>
-
+    <string name="main_tv_time">시간</string>
+    <string name="main_see_list">목록 보기</string>
+    <string name="main_see_map">지도 보기</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

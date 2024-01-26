@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MainCourseMapData
 import com.example.people_here.R
-import com.example.people_here.databinding.FragmentMainTourCourseBinding
+import com.example.people_here.databinding.ActivityMainTourCourseBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,7 +30,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 
 
 class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var binding: FragmentMainTourCourseBinding
+    private lateinit var binding: ActivityMainTourCourseBinding
     private var mainCourseMapData : ArrayList<MainCourseMapData> = arrayListOf()
     private val markerDataMap = hashMapOf<Marker, List<MainCourseMapData>>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -44,11 +44,15 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentMainTourCourseBinding.inflate(layoutInflater)
+        binding = ActivityMainTourCourseBinding.inflate(layoutInflater)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this@MainCourseMapActivity)
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        binding.ivBackArrow.setOnClickListener {
+            onBackPressed()
+        }
 
         //백앤드 통신 시 변경될 데이터 추가 방식입니다.
         initRecyclerview()
@@ -101,11 +105,22 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
     private fun generateDataForMarker(index: Int): List<MainCourseMapData> {
+        val arrayList1 = ArrayList<String>()
+        arrayList1.add("성동구")
+        arrayList1.add("팔달구")
+        arrayList1.add("영통구")
+
         return arrayListOf(
-            MainCourseMapData("데이터 $index-1", "1시간", "10000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index"),
-            MainCourseMapData("데이터 $index-2", "2시간", "20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index") ,
-            MainCourseMapData("데이터 $index-3", "2시간", "20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index") ,
-            MainCourseMapData("데이터 $index-4", "2시간", "20000원", R.drawable.img_example_user, "Alexan", R.drawable.img_example, "장소 $index")
+            MainCourseMapData("홍대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,1, R.drawable.img_example_user, "Alex", R.drawable.img_example, "홍대역 근처"),
+            MainCourseMapData("건대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Brian", R.drawable.img_example_user, "건대역"),
+            MainCourseMapData("이대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Cyan", R.drawable.img_example, "이대역"),
+            MainCourseMapData("중대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,4, R.drawable.img_example_user, "David", R.drawable.img_example_user, "중대역"),
+            MainCourseMapData("고대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Emily", R.drawable.img_example, "홍대"),
+            MainCourseMapData("연대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Frank", R.drawable.img_example_user, "홍대"),
+            MainCourseMapData("성대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,1, R.drawable.img_example_user, "Green", R.drawable.img_example, "홍대"),
+            MainCourseMapData("서강대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Harry", R.drawable.img_example_user, "홍대"),
+            MainCourseMapData("경희대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Iron", R.drawable.img_example, "홍대"),
+            MainCourseMapData("시립대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,4, R.drawable.img_example_user, "Jessica", R.drawable.img_example_user, "홍대")
 
         )
     }
@@ -200,18 +215,22 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private fun initDummyData() {
+        val arrayList1 = ArrayList<String>()
+        arrayList1.add("성동구")
+        arrayList1.add("팔달구")
+        arrayList1.add("영통구")
         mainCourseMapData.addAll(
             arrayListOf(
-                MainCourseMapData("홍대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","1시간","10000원", R.drawable.img_example_user, "Alex", R.drawable.img_example, "홍대역 근처"),
-                MainCourseMapData("건대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","2시간","20000원", R.drawable.img_example_user, "Brian", R.drawable.img_example_user, "건대역"),
-                MainCourseMapData("이대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","3시간","30000원", R.drawable.img_example_user, "Cyan", R.drawable.img_example, "이대역"),
-                MainCourseMapData("중대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","4시간","40000원", R.drawable.img_example_user, "David", R.drawable.img_example_user, "중대역"),
-                MainCourseMapData("고대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","5시간","5000원", R.drawable.img_example_user, "Emily", R.drawable.img_example, "홍대"),
-                MainCourseMapData("연대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","6시간","60000원", R.drawable.img_example_user, "Frank", R.drawable.img_example_user, "홍대"),
-                MainCourseMapData("성대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","7시간","70000원", R.drawable.img_example_user, "Green", R.drawable.img_example, "홍대"),
-                MainCourseMapData("서강대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","8시간","80000원", R.drawable.img_example_user, "Harry", R.drawable.img_example_user, "홍대"),
-                MainCourseMapData("경희대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","9시간","90000원", R.drawable.img_example_user, "Iron", R.drawable.img_example, "홍대"),
-                MainCourseMapData("시립대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요","10시간","100000원", R.drawable.img_example_user, "Jessica", R.drawable.img_example_user, "홍대")
+                MainCourseMapData("홍대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,1, R.drawable.img_example_user, "Alex", R.drawable.img_example, "홍대역 근처"),
+                MainCourseMapData("건대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Brian", R.drawable.img_example_user, "건대역"),
+                MainCourseMapData("이대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Cyan", R.drawable.img_example, "이대역"),
+                MainCourseMapData("중대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,4, R.drawable.img_example_user, "David", R.drawable.img_example_user, "중대역"),
+                MainCourseMapData("고대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Emily", R.drawable.img_example, "홍대"),
+                MainCourseMapData("연대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Frank", R.drawable.img_example_user, "홍대"),
+                MainCourseMapData("성대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,1, R.drawable.img_example_user, "Green", R.drawable.img_example, "홍대"),
+                MainCourseMapData("서강대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Harry", R.drawable.img_example_user, "홍대"),
+                MainCourseMapData("경희대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Iron", R.drawable.img_example, "홍대"),
+                MainCourseMapData("시립대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,4, R.drawable.img_example_user, "Jessica", R.drawable.img_example_user, "홍대")
             )
         )
     }

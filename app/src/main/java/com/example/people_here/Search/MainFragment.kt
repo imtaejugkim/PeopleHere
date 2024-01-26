@@ -28,8 +28,14 @@ class MainFragment : Fragment() {
         initDummyData()
 
 
-        binding.viewMtSearch.setOnClickListener {
+        binding.clTopSearchBar.setOnClickListener {
             initSearchView()
+        }
+
+        binding.clSeeMap.setOnClickListener {
+            val intent = Intent(requireActivity(), MainCourseMapActivity::class.java)
+//                intent.putExtra("Key", tourListInfo)
+            startActivity(intent)
         }
 
         return binding.root

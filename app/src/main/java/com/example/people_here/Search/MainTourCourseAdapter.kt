@@ -22,11 +22,12 @@ class MainTourCourseAdapter(val mainCourseMapData : ArrayList<MainCourseMapData>
     inner class ViewHolder(val binding : ItemMainCourseMapBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(courseMapInfo : MainCourseMapData){
             binding.tvMainCourseListTitle.text = courseMapInfo.courseTitle
-            binding.tvMainCourseListTime.text = courseMapInfo.courseTime
-            binding.tvMainCourseListCost.text = courseMapInfo.courseCost
+            binding.tvMainCourseListRegion.text = courseMapInfo.courseRegion.toString()
+            binding.tvMainCourseListTime.text = courseMapInfo.courseTime.toString()
             binding.tvMainCourseListUserName.text = courseMapInfo.userName
             binding.ivMainCourseListUser.setImageResource(courseMapInfo.userImage)
-            binding.ivMainCourseListUserCourse.setImageResource(courseMapInfo.courseImage)
+            binding.ivMainCourseListUserCourse.setImageResource(courseMapInfo.placeImage)
+            binding.tvItemMainCourseListPlace.text = courseMapInfo.placeName
         }
     }
     override fun onCreateViewHolder(

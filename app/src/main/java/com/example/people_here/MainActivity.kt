@@ -2,7 +2,7 @@ package com.example.people_here
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.people_here.MakingTour.MakingTourFragment
+import com.example.people_here.TitleCategory.MakingTourFragment
 import com.example.people_here.MyTour.MakingCourseFragment
 import com.example.people_here.Profile.ProfileFragment
 import com.example.people_here.Search.MainFragment

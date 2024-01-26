@@ -23,14 +23,22 @@
         android:theme="@style/Theme.People_Here"
         tools:targetApi="31">
         <activity
+            android:name=".TitleCategory.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TitleCategory.TitleActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddPicture.CustomAlbumActivity"
             android:exported="false" />
         <activity
             android:name=".AddPicture.AddPictureActivity"
             android:exported="false" /> <!-- 구글맵 api키 추가해서 사용함 -->
         <activity android:name=".AddPicture.AddPictureAdapter">
+
             <!-- 필요한 인텐트 필터 및 설정 추가 -->
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB3WLa8PNBaMOK2OQm1U64Hb6RetEu-E1g" />

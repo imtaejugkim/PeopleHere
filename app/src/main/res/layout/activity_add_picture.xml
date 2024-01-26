@@ -8,6 +8,7 @@
 
     tools:context=".AddPicture.AddPictureActivity">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_exit"
         android:layout_width="0dp"

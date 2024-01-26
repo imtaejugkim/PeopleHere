@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="making_tour_headline_style">
-    <item name="android:textSize">17dp</item>
-    <item name="android:textStyle">normal</item>
-    <item name="android:textColor">@color/black</item>
-</style>
+        <item name="android:textSize">17dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

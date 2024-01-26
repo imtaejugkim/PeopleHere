@@ -56,10 +56,7 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
                     val c=ApplicationClass.mSharedPreferencesManager.getString("image",null)
                     dismiss()
 
-
-
                     //activity에 데이터 넘겨주고 startActivity 혹은 dismiss?
-
                     //intent를  통해 이전에 주고 dismiss하는건?
                 }
             }
@@ -91,7 +88,6 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
             LocationChooseData(R.drawable.img, "장소1"),
             LocationChooseData(R.drawable.img, "장소1"),
             LocationChooseData(R.drawable.img, "장소2")
-
         )
         locationChooseAdapter = LocationChooseAdapter(locationlist)
 

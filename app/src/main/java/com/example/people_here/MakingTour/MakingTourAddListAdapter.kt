@@ -55,6 +55,7 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
         notifyItemRemoved(position)
     }
 
+
     fun selectItem(position: Int) {
         val previousPosition = selectedPosition
         selectedPosition = position
@@ -167,8 +168,6 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
                 binding.ivMakingTourAddListPlaceDots.setOnClickListener(null)
             }
         }
-
-
     }
 
     inner class LastViewHolder(private val binding: ItemMakingTourAddListPlace3Binding) : RecyclerView.ViewHolder(binding.root) {

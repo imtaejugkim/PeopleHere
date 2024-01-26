@@ -46,6 +46,10 @@ dependencies {
     implementation ("com.google.android.gms:play-services-places:15.0.1")
     //startActivityforResult
     implementation ("androidx.activity:activity-ktx:1.2.0-alpha05")
+    //글라이드
+    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
+
 
     implementation ("io.coil-kt:coil:1.2.0")
     implementation ("io.coil-kt:coil-svg:1.2.0")

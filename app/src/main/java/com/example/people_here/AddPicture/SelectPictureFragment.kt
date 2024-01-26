@@ -63,9 +63,10 @@ class SelectPictureFragment :  BottomSheetDialogFragment() {
 
             val intent = Intent(requireContext(), CustomAlbumActivity::class.java)
             startActivity(intent)
-
+            requireActivity().finish()
+            //TODO:권한 요청 좀 다듬기
             requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-            openGallery()//갤러리 열음
+//            openGallery()//갤러리 열음
 
 
         }

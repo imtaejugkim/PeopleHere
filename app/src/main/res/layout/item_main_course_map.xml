@@ -62,13 +62,35 @@
             app:layout_constraintEnd_toEndOf="@id/tv_main_course_list_title">
 
             <ImageView
-                android:id="@+id/iv_main_course_list_clock"
+                android:id="@+id/iv_main_course_list_region"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@drawable/ic_main_time"
+                android:src="@drawable/ic_location_14"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_main_course_list_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="null장소"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@id/iv_main_course_list_region"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/iv_main_course_list_region"/>
+
+            <ImageView
+                android:id="@+id/iv_main_course_list_credit"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_main_time"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toEndOf="@id/tv_main_course_list_cost"
+                app:layout_constraintEnd_toStartOf="@id/tv_main_course_list_time"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_main_course_list_time"
@@ -77,31 +99,9 @@
                 android:layout_marginStart="4dp"
                 android:text="null시간"
                 android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@id/iv_main_course_list_clock"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/iv_main_course_list_clock"/>
-
-            <ImageView
-                android:id="@+id/iv_main_course_list_credit"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_main_credit_card"
-                android:layout_marginStart="12dp"
-                app:layout_constraintStart_toEndOf="@id/tv_main_course_list_time"
-                app:layout_constraintEnd_toStartOf="@id/tv_main_course_list_cost"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_main_course_list_cost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="null원"
-                android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@id/iv_main_course_list_credit"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/iv_main_course_list_clock"/>
+                app:layout_constraintBottom_toBottomOf="@id/iv_main_course_list_region"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -31,8 +31,5 @@ class CostExitDialog(context: Context) : Dialog(context) {
 
         //배경투명
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
     }
-
 }

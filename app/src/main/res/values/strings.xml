@@ -41,6 +41,15 @@
     <string name="making_tour_time_headline">전체 소요 시간을 알려주세요</string>
     <string name="making_tour_time_subtitle">장소간 이동과 여유 시간을 고려하세요.</string>
 
+    <!--dialog_max_picture  이름 정리 -->
+    <string name="dialog_max_picture_out_of_range">장소 별 최대 사진 개수 초과</string>
+    <string name="dialog_max_picture_explain">한 장소에 최대 5장까지 추가할 수 있어요.</string>
+    <string name="dialog_max_picture_ok">확인</string>
+
+
+
+
+
     <!--making_tour 장소 추가 목록 이름 정리 -->
     <string name="making_tour_add_list_headline">투어 코스를 계획하세요</string>
     <string name="making_tour_add_list_subtitle">장소를 추가하고 나만의 코스를 만들어요</string>

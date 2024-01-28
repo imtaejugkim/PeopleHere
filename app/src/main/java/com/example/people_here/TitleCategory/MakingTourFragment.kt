@@ -1,5 +1,6 @@
 package com.example.people_here.TitleCategory
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.people_here.MakingTour.HelpDiaLog
 import com.example.people_here.R
+import com.example.people_here.TourContents.TourContentsActivity
 import com.example.people_here.databinding.FragmentMakingTourBinding
 
 class MakingTourFragment : Fragment() {
@@ -19,10 +21,11 @@ class MakingTourFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMakingTourBinding.inflate(layoutInflater)
-        //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
-        binding.btnNext.setOnClickListener{
-            //확인하기 위해 이렇게 해놨습니다
 
+        //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
+        binding.cvFoodTour.setOnClickListener{
+            val intent = Intent(requireActivity(), TourContentsActivity::class.java)
+            startActivity(intent)
         }
         return binding.root
     }

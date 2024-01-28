@@ -1,5 +1,6 @@
 package com.example.people_here.Search
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MainCourseMapData
 import com.example.people_here.R
+import com.example.people_here.TourContents.TourContentsActivity
 import com.example.people_here.databinding.ActivityMainTourCourseBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -42,7 +44,9 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val markers = mutableListOf<Marker>()
     private var isRecyclerViewMoved = false
 
-
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,9 +88,6 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-    }
 
     private fun mapListener(){
         googleMap?.setOnMapClickListener {
@@ -265,6 +266,19 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.rvMainTourCourse.adapter = mainTourCourseAdapter
         binding.rvMainTourCourse.layoutManager = LinearLayoutManager(this@MainCourseMapActivity,
             LinearLayoutManager.HORIZONTAL, false)
+
+        mainTourCourseAdapter?.setOnItemClickListener(object : MainTourCourseAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val intent = Intent(this@MainCourseMapActivity, TourContentsActivity::class.java)
+
+                val itemData = mainCourseMapData[position]
+                intent.putExtra("key", itemData)
+                Log.d("클릭됨","클릭됨")
+
+                startActivity(intent)
+            }
+        })
+
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvMainTourCourse)
     }

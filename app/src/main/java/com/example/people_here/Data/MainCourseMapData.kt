@@ -1,5 +1,7 @@
 package com.example.people_here.Data
 
+import java.io.Serializable
+
 data class MainCourseMapData (
     var courseTitle : String,
     var courseRegion : ArrayList<String>,
@@ -8,4 +10,4 @@ data class MainCourseMapData (
     var userName : String,
     var placeImage : Int,
     var placeName : String
-)
+) : Serializable

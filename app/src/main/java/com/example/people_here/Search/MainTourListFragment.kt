@@ -30,18 +30,19 @@ class MainTourListFragment : Fragment() {
     }
 
     private fun initDummyData() {
+        val array1 = arrayListOf<String>("성동구, 강북구, 팔달구")
         mainTourListData.addAll(
             arrayListOf(
-                MainTourListData("홍대 소품삽 둘러보기","1시간","10000원", createDummyInnerData(0)),
-                MainTourListData("건대 소품삽 둘러보기","2시간","20000원", createDummyInnerData(1)),
-                MainTourListData("이대 소품삽 둘러보기","3시간","30000원", createDummyInnerData(2)),
-                MainTourListData("중대 소품삽 둘러보기","4시간","40000원", createDummyInnerData(index = 3)),
-                MainTourListData("고대 소품삽 둘러보기","5시간","5000원", createDummyInnerData(index = 4)),
-                MainTourListData("연대 소품삽 둘러보기","6시간","60000원", createDummyInnerData(index = 5)),
-                MainTourListData("성대 소품삽 둘러보기","7시간","70000원", createDummyInnerData(index = 6)),
-                MainTourListData("서강대 소품삽 둘러보기","8시간","80000원", createDummyInnerData(index = 7)),
-                MainTourListData("경희대 소품삽 둘러보기","9시간","90000원", createDummyInnerData(index = 8)),
-                MainTourListData("시립대 소품삽 둘러보기","10시간","100000원", createDummyInnerData(index = 9))
+                MainTourListData("홍대 소품삽 둘러보기","1시간",array1, createDummyInnerData(0)),
+                MainTourListData("건대 소품삽 둘러보기","2시간",array1, createDummyInnerData(1)),
+                MainTourListData("이대 소품삽 둘러보기","3시간",array1, createDummyInnerData(2)),
+                MainTourListData("중대 소품삽 둘러보기","4시간",array1, createDummyInnerData(index = 3)),
+                MainTourListData("고대 소품삽 둘러보기","5시간",array1, createDummyInnerData(index = 4)),
+                MainTourListData("연대 소품삽 둘러보기","6시간",array1, createDummyInnerData(index = 5)),
+                MainTourListData("성대 소품삽 둘러보기","7시간",array1, createDummyInnerData(index = 6)),
+                MainTourListData("서강대 소품삽 둘러보기","8시간",array1, createDummyInnerData(index = 7)),
+                MainTourListData("경희대 소품삽 둘러보기","9시간",array1, createDummyInnerData(index = 8)),
+                MainTourListData("시립대 소품삽 둘러보기","10시간",array1, createDummyInnerData(index = 9))
             )
         )
 

@@ -19,10 +19,15 @@ class MainTourListAdapter(val mainTourListData : ArrayList<MainTourListData>) : 
         fun bind(tourListInfo : MainTourListData){
             binding.tvMainTourListTitle.text = tourListInfo.mainTourListTitle
             binding.tvMainTourListTime.text = tourListInfo.mainTourListTime
-            binding.tvMainTourListCost.text = tourListInfo.mainTourListCost
             binding.clItemMainTourList.setOnClickListener {
                 itemClickListener.onItemClick(tourListInfo)
             }
+            val locationText = when {
+                tourListInfo.mainTourListRegion.size > 1 -> "${tourListInfo.mainTourListRegion[0]} 외 ${tourListInfo.mainTourListRegion.size - 1}개"
+                tourListInfo.mainTourListRegion.isNotEmpty() -> tourListInfo.mainTourListRegion[0]
+                else -> "Null지역"
+            }
+            binding.tvMainTourListLocation.text = locationText.toString()
 
             // 내부 RecyclerView 초기화 및 어댑터 설정
             val innerAdapter = MainTourListCourseAdapter(tourListInfo.mainTourListCourses) // 가정: MainTourListData에 내부 리스트 데이터가 포함됨

@@ -19,6 +19,10 @@ class TourContentsActivity : AppCompatActivity() {
         //백엔드 통신시 추가될 데이터 형식입니다.
         initDummyData()
 
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
+
         setContentView(binding.root)
     }
 

@@ -1,9 +1,8 @@
 package com.example.people_here.Data
 
-data class MainTourListCourseData(
+data class MainCourseData(
     var userImage: Int,
     var userName: String,
-    var userRating: Double,
     var courseImage: Int,
     var courseRegion: String,
 )

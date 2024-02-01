@@ -119,12 +119,15 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
         layout2.background = placeNumberColor
     }
 
+
+
+
+
     inner class FirstViewHolder(private val binding: ItemMakingTourAddListPlace1Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(placeInfo: MakingTourAddListData, isSelected : Boolean, isEditMode : Boolean) {
             binding.ivMakingTourAddListPlace.setImageResource(placeInfo.placeImage)
             binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
             binding.tvMakingTourListPlaceNumber.text = placeInfo.placeNumber.toString()
-
             changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, binding.tvMakingTourAddListPlaceName, isSelected)
 
             itemView.setOnClickListener {
@@ -208,6 +211,8 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             //다이얼로그 버튼처럼 커스텁
             setDialog()
         }
+
+
 
         private fun setDialog() {
             val window = window

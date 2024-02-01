@@ -159,8 +159,8 @@
     <string name="dialog_cost_exit_btn_exit">\나가기</string>
     <!--activity_introduce 이름-->
     <string name="activity_introduce_exit">\저장 후 나가기</string>
-    <string name="activity_introduce_headline">\투어 소개를 작성하세요</string>
-    <string name="activity_introduce_guideline">\여행자가 어떤 투어 경험을 하게 되는지 알려주세요.</string>
+    <string name="activity_introduce_headline">\마지막으로,\n소개를 작성하세요</string>
+    <string name="activity_introduce_guideline">\계획한 코스를 따라 무엇을 하게 되는지 알려주세요.</string>
     <!--activity_caution 이름-->
     <string name="activity_caution_exit">\저장 후 나가기</string>
     <string name="activity_caution_headline">\투어 주의사항을 작성하세요</string>
@@ -179,5 +179,12 @@
     <!--dialog_select_picture 이름 정리 -->
     <string name="dialog_select_picture_my_gallery">\앨범에서 ✨내가 찍은 사진✨ 추가</string>
     <string name="dialog_select_picture_basic_pic">\구글 기본 이미지 사용</string>
+    <!--item_add_picture  이름 정리 -->
+    <string name="item_add_picture_name">\장소 이름</string>
+    <string name="item_add_picture_string">\대표사진</string>
+
+
+
+
 
 </resources>

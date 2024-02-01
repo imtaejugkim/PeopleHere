@@ -1,9 +1,12 @@
 package com.example.people_here.TitleCategory
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.people_here.IntroduceCaution.CautionActivity
+import com.example.people_here.IntroduceCaution.IntroduceActivity
 import com.example.people_here.MakingTour.HelpDiaLog
 import com.example.people_here.R
 import com.example.people_here.databinding.ActivityCategoryBinding
@@ -20,7 +23,8 @@ class CategoryActivity : AppCompatActivity() {
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
         binding.btnNext.setOnClickListener{
             //확인하기 위해 이렇게 해놨습니다
-
+            val intent = Intent(this, IntroduceActivity::class.java)//화면전환
+            startActivity(intent)
         }
 
         setContentView(binding.root)

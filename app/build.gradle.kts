@@ -65,6 +65,15 @@ dependencies {
 
     //검색어 api
     implementation ("com.google.android.libraries.places:places:3.3.0")
+    //roomDB
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
+    implementation ("androidx.room:room-ktx:2.6.0")
+    implementation ("androidx.room:room-runtime:2.6.0") // 현재 사용 중인 버전에 맞게 업데이트
+    annotationProcessor ("androidx.room:room-compiler:2.6.0") // 현재 사용 중인 버전에 맞게 업데이트
+    kapt ("androidx.room:room-compiler:2.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
 
     //사진 url glide
     implementation("com.github.bumptech.glide:glide:4.13.0")

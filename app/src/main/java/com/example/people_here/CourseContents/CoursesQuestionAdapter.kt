@@ -3,6 +3,7 @@ package com.example.people_here.CourseContents
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.people_here.Data.CourseData
 import com.example.people_here.Data.CourseQuestionData
 import com.example.people_here.databinding.ItemCourseContentsQuestionBinding
 

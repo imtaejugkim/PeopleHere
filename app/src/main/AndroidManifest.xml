@@ -22,7 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.People_Here"
         tools:targetApi="31">
-        <activity android:name=".Search.MainCourseMapActivity"
+        <activity
+            android:name=".CourseContents.CourseContentsActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Search.MainCourseMapActivity"
             android:exported="false"/>
         <activity
             android:name=".TitleCategory.CategoryActivity"

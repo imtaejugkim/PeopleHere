@@ -3,11 +3,11 @@ package com.example.people_here.Search
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.people_here.Data.MainTourListCourseData
+import com.example.people_here.Data.MainCourseData
 import com.example.people_here.databinding.ItemMainTourListCourse1Binding
 import com.example.people_here.databinding.ItemMainTourListCourse2Binding
 
-class MainTourListCourseAdapter(private val mainTourListCourseData: ArrayList<MainTourListCourseData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val TYPE_FIRST_ITEM = 0
@@ -19,15 +19,14 @@ class MainTourListCourseAdapter(private val mainTourListCourseData: ArrayList<Ma
     }
 
     inner class FirstItemViewHolder(val binding: ItemMainTourListCourse1Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tourListInfo: MainTourListCourseData) {
+        fun bind(tourListInfo: MainCourseData) {
             binding.ivMainTourListUser.setImageResource(tourListInfo.userImage)
-            binding.tvMainTourListUserName.text = tourListInfo.userName
-            binding.tvMainTourListUserRating.text = tourListInfo.userRating.toString()
+            binding.tvMainTourListUser.text = tourListInfo.userName
         }
     }
 
     inner class OtherItemViewHolder(val binding: ItemMainTourListCourse2Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tourListInfo: MainTourListCourseData) {
+        fun bind(tourListInfo: MainCourseData) {
 
             binding.ivMainTourListUserCourse.setImageResource(tourListInfo.courseImage)
             binding.tvItemMainTourListRegion.text = tourListInfo.courseRegion
@@ -49,12 +48,12 @@ class MainTourListCourseAdapter(private val mainTourListCourseData: ArrayList<Ma
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = mainTourListCourseData[position]
+        val item = mainCourseData[position]
         when (holder) {
             is FirstItemViewHolder -> holder.bind(item)
             is OtherItemViewHolder -> holder.bind(item)
         }
     }
 
-    override fun getItemCount(): Int = mainTourListCourseData.size
+    override fun getItemCount(): Int = mainCourseData.size
 }

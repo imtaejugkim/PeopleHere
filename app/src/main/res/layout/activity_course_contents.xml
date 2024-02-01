@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +28,7 @@
             app:layout_constraintGuide_percent="0.956"/>
 
         <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_main_left_arrow"
@@ -71,23 +73,32 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.956" />
 
-            <ImageView
-                android:id="@+id/iv_tour_contents"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_tour_contents"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/img_example_contents"
                 app:layout_constraintDimensionRatio="360:291"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/ll_Indicator_Container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/vp_tour_contents"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cv_rolling_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_tour_contents"
+                app:layout_constraintBottom_toBottomOf="@id/vp_tour_contents"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -102,7 +113,7 @@
                 app:layout_constraintDimensionRatio="360:132"
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
-                app:layout_constraintTop_toBottomOf="@id/iv_tour_contents">
+                app:layout_constraintTop_toBottomOf="@id/vp_tour_contents">
 
                 <TextView
                     android:id="@+id/tv_tour_title"
@@ -326,7 +337,6 @@
                 android:id="@+id/rv_tour_contents_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
                 app:layout_constraintTop_toBottomOf="@id/cl_meeting_people_presentation"/>
@@ -371,8 +381,8 @@
                 android:textSize="14sp"
                 android:maxLines="10"
                 android:text="더\n미\n데\n이\n터\n더\n더미\n더미데이\n더미데이터\n더\n여기부터 늘어남"/>
-            
-            
+
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_course_info_more"
                 android:layout_width="0dp"
@@ -612,7 +622,7 @@
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
                 app:layout_constraintTop_toBottomOf="@id/ll_coming_date_button"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-                
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

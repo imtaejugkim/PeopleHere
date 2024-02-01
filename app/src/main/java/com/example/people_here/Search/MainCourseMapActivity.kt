@@ -1,5 +1,7 @@
 package com.example.people_here.Search
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,12 +9,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MainCourseMapData
 import com.example.people_here.R
+import com.example.people_here.CourseContents.CourseContentsActivity
 import com.example.people_here.databinding.ActivityMainTourCourseBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -40,7 +44,9 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val markers = mutableListOf<Marker>()
     private var isRecyclerViewMoved = false
 
-
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +68,26 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         setContentView(binding.root)
     }
+
+    private fun requestLocationPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // 권한 요청 이유 설명하는 코드?
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 권한 승인 시 해당 위치로 이동 하는 코드?
+            } else {
+                // 권한 거부 시 메인으로 아마 다시 돌아가야 할듯?
+            }
+        }
+    }
+
 
     private fun mapListener(){
         googleMap?.setOnMapClickListener {
@@ -241,6 +267,19 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.rvMainTourCourse.adapter = mainTourCourseAdapter
         binding.rvMainTourCourse.layoutManager = LinearLayoutManager(this@MainCourseMapActivity,
             LinearLayoutManager.HORIZONTAL, false)
+
+        mainTourCourseAdapter?.setOnItemClickListener(object : MainTourCourseAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                val intent = Intent(this@MainCourseMapActivity, CourseContentsActivity::class.java)
+
+                val itemData = mainCourseMapData[position]
+                intent.putExtra("key", itemData)
+                Log.d("클릭됨","클릭됨")
+
+                startActivity(intent)
+            }
+        })
+
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvMainTourCourse)
     }
@@ -271,5 +310,10 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mapListener()
         markerListener()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        requestLocationPermission()
     }
 }

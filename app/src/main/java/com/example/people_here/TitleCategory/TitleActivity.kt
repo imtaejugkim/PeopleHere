@@ -50,7 +50,7 @@ class TitleActivity : AppCompatActivity() {
                 } else {//클릭 불가능 하게도 설정하기
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)//설정 회색으로
                 }
-                binding.tvCountNum.setText("${binding.etIntroduce.length()} /500")
+                binding.tvCountNum.setText("${binding.etIntroduce.length()} /30")
             }
         })
     }

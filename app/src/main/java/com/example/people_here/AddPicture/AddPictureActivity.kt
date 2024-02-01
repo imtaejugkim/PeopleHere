@@ -10,17 +10,27 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.example.people_here.AddPicture.PictureDB.PictureDB
+import com.example.people_here.AddPicture.PictureDB.PictureEntity
+import com.example.people_here.AddPicture.PictureDB.PictureRepo
 import com.example.people_here.Data.AddPictureData
 import com.example.people_here.R
 import com.example.people_here.TitleCategory.TitleActivity
 import com.example.people_here.databinding.ActivityAddPictureBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AddPictureActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddPictureBinding
     private var addPictureAdapter: AddPictureAdapter? = null
+    var pictureDB: PictureDB? = null//없으면 null 로
+    var uriString: String? = null
     val picturelist = arrayListOf<AddPictureData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +38,16 @@ class AddPictureActivity : AppCompatActivity() {
 
         binding = ActivityAddPictureBinding.inflate(layoutInflater)
         CreateTextView()//text는 딱 oncreate 처음 한 번에만 보이면 된다
+        setupItemTouchHelper()
 
         val resourceUri_1 = Uri.parse("android.resource://$packageName/${R.drawable.photoaddition}")
-        val resourceUri_2 = Uri.parse("android.resource://$packageName/${R.drawable.photoaddition2}")
-        val resourceUri_full = Uri.parse("android.resource://$packageName/${R.drawable.photoaddition3}")
+        val resourceUri_2 =
+            Uri.parse("android.resource://$packageName/${R.drawable.photoaddition2}")
+        val resourceUri_full =
+            Uri.parse("android.resource://$packageName/${R.drawable.photoaddition3}")
 
-        //TODO:돌 떄 마다, ROom
 
+        pictureDB = PictureDB.getInstance(this) //인스턴스 생성
 
         //Data 받아와서 추가하는 부분
         val receivedIntent = intent
@@ -42,30 +55,39 @@ class AddPictureActivity : AppCompatActivity() {
             // ArrayList 크기만큼 반복
             var i = 0
             while (receivedIntent.hasExtra("uri_$i")) {
-                val uriString = receivedIntent.getStringExtra("uri_$i").toString()
-                Log.d("test1",uriString)
-                val uri = Uri.parse(uriString)
-                picturelist.add(AddPictureData(uriString.toString(),1))
+                uriString = receivedIntent.getStringExtra("uri_$i").toString()
+                Log.d("test1", uriString!!)
+                picturelist.add(AddPictureData(uriString!!, 1))
                 i++
             }
         }
-        //첫 번째만 주황사진, 나머지는 회색 사진으로 바꿈
-        if(picturelist.isEmpty()){
-            picturelist.add(AddPictureData(resourceUri_1.toString(),0))
-        }else{
-            picturelist.add(AddPictureData(resourceUri_2.toString(),0))
+
+        //얘는 리스트 에 있는걸 DB에 넣음
+
+
+        //TODO: 이 부분을 그럼 어떻게 해야하지??? 문제는 DB가 비동기로 처리돼서 이걸 알 수가 없는데 흠
+        
+        if (picturelist.isEmpty()) {
+            picturelist.add(AddPictureData(resourceUri_1.toString(), 0))
+            Log.d("which", "1")
+        } else {
+            Log.d("which", picturelist.toString())
+
+            picturelist.add(AddPictureData(resourceUri_2.toString(), 0))
             binding.btnNext.setBackgroundResource(R.drawable.add_list_next_button)
         }
 
-        addPictureAdapter = AddPictureAdapter(picturelist)
+
+        Log.d("ghkrdls3", picturelist.size.toString())
+
+
+        addPictureAdapter = AddPictureAdapter(picturelist, this)
         binding.rvPictures.adapter = addPictureAdapter
         binding.rvPictures.layoutManager =
             GridLayoutManager(this, 2)
         addPictureAdapter!!.setOnItemClickListener(object :
             AddPictureAdapter.OnItemClickListener {
             override fun onItemClick(picturelist: AddPictureData) {
-                //눌리면 이제 AddpicActivity에 사진 추가가 되게
-                //TODO: Intent로 넘겼는데 이거 저장때문에 roomDB에 넣어야함
             }
         })
         binding.btnNext.setOnClickListener {
@@ -73,7 +95,6 @@ class AddPictureActivity : AppCompatActivity() {
             startActivity(intent)
             //finish()
         }
-           //TODO:1개 이상 추가 되면 화면 바뀌는..
         addPictureAdapter!!.notifyItemInserted(picturelist.size)
 
         binding.btnAddPicture.setOnClickListener {
@@ -81,16 +102,51 @@ class AddPictureActivity : AppCompatActivity() {
             bottomsheet.show(supportFragmentManager, bottomsheet.tag)
         }
 
+        //얘는 RV notify해줘야 리사이클러뷰가 적용해서 할 듯 !!
+        lifecycleScope.launch {
+            // 백그라운드에서 실행되어야 하는 코드
+            var pictures = withContext(Dispatchers.IO) {
+                pictureDB!!.getPictureDao().getPicture()
+            }
+            // UI 업데이트는 Main 문맥에서 실행
+            //백그라운드에서 가져와서 띄우는데 왜 두 번째에 나갔다 오면 이게 시행이 안되냐?
+            withContext(Dispatchers.IO) {
+                picturelist.addAll(pictures.map { pictureEntity ->
+                    AddPictureData(
+                        imageUrl = pictureEntity.pictureUri,
+                        itemType = pictureEntity.itemType
+                    )
+                })
+                //이걸 넣어야 가능하다
+                addPictureAdapter!!.notifyDataSetChanged()
+                Log.d("qwer",picturelist.size.toString())
+                //개수가 저절로 줄어드는데 어쨰서죠??
+                Log.d("dbqwer",pictures.size.toString())
 
+            }
+        }
+        //DB에다가 추가 하는것 이건 그냥 써도 ㄱㅊ할듯
+        uriString?.let {
+            lifecycleScope.launch {
+                // 백그라운드에서 실행되어야 하는 코드
+                // UI 업데이트는 Main 문맥에서 실행
+                withContext(Dispatchers.IO) {
+                    pictureDB!!.getPictureDao().addPicture(PictureEntity(it, "건대 츠케멘", "Jungan", 1))
+                }
+            }
+        }
 
         setContentView(binding.root)
     }
 
 
-
-
     override fun onStart() {//아마 fragment에서 dissmiss하면 여기로 와질듯?
         super.onStart()
+
+
+        //실습보고 다시
+
+
     }
 
     override fun onResume() {
@@ -148,5 +204,48 @@ class AddPictureActivity : AppCompatActivity() {
 
 //        binding.layoutAddPic.addView(img1, layoutParams)
 
+    }
+
+    private fun setupItemTouchHelper() {
+        val itemTouchHelperCallback = object : ItemTouchHelper.Callback() {
+            //항상 드래그 가능
+            override fun isLongPressDragEnabled(): Boolean {
+                return true
+            }
+
+            //상하좌우
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
+                val dragFlags =
+                    ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                return makeMovementFlags(dragFlags, 0)
+            }
+
+            //포지션 바뀌게
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+
+                if (toPosition == picturelist.size - 1) {
+                    return false
+                }
+                addPictureAdapter?.onItemMove(fromPosition, toPosition)
+                return true
+
+            }
+
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // 추후 swipe 기능 추가 되면 추가
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.rvPictures)
     }
 }

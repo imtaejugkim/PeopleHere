@@ -89,6 +89,7 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+
     private fun resetMarker() {
         for (marker in markers) {
             marker.setIcon(vectorToBitmap(R.drawable.ic_main_marker_unclicked))
@@ -104,6 +105,7 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
             markerDataMap[marker] = markerDataList
         }
     }
+
     private fun generateDataForMarker(index: Int): List<MainCourseMapData> {
         val arrayList1 = ArrayList<String>()
         arrayList1.add("성동구")
@@ -121,7 +123,6 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
             MainCourseMapData("서강대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,2, R.drawable.img_example_user, "Harry", R.drawable.img_example_user, "홍대"),
             MainCourseMapData("경희대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,3, R.drawable.img_example_user, "Iron", R.drawable.img_example, "홍대"),
             MainCourseMapData("시립대에서 만나는 디자인과 예술인데 얘는 데이터가 좀 길어요",arrayList1,4, R.drawable.img_example_user, "Jessica", R.drawable.img_example_user, "홍대")
-
         )
     }
 

@@ -100,6 +100,7 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
             }
         }
     }
+
     override fun getItemViewType(position: Int): Int { // 재활용시 눌리는거 막아줌
         return position
     }

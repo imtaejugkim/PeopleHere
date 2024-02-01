@@ -1,27 +1,33 @@
 package com.example.people_here.AddPicture
 
+import android.app.Application
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.people_here.AddPicture.PictureDB.PictureDB
+import com.example.people_here.AddPicture.PictureDB.PictureEntity
 import com.example.people_here.Data.AddPictureData
-import com.example.people_here.Data.MakingTourAddListData
-import com.example.people_here.MakingTour.MakingTourAddListAdapter
-import com.example.people_here.R
 import com.example.people_here.databinding.ItemAddPictureBinding
 import com.example.people_here.databinding.ItemAddPictureFirstBinding
-import com.example.people_here.databinding.ItemMakingTourAddListPlace1Binding
-import com.example.people_here.databinding.ItemMakingTourAddListPlace2Binding
-import com.example.people_here.databinding.ItemMakingTourAddListPlace3Binding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Collections
 
 
-class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>) :
+class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
+    var pictureDB = PictureDB.getInstance(context) //인스턴스 생성
+
 
     //사진 추가& 더 이상 추가 못 하는 버튼을 type1
     //나머지를 type second
@@ -48,7 +54,6 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>) :
                 .load(Uri.parse(picturelist.imageUrl)) // 이미지 경로를 로드
                 .into(binding.ivAddPicture) // ImageView에 이미지 표시
 
-            Log.d("qwer_addadt",picturelist.imageUrl)
             binding.ivAddPicture.setOnClickListener {
                 //눌리면 사진 추가 기능 하게
                 val bottomsheet = LocationChooseFragment()
@@ -58,15 +63,30 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>) :
             }
         }
     }
-
     inner class SecondViewHolder(private val binding: ItemAddPictureBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(picturelist: AddPictureData,position: Int) {
+        private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+
+        fun bind(picturelist: AddPictureData, position: Int) {
             Glide.with(binding.root)
                 .load(Uri.parse(picturelist.imageUrl)) // URI 문자열을 URI로 변환
                 .into(binding.ivPicture)
-            //x버튼 눌르면 이미지 사라지게
+            //x버튼 눌르면 이미지 사라지게 //인스턴스 생성
+
+            if(position==0){
+                binding.cvString.visibility= View.VISIBLE
+            }
             binding.ivBtn.setOnClickListener{
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        // 비동기로 데이터베이스에서 삭제
+                        pictureDB!!.getPictureDao().deletePicture(picturelist.imageUrl)
+
+                        Log.d("list_check","1234")
+                    }
+                    // UI 업데이트는 Main 문맥에서 실행
+                }
+                //TODO:비동기 처리
                 removeItem(position)
             }
         }
@@ -111,6 +131,7 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>) :
 
     override fun getItemCount(): Int {
         return picturelist.size
+
     }
 
     fun removeItem(position: Int) {
@@ -118,5 +139,21 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>) :
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, picturelist.size)
     }
+
+
+    //드래그 앤 드롭 파트
+    fun onItemMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(picturelist, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(picturelist, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
 
 }

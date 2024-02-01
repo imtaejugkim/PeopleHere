@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.MainCourseMapData
 import com.example.people_here.R
-import com.example.people_here.TourContents.TourContentsActivity
+import com.example.people_here.CourseContents.CourseContentsActivity
 import com.example.people_here.databinding.ActivityMainTourCourseBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -269,7 +269,7 @@ class MainCourseMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mainTourCourseAdapter?.setOnItemClickListener(object : MainTourCourseAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
-                val intent = Intent(this@MainCourseMapActivity, TourContentsActivity::class.java)
+                val intent = Intent(this@MainCourseMapActivity, CourseContentsActivity::class.java)
 
                 val itemData = mainCourseMapData[position]
                 intent.putExtra("key", itemData)

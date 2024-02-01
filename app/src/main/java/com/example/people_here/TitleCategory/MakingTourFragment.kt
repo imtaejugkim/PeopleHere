@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.people_here.MakingTour.HelpDiaLog
 import com.example.people_here.R
-import com.example.people_here.TourContents.TourContentsActivity
+import com.example.people_here.CourseContents.CourseContentsActivity
 import com.example.people_here.databinding.FragmentMakingTourBinding
 
 class MakingTourFragment : Fragment() {
@@ -24,7 +24,7 @@ class MakingTourFragment : Fragment() {
 
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
         binding.cvFoodTour.setOnClickListener{
-            val intent = Intent(requireActivity(), TourContentsActivity::class.java)
+            val intent = Intent(requireActivity(), CourseContentsActivity::class.java)
             startActivity(intent)
         }
         return binding.root

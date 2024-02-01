@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.people_here.Data.MainData
 import com.example.people_here.Data.MainCourseData
 import com.example.people_here.R
-import com.example.people_here.TourContents.TourContentsActivity
+import com.example.people_here.CourseContents.CourseContentsActivity
 import com.example.people_here.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -89,7 +89,7 @@ class MainFragment : Fragment() {
 
         mainAdapter!!.setOnItemClickListener(object : MainAdapter.OnItemClickListener{
             override fun onItemClick(tourListInfo : MainData) {
-                val intent = Intent(requireActivity(), TourContentsActivity::class.java)
+                val intent = Intent(requireActivity(), CourseContentsActivity::class.java)
 //                intent.putExtra("Key", tourListInfo)
                 startActivity(intent)
             }

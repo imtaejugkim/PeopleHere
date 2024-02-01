@@ -1,4 +1,4 @@
-package com.example.people_here.TourContents
+package com.example.people_here.CourseContents
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.people_here.databinding.ItemTourContentsImageBinding
 
-class TourContentsImageAdapter(val context : Context, val imgList : MutableList<String>) : RecyclerView.Adapter<TourContentsImageAdapter.ViewHolder>() {
+class CourseContentsImageAdapter(val context : Context, val imgList : MutableList<String>) : RecyclerView.Adapter<CourseContentsImageAdapter.ViewHolder>() {
     inner class ViewHolder(val binding : ItemTourContentsImageBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(imgUrl : String){
             Glide.with(context)

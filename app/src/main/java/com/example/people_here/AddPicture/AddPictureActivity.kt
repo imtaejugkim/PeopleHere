@@ -117,25 +117,48 @@ class AddPictureActivity : AppCompatActivity() {
                         itemType = pictureEntity.itemType
                     )
                 })
+                for (pictureEntity in pictures) {
+                    Log.d("DB_CONTENT_qwer1", "Picture URI: ${pictureEntity.pictureUri}, ItemType: ${pictureEntity.itemType}")
+                }
                 //이걸 넣어야 가능하다
                 addPictureAdapter!!.notifyDataSetChanged()
-                Log.d("qwer",picturelist.size.toString())
-                //개수가 저절로 줄어드는데 어쨰서죠??
-                Log.d("dbqwer",pictures.size.toString())
+                //TODO:잘 되다가 개수가 저절로 줄어드는데 어쨰서죠??
 
             }
         }
         //DB에다가 추가 하는것 이건 그냥 써도 ㄱㅊ할듯
+        //TODO:너 왜 안되냐?
         uriString?.let {
             lifecycleScope.launch {
+                var pictures = withContext(Dispatchers.IO) {
+                    pictureDB!!.getPictureDao().getPicture()
+                }
                 // 백그라운드에서 실행되어야 하는 코드
                 // UI 업데이트는 Main 문맥에서 실행
                 withContext(Dispatchers.IO) {
-                    pictureDB!!.getPictureDao().addPicture(PictureEntity(it, "건대 츠케멘", "Jungan", 1))
-                }
-            }
-        }
 
+                    pictureDB!!.getPictureDao().addPicture(PictureEntity(it, "건대 츠케멘", "Jungan", 1))
+                    for (i in 1 until picturelist.size) {//picturelist에 그냥 저 사진추가를 넣지 말거나...흠..
+                        val pictureData = picturelist[i]//왜 첫 번째 꺼랑 3번째 꺼가 오버랩? 그리고 같은거 있으면 추가 안된다며 엠병
+                        pictureDB!!.getPictureDao().addPicture(//
+                            PictureEntity(//왜 마지막->다음-마지막 이래댐?
+                                pictureData.imageUrl,
+                                "건대 츠케멘",
+                                "Jungan",
+                                pictureData.itemType
+                            )
+                        )
+                        Log.d("plz_for",picturelist.toString())
+                    }
+                }
+                for (pictureEntity in pictures) {
+                    Log.d("DB_CONTENT_qwer2", "Picture URI: ${pictureEntity.pictureUri},ItemType: ${pictureEntity.itemType}")
+                }
+
+            }
+
+
+        }
         setContentView(binding.root)
     }
 

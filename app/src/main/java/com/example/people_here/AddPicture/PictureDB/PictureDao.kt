@@ -11,7 +11,6 @@ import androidx.room.Update
 @Dao
 interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-
     fun addPicture(picture:PictureEntity)
     @Update
     fun UpdatePicture(picture:PictureEntity)

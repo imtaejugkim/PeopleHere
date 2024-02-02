@@ -1,6 +1,7 @@
 package com.example.people_here.AddPicture
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,21 +31,20 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
         fun bind(locationlist: LocationChooseData,position: Int) {
             val gray3 = ContextCompat.getColor(binding.root.context, R.color.Gray3)
             val orange3 = ContextCompat.getColor(binding.root.context, R.color.Orange3)
-            /*if(selectedItemPosition!=position){
-                binding.btnRadio.setImageResource(R.drawable.radio_check_no)//ok로 바꿈
-                binding.cvOuter.setStrokeColor(gray3)
-                notifyDataSetChanged()
-            }*/
+
             binding.ivRegionImage.setImageResource(R.drawable.img)//여기 서버에서 받아오는 이미지로 대체
             binding.tvRegion.text = locationlist.locationName//이름
             binding.cvOuter.setOnClickListener {
                 itemClickListener.onItemClick(locationlist)//하나의 객체 눌리게
                 //하나만 눌리게 하려면 다른것 false로 하고  notifychanged 하면 될 듯??
 
-/*
-                if(selectedItemPosition==position){//이미 선택 되어 있으면
+                Log.d("selposition_qwe",selectedItemPosition.toString())
+
+                Log.d("position_qwe",position.toString())
+              /*  if(selectedItemPosition==position){//이미 선택 되어 있으면
                     binding.btnRadio.setImageResource(R.drawable.radio_check_no)//ok로 바꿈
                     binding.cvOuter.setStrokeColor(gray3)
+                    notifyDataSetChanged()
                 }else{
                     //TODO:Location 연동되면, 최대 갯수 및 체크표시 이미지 뀌게
                     binding.btnRadio.setImageResource(R.drawable.radio_check_ok)//ok로 바꿈
@@ -53,7 +53,7 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
                     selectedItemPosition=position
                 }
 */
-
+                //이거 절대 아니니 다시 제발
                 binding.btnRadio.setImageResource(R.drawable.radio_check_ok)//ok로 바꿈
                 binding.cvOuter.setStrokeColor(orange3)
             }

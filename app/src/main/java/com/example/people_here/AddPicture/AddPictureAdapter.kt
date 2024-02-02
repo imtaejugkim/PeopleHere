@@ -82,7 +82,7 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
                         // 비동기로 데이터베이스에서 삭제
                         pictureDB!!.getPictureDao().deletePicture(picturelist.imageUrl)
 
-                        Log.d("list_check","1234")
+                        Log.d("qwer_deleteCheck","1234")
                     }
                     // UI 업데이트는 Main 문맥에서 실행
                 }

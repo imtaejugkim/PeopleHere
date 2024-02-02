@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.people_here.MakingTour.MakingTourAddListActivity
-import com.example.people_here.Search.MainSearchActivity
 import com.example.people_here.databinding.FragmentMakingCourseBinding
 
 class MakingCourseFragment : Fragment() {

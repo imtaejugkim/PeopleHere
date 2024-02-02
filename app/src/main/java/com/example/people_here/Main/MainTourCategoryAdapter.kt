@@ -1,4 +1,4 @@
-package com.example.people_here.Search
+package com.example.people_here.Main
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

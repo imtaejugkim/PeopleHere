@@ -26,7 +26,7 @@
             android:name=".CourseContents.CourseContentsActivity"
             android:exported="false"/>
         <activity
-            android:name=".Search.MainCourseMapActivity"
+            android:name=".Main.MainCourseMapActivity"
             android:exported="false"/>
         <activity
             android:name=".TitleCategory.CategoryActivity"
@@ -58,7 +58,7 @@
         <activity
             android:name=".CostInput.CostInputActivity"
             android:exported="false" />
-        <activity android:name=".Search.MainSearchActivity" />
+        <activity android:name=".Main.MainSearchActivity" />
         <activity android:name=".MakingTour.MakingTourAddListActivity" />
         <activity android:name=".MakingTour.MakingTourTimeActivity" />
         <activity

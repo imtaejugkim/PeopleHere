@@ -36,6 +36,8 @@
     <string name="making_tour_shopping">쇼핑</string>
     <string name="making_tour_no_choice">해당하는 유형이 없어요</string>
     <string name="making_tour_next">다음</string>
+    <string name="making_tour_on_boarding">지금 내가 살고 있는 ‘이곳’을\n여행하려는 사람들에게\n소개해주고 싶은 장소가 있나요?</string>
+    <string name="making_tour_on_boarding_start">시작하기</string>
 
     <!--activity_title  이름 정리 -->
     <string name="activity_title_type_title">제목을 작성하세요</string>

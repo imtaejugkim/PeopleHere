@@ -39,7 +39,7 @@ class AuthService {
             }
 
             override fun onFailure(call: Call<BaseResponse<MainResponse>>, t: Throwable) {
-                Log.d("User Failed", "User Failed")
+                Log.d("Main Failed", "Main Failed")
             }
 
         })

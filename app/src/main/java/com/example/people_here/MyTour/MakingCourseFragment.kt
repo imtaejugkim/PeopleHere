@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.people_here.MakingTour.MakingTourAddListActivity
+import com.example.people_here.MakingTour.OnBoardingActivity
 import com.example.people_here.databinding.FragmentMakingCourseBinding
 
 class MakingCourseFragment : Fragment() {
@@ -22,7 +23,7 @@ class MakingCourseFragment : Fragment() {
 
         //장소 검색 페이지로 넘어가기 구현
         binding.btnAddPlace.setOnClickListener {
-            val intent = Intent(requireContext(), MakingTourAddListActivity::class.java)
+            val intent = Intent(requireContext(), OnBoardingActivity::class.java)
             startActivity(intent)
         }
 

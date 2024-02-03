@@ -1,6 +1,8 @@
 package com.example.people_here.Remote
 
-class MainView {
+import com.example.people_here.Data.MainData
+
+interface MainView {
     fun MainLoading()
-    fun MainSuccess()
+    fun MainSuccess(mainDataList : List<MainData>)
 }

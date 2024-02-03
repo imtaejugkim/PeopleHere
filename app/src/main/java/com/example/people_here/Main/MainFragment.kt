@@ -6,15 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.people_here.Data.MainData
 import com.example.people_here.Data.MainCourseData
 import com.example.people_here.R
 import com.example.people_here.CourseContents.CourseContentsActivity
+import com.example.people_here.Local.getJwt
+import com.example.people_here.Remote.AuthService
+import com.example.people_here.Remote.MainView
 import com.example.people_here.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment() , MainView {
     private lateinit var binding: FragmentMainBinding
     private var mainData : ArrayList<MainData> = arrayListOf()
     private var mainAdapter : MainAdapter?= null
@@ -28,7 +32,7 @@ class MainFragment : Fragment() {
         //백앤드 통신 시 변경될 데이터 추가 방식입니다.
         initRecyclerView()
         initDummyData()
-
+        initDataManager()
 
         binding.clTopSearchBar.setOnClickListener {
             initSearchView()
@@ -41,6 +45,18 @@ class MainFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun initDataManager() {
+        val token = getJwt()
+        Log.d("token",token)
+        if(token.isNotEmpty()){
+            val authService = AuthService()
+            authService.setMainView(this)
+            authService.mainInfo()
+        }else{
+            Log.d("token 오류","token 오류")
+        }
     }
 
 
@@ -118,5 +134,13 @@ class MainFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         binding.root.visibility = View.VISIBLE
+    }
+
+    override fun MainLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun MainSuccess() {
+        TODO("Not yet implemented")
     }
 }

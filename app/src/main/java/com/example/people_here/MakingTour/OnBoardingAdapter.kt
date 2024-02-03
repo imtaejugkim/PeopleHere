@@ -1,18 +1,25 @@
 package com.example.people_here.MakingTour
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.people_here.Data.OnBoardingData
 import com.example.people_here.databinding.ItemOnBoardingBinding
 
-class OnBoardingAdapter(val onBoardingData : List<OnBoardingData>) : RecyclerView.Adapter<OnBoardingAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding : ItemOnBoardingBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(onBoardingInfo : OnBoardingData){
+class OnBoardingAdapter(private val onBoardingData: List<OnBoardingData>) : RecyclerView.Adapter<OnBoardingAdapter.ViewHolder>() {
+    inner class ViewHolder(val binding: ItemOnBoardingBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(onBoardingInfo: OnBoardingData) {
             binding.ivOnBoardingPicture.setImageResource(onBoardingInfo.onBoardingPicture)
-            binding.tvOnBoardingNumber.text = onBoardingInfo.onBoardingNumber.toString()
             binding.tvOnBoardingInfo.text = onBoardingInfo.onBoardingInfo
 
+
+            if (onBoardingInfo.onBoardingNumber == 0) {
+                binding.cvOnBoardingNumber.visibility = View.GONE
+            } else {
+                binding.tvOnBoardingNumber.text = onBoardingInfo.onBoardingNumber.toString()
+                binding.cvOnBoardingNumber.visibility = View.VISIBLE
+            }
         }
     }
 

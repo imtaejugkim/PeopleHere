@@ -4,5 +4,5 @@ import com.example.people_here.Data.MainData
 
 interface MainView {
     fun MainLoading()
-    fun MainSuccess(mainDataList : List<MainData>)
+    fun MainSuccess(content : ArrayList<MainData>)
 }

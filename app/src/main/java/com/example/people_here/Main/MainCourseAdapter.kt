@@ -20,16 +20,16 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) :
 
     inner class FirstItemViewHolder(val binding: ItemMainTourListCourse1Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourListInfo: MainCourseData) {
-            binding.ivMainTourListUser.setImageResource(tourListInfo.userImage)
-            binding.tvMainTourListUser.text = tourListInfo.userName
+            binding.ivMainTourListUser.setImageResource(tourListInfo.id)
+            binding.tvMainTourListUser.text = tourListInfo.content
         }
     }
 
     inner class OtherItemViewHolder(val binding: ItemMainTourListCourse2Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourListInfo: MainCourseData) {
 
-            binding.ivMainTourListUserCourse.setImageResource(tourListInfo.courseImage)
-            binding.tvItemMainTourListRegion.text = tourListInfo.courseRegion
+            binding.ivMainTourListUserCourse.setImageResource(tourListInfo.id)
+            binding.tvItemMainTourListRegion.text = tourListInfo.address
         }
     }
 

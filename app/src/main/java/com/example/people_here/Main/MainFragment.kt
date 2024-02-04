@@ -31,7 +31,7 @@ class MainFragment : Fragment() , MainView {
 
         //백앤드 통신 시 변경될 데이터 추가 방식입니다.
         initRecyclerView()
-        initDummyData()
+//        initDummyData()
         initDataManager()
 
         binding.clTopSearchBar.setOnClickListener {
@@ -65,37 +65,37 @@ class MainFragment : Fragment() , MainView {
         val array2 = arrayListOf<String>("영통구")
         val array3 = arrayListOf<String>("영통구","팔달구")
 
-        mainData.addAll(
-            arrayListOf(
-                MainData("홍대 소품삽 둘러보기","1시간",false,array1, createDummyInnerData(0)),
-                MainData("건대 소품삽 둘러보기","2시간",false,array2, createDummyInnerData(1)),
-                MainData("이대 소품삽 둘러보기","3시간",false,array3, createDummyInnerData(2)),
-                MainData("중대 소품삽 둘러보기","4시간",false,array1, createDummyInnerData(3)),
-                MainData("고대 소품삽 둘러보기","5시간",false,array2, createDummyInnerData(4)),
-                MainData("연대 소품삽 둘러보기","6시간",false,array3, createDummyInnerData(5)),
-                MainData("성대 소품삽 둘러보기","7시간",false,array1, createDummyInnerData(6)),
-                MainData("서강대 소품삽 둘러보기","8시간",false,array2, createDummyInnerData(7)),
-                MainData("경희대 소품삽 둘러보기","9시간",false,array3, createDummyInnerData(8)),
-                MainData("시립대 소품삽 둘러보기","10시간",false,array1, createDummyInnerData(9))
-            )
-        )
+//        mainData.addAll(
+//            arrayListOf(
+//                MainData("홍대 소품삽 둘러보기","1시간",false,array1, createDummyInnerData(0)),
+//                MainData("건대 소품삽 둘러보기","2시간",false,array2, createDummyInnerData(1)),
+//                MainData("이대 소품삽 둘러보기","3시간",false,array3, createDummyInnerData(2)),
+//                MainData("중대 소품삽 둘러보기","4시간",false,array1, createDummyInnerData(3)),
+//                MainData("고대 소품삽 둘러보기","5시간",false,array2, createDummyInnerData(4)),
+//                MainData("연대 소품삽 둘러보기","6시간",false,array3, createDummyInnerData(5)),
+//                MainData("성대 소품삽 둘러보기","7시간",false,array1, createDummyInnerData(6)),
+//                MainData("서강대 소품삽 둘러보기","8시간",false,array2, createDummyInnerData(7)),
+//                MainData("경희대 소품삽 둘러보기","9시간",false,array3, createDummyInnerData(8)),
+//                MainData("시립대 소품삽 둘러보기","10시간",false,array1, createDummyInnerData(9))
+//            )
+//        )
 
     }
 
-    private fun createDummyInnerData(index: Int): ArrayList<MainCourseData> {
-        val dataList = ArrayList<MainCourseData>()
-        for (i in 1..10) {
-            val userName = "홍길동${index * 10 + i}"
-            dataList.add(
-                MainCourseData(
-                    R.drawable.img_example_user,
-                    userName,
-                    R.drawable.img_example,
-                    "홍대역")
-            )
-        }
-        return dataList
-    }
+//    private fun createDummyInnerData(index: Int): ArrayList<MainCourseData> {
+//        val dataList = ArrayList<MainCourseData>()
+//        for (i in 1..10) {
+//            val userName = "홍길동${index * 10 + i}"
+//            dataList.add(
+//                MainCourseData(
+//                    R.drawable.img_example_user,
+//                    userName,
+//                    R.drawable.img_example,
+//                    "홍대역")
+//            )
+//        }
+//        return dataList
+//    }
 
     private fun initRecyclerView() {
         mainAdapter = MainAdapter(mainData)
@@ -114,7 +114,7 @@ class MainFragment : Fragment() , MainView {
         mainAdapter!!.setOnHeartClickListener(object : MainAdapter.OnHeartClickListener{
             override fun onHeartClick(position: Int) {
                 val item = mainAdapter!!.mainData[position]
-                item.mainTourHeart = !item.mainTourHeart
+//                item.mainTourHeart = !item.mainTourHeart
                 mainAdapter!!.notifyItemChanged(position)
                 Log.d("하트 item 변경됨",position.toString())
             }
@@ -140,7 +140,11 @@ class MainFragment : Fragment() , MainView {
         TODO("Not yet implemented")
     }
 
-    override fun MainSuccess() {
-        TODO("Not yet implemented")
+    override fun MainSuccess(content : ArrayList<MainData>) {
+        mainData.clear() // 기존 데이터를 클리어
+        mainData.addAll(content) // 새로운 데이터 추가
+
+        // 어댑터에 데이터 변경 알림
+        mainAdapter?.notifyDataSetChanged()
     }
 }

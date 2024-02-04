@@ -36,9 +36,33 @@
     <string name="making_tour_shopping">쇼핑</string>
     <string name="making_tour_no_choice">해당하는 유형이 없어요</string>
     <string name="making_tour_next">다음</string>
+
+    <!--making_tour 온보딩 이름 정리 -->
     <string name="making_tour_on_boarding">지금 내가 살고 있는 ‘이곳’을\n여행하려는 사람들에게\n소개해주고 싶은 장소가 있나요?</string>
     <string name="making_tour_on_boarding_start">시작하기</string>
+
+    <!--making_tour 완성 이름 정리 -->
     <string name="making_tour_finish">짠 나만의 코스 완성!\n이젠 이런 것도 할 수 있어요</string>
+    <string name="making_tour_finish_map">완성된 코스 미리보기</string>
+    <string name="making_tour_finish_register">참여 가능한 날짜 등록</string>
+    <string name="making_tour_finish_profile_1">프로필에서\u0020</string>
+    <string name="making_tour_finish_profile_2">나의 코스</string>
+    <string name="making_tour_finish_profile_3">를 관리해요</string>
+    <string name="making_tour_finish_register_1">일정에서\u0020</string>
+    <string name="making_tour_finish_register_2">참여가능한 날짜</string>
+    <string name="making_tour_finish_register_3">를 등록해요</string>
+    <string name="making_tour_finish_request_1">여행자가 가능한 날짜에\u0020</string>
+    <string name="making_tour_finish_request_2">참여요청</string>
+    <string name="making_tour_finish_request_3">을 보내요</string>
+    <string name="making_tour_finish_confirm_1">요청을 받으면\u0020</string>
+    <string name="making_tour_finish_confirm_2">24시간\u0020</string>
+    <string name="making_tour_finish_confirm_3">내에 참여를 확정해요</string>
+    <string name="making_tour_finish_message_1">확정된 여행자와\u0020</string>
+    <string name="making_tour_finish_message_2">메세지로 대화</string>
+    <string name="making_tour_finish_message_3">해요</string>
+
+
+
 
     <!--activity_title  이름 정리 -->
     <string name="activity_title_type_title">제목을 작성하세요</string>

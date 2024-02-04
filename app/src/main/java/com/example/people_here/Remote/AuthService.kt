@@ -21,7 +21,7 @@ class AuthService {
     }
 
     fun mainInfo(){
-        mainView.MainLoading()
+//        mainView.MainLoading()
         authService.mainInfo().enqueue(object : Callback<BaseResponse<MainResponse>>{
             override fun onResponse(
                 call: Call<BaseResponse<MainResponse>>,
@@ -33,7 +33,7 @@ class AuthService {
                     Log.d("Main Response Body", resp.toString())
                     Log.d("Main Response Body result", resp?.result.toString())
                     when(resp!!.code){
-                        200 -> mainView.MainSuccess()
+                        200 -> mainView.MainSuccess(resp.result.content)
                     }
                 }
             }

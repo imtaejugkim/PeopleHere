@@ -31,12 +31,12 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
                 .load(Uri.parse(picturelist.imageUrl)) // URI 문자열을 URI로 변환
                 .into(binding.ivProfile)
             val color = ColorStateList.valueOf(Color.parseColor("#FF7834"))
+            //만약 여기서 이미 db에 있는 url 가지고 있으면 countItem 증가시키고 눌러지게 구성되게 하기
+
 
             binding.ivProfile.setOnClickListener {
                 itemClickListener.onItemClick(picturelist)//하나의 객체 눌리게
                 //각각 true면 false되게, false면 true되게
-
-
 
                 if(CountItem==5 && !binding.selectRatioBT.isChecked){
                     //다이어로그 보여주기
@@ -46,7 +46,6 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
                     //그 다음꺼 안 눌ㄹ리게
                 }
 
-                //TODO:눌리면 uri 를 string 형태로 picturelist.imageUrl 넣기
 
                 if(!binding.selectRatioBT.isChecked){
                     binding.selectRatioBT.isChecked=true
@@ -63,12 +62,9 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
 
                     Log.d("countItem++",CountItem.toString())
                 }
-
-
             }
         }
     }
-
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         itemClickListener = onItemClickListener
     }

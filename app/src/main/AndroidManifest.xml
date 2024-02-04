@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:name=".ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,19 +21,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.People_Here"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TitleCategory.CategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignIn.SignInActivity"
-
             android:exported="false" />
         <activity
             android:name=".CourseContents.CourseContentsActivity"
             android:exported="false" />
         <activity
             android:name=".Search.MainCourseMapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TitleCategory.CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".TitleCategory.TitleActivity"
@@ -75,7 +74,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

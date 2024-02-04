@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import java.util.Collections
 
 
-class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Context) :
+class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
     var pictureDB = PictureDB.getInstance(context) //인스턴스 생성
@@ -37,21 +37,21 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
     }
 
 
-    override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position: Int): Int {//entity의 순서
         return picturelist[position].itemType
     }
 
 
     interface OnItemClickListener {
-        fun onItemClick(picturelist: AddPictureData)
+        fun onItemClick(picturelist: PictureEntity)
     }
 
     inner class FirstViewHolder(private val binding: ItemAddPictureFirstBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(picturelist: AddPictureData) {
+        fun bind(picturelist: PictureEntity) {
 
             Glide.with(binding.root)
-                .load(Uri.parse(picturelist.imageUrl)) // 이미지 경로를 로드
+                .load(Uri.parse(picturelist.pictureUri)) // 이미지 경로를 로드
                 .into(binding.ivAddPicture) // ImageView에 이미지 표시
 
             binding.ivAddPicture.setOnClickListener {
@@ -63,32 +63,35 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
             }
         }
     }
+
     inner class SecondViewHolder(private val binding: ItemAddPictureBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-
-        fun bind(picturelist: AddPictureData, position: Int) {
+        private var getPosition: Int? = null
+        fun bind(picturelist: PictureEntity, position: Int) {
             Glide.with(binding.root)
-                .load(Uri.parse(picturelist.imageUrl)) // URI 문자열을 URI로 변환
+                .load(Uri.parse(picturelist.pictureUri)) // URI 문자열을 URI로 변환
                 .into(binding.ivPicture)
             //x버튼 눌르면 이미지 사라지게 //인스턴스 생성
 
-            if(position==0){
-                binding.cvString.visibility= View.VISIBLE
-            }
-            binding.ivBtn.setOnClickListener{
+            if (position == 0) {
+                binding.cvString.visibility = View.VISIBLE
+            } else {
+                binding.cvString.visibility = View.INVISIBLE
+            } //벗어나면 다시 없애야함
+            binding.ivBtn.setOnClickListener {
+                removeItem(position)
+
+                val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {
                         // 비동기로 데이터베이스에서 삭제
-                        pictureDB!!.getPictureDao().deletePicture(picturelist.imageUrl)
-
-                        Log.d("qwer_deleteCheck","1234")
-                    }
-                    // UI 업데이트는 Main 문맥에서 실행
+                        pictureDB!!.getPictureDao().deletePicture(picturelist.pictureUri)
+                        Log.d("qwer_deleteCheck", "1234")
+                    }l
                 }
-                //TODO:비동기 처리
-                removeItem(position)
             }
+
+
         }
     }
 
@@ -101,7 +104,7 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
         viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
-           TYPE_FIRST -> {
+            TYPE_FIRST -> {
                 val binding = ItemAddPictureFirstBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -109,6 +112,7 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
                 )
                 FirstViewHolder(binding)
             }
+
             TYPE_SECOND -> {
                 val binding = ItemAddPictureBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -117,6 +121,7 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
                 )
                 SecondViewHolder(binding)
             }
+
             else -> throw IllegalArgumentException("이외의 viewType")
         }
     }
@@ -125,19 +130,20 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
         val item = picturelist[position]
         when (holder) {
             is AddPictureAdapter.FirstViewHolder -> holder.bind(item)
-            is AddPictureAdapter.SecondViewHolder -> holder.bind(item,position)
+            is AddPictureAdapter.SecondViewHolder -> holder.bind(item, position)
         }
     }
+
+    fun setData(products: List<PictureEntity>) {
+        picturelist = products as ArrayList<PictureEntity>
+        notifyDataSetChanged()
+        //아 마찬가지로 이거쓰면 ㄱㅊ할듯한데그냥 list안쓰고 흠흠
+    }
+
 
     override fun getItemCount(): Int {
         return picturelist.size
 
-    }
-
-    fun removeItem(position: Int) {
-        picturelist.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, picturelist.size)
     }
 
 
@@ -152,8 +158,17 @@ class AddPictureAdapter(val picturelist: ArrayList<AddPictureData>,context: Cont
                 Collections.swap(picturelist, i, i - 1)
             }
         }
+
+        //다시 setData하게 해야하나ㅋㅋ
         notifyItemMoved(fromPosition, toPosition)
     }
 
+    fun removeItem(position: Int) {
+        picturelist.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, picturelist.size)
+    }
 
 }
+
+

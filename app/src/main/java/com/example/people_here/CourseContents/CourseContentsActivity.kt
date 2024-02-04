@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.people_here.Data.CourseQuestionData
-import com.example.people_here.Data.MainData
 import com.example.people_here.R
-import com.example.people_here.Search.MainAdapter
 import com.example.people_here.databinding.ActivityCourseContentsBinding
 import java.lang.Integer.min
 

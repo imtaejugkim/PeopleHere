@@ -62,8 +62,6 @@
     <string name="making_tour_finish_message_3">해요</string>
 
 
-
-
     <!--activity_title  이름 정리 -->
     <string name="activity_title_type_title">제목을 작성하세요</string>
     <string name="activity_title_short">짧은 제목이 여행자들을 더 쉽게 사로잡아요.\n 나중에 언제든지 수정할 수 있어요.</string>
@@ -210,8 +208,23 @@
     <string name="item_add_picture_name">\장소 이름</string>
     <string name="item_add_picture_string">\대표사진</string>
 
+    <!--profile 코스 관리 이름 정리 -->
+    <string name="course_manage">코스 관리</string>
+    <string name="course_manage_false">내가 만든 코스가 없어요</string>
+    <string name="course_manage_false_making">나만의 코스 만들러 가기</string>
+    <string name="course_manage_true_active">활성화</string>
+    <string name="course_manage_true_inactive">비활성화</string>
+    <string name="course_manage_true_stop">정지됨</string>
+    <string name="course_manage_true_calendar">일정</string>
 
-
-
-
+    <!--profile 캘린더 이름 정리 -->
+    <string-array name="week_label">
+        <item name="monday">M</item>
+        <item name="tuesday">T</item>
+        <item name="wednesday">W</item>
+        <item name="thursday">T</item>
+        <item name="friday">F</item>
+        <item name="saturday">S</item>
+        <item name="sunday">S</item>
+    </string-array>
 </resources>

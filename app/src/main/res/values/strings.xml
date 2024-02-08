@@ -219,12 +219,15 @@
 
     <!--profile 캘린더 이름 정리 -->
     <string-array name="week_label">
-        <item name="monday">M</item>
-        <item name="tuesday">T</item>
-        <item name="wednesday">W</item>
-        <item name="thursday">T</item>
-        <item name="friday">F</item>
-        <item name="saturday">S</item>
-        <item name="sunday">S</item>
+        <item name="monday">월</item>
+        <item name="tuesday">화</item>
+        <item name="wednesday">수</item>
+        <item name="thursday">목</item>
+        <item name="friday">금</item>
+        <item name="saturday">토</item>
+        <item name="sunday">일</item>
     </string-array>
+    <string name="text_year">년</string>
+    <string name="text_month">월</string>
+    <string name="text_day">일</string>
 </resources>

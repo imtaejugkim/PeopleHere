@@ -10,17 +10,17 @@
     <style name="Theme.People_Here" parent="Base.Theme.People_Here" />
 
     <style name="calendarWeekText" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#FF00FF</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textColor">@color/Gray5</item>
     </style>
 
     <style name="calendarDateText" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#A0A0A0</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textColor">@color/Gray8</item>
     </style>
 
-    <style name="calendarHeaderText" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#00FFFF</item>
-    </style>
+<!--    <style name="calendarHeaderText" parent="TextAppearance.AppCompat.Button">-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:textColor">#00FFFF</item>-->
+<!--    </style>-->
 </resources>

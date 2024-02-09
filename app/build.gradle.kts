@@ -83,4 +83,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    //calendar
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
+
 }

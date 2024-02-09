@@ -1,11 +1,15 @@
 package com.peopleHere.people_here.Main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.peopleHere.people_here.Data.MainCourseData
 import com.peopleHere.people_here.databinding.ItemMainTourListCourse1Binding
 import com.peopleHere.people_here.databinding.ItemMainTourListCourse2Binding
+import com.bumptech.glide.Glide
+import com.peopleHere.people_here.R
 
 class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -20,16 +24,30 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) :
 
     inner class FirstItemViewHolder(val binding: ItemMainTourListCourse1Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourListInfo: MainCourseData) {
-            binding.ivMainTourListUser.setImageResource(tourListInfo.userImage)
-            binding.tvMainTourListUser.text = tourListInfo.userName
+//            binding.ivMainTourListUser.setImageResource(context, binding.ivMainTourListUser, tourListInfo)
+//            binding.tvMainTourListUser.text = tourListInfo.content
+            setImage(binding.root.context, binding.ivMainTourListUser, tourListInfo)
+            binding.tvMainTourListUser.text = tourListInfo.content
         }
     }
 
+    private fun setImage(context: Context, imageView: ImageView, tourListInfo: MainCourseData) {
+        if(tourListInfo.imageUrls[0] == "string") {
+            imageView.setImageResource(R.drawable.img_example_user)
+        } else {
+            Glide.with(context)
+                .load(tourListInfo.imageUrls[0])
+                .into(imageView)
+        }
+    }
+
+
     inner class OtherItemViewHolder(val binding: ItemMainTourListCourse2Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourListInfo: MainCourseData) {
-
-            binding.ivMainTourListUserCourse.setImageResource(tourListInfo.courseImage)
-            binding.tvItemMainTourListRegion.text = tourListInfo.courseRegion
+//            binding.ivMainTourListUserCourse.setImageResource(tourListInfo.id)
+//            binding.tvItemMainTourListRegion.text = tourListInfo.address
+            setImage(binding.root.context, binding.ivMainTourListUserCourse, tourListInfo)
+            binding.tvItemMainTourListRegion.text = tourListInfo.address
         }
     }
 

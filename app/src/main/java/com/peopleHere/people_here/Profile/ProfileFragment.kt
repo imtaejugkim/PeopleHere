@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.Profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,12 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater)
+
+//        임의이동
+        binding.example.setOnClickListener {
+            val intent = Intent(requireActivity(), CalendarActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 }

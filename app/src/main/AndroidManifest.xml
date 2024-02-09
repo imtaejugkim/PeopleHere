@@ -14,6 +14,7 @@
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -23,11 +24,26 @@
         android:theme="@style/Theme.People_Here"
         tools:targetApi="31">
         <activity
-            android:name=".CourseContents.CourseContentsActivity"
+            android:name=".Profile.CalendarActivity"
             android:exported="false"/>
         <activity
-            android:name=".Main.MainCourseMapActivity"
+            android:name=".Profile.CourseDateActivity"
             android:exported="false"/>
+        <activity
+            android:name=".Profile.CourseManageFalseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.CourseManageTrueActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MakingTour.OnBoardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CourseContents.CourseContentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Main.MainCourseMapActivity"
+            android:exported="false" />
         <activity
             android:name=".TitleCategory.CategoryActivity"
             android:exported="false" />

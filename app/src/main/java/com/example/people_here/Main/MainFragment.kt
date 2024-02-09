@@ -6,13 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.people_here.Data.MainData
-import com.example.people_here.Data.MainCourseData
-import com.example.people_here.R
 import com.example.people_here.CourseContents.CourseContentsActivity
+import com.example.people_here.Data.MainData
 import com.example.people_here.Local.getJwt
 import com.example.people_here.Remote.AuthService
 import com.example.people_here.Remote.MainView
@@ -143,8 +140,14 @@ class MainFragment : Fragment() , MainView {
     override fun MainSuccess(content : ArrayList<MainData>) {
         mainData.clear() // 기존 데이터를 클리어
         mainData.addAll(content) // 새로운 데이터 추가
+        Log.d("content",content.toString())
 
         // 어댑터에 데이터 변경 알림
         mainAdapter?.notifyDataSetChanged()
+    }
+
+    override fun MainFailure(code: Int, message: String) {
+        Log.d("통신O에러1",code.toString())
+        Log.d("통신O에러2",message)
     }
 }

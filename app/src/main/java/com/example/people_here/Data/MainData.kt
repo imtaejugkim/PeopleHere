@@ -1,20 +1,19 @@
 package com.example.people_here.Data
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
 
 data class MainData (
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("startDate") val startDate: LocalDateTime,
+    @SerializedName("startDate") val startDate: String,
     @SerializedName("time") val time: Int,
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("content") val content: String,
     @SerializedName("places") val places: ArrayList<MainCourseData>,
     @SerializedName("categoryNames") val categoryNames: List<String>,
     @SerializedName("status") val status: String,
-    @SerializedName("createdAt") val createdAt: LocalDateTime,
-    @SerializedName("updatedAt") val updatedAt: LocalDateTime
+    @SerializedName("createdAt") val createdAt: String,
+    @SerializedName("updatedAt") val updatedAt: String
 //    var mainTourListTitle : String,
 //    var mainTourListTime : String,
 //    var mainTourHeart : Boolean,

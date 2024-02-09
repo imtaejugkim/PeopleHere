@@ -32,14 +32,15 @@ class AuthService {
                     val resp = response.body()
                     Log.d("Main Response Body", resp.toString())
                     Log.d("Main Response Body result", resp?.result.toString())
-                    when(resp!!.code){
+                    when(resp!!.status){
                         200 -> mainView.MainSuccess(resp.result.content)
+                        else -> mainView.MainFailure(resp.status, resp.message)
                     }
                 }
             }
 
             override fun onFailure(call: Call<BaseResponse<MainResponse>>, t: Throwable) {
-                Log.d("Main Failed", "Main Failed")
+                Log.d("Main Failed", t.toString())
             }
 
         })

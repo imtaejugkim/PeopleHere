@@ -1,17 +1,11 @@
 package com.example.people_here.Profile
 
-import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.people_here.Data.CalendarData
-import com.example.people_here.databinding.ActivityCalendarBinding
-import com.example.people_here.databinding.DialogMakingTourAddListSequenceBinding
+import com.peopleHere.people_here.databinding.ActivityCalendarBinding
 import java.util.Calendar
 
 class CalendarActivity : AppCompatActivity() {

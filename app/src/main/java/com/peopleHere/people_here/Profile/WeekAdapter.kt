@@ -1,4 +1,4 @@
-package com.example.people_here.Profile
+package com.peopleHere.people_here.Profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

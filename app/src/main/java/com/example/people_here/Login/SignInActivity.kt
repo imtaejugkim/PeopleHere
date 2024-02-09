@@ -1,11 +1,9 @@
-package com.example.people_here.SignIn
+package com.example.people_here.Login
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.people_here.R
 import com.example.people_here.Remote.AuthService
 import com.example.people_here.Remote.SignInView
 import com.example.people_here.databinding.ActivitySignInBinding

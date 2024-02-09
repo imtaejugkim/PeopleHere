@@ -4,7 +4,6 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-import retrofit2.Call
 import retrofit2.http.GET
 
 // 레트로핏 인터페이스, post, get, patch 등 정의

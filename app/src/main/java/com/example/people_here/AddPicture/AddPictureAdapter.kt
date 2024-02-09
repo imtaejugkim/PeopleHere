@@ -87,11 +87,9 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
                         // 비동기로 데이터베이스에서 삭제
                         pictureDB!!.getPictureDao().deletePicture(picturelist.pictureUri)
                         Log.d("qwer_deleteCheck", "1234")
-                    }l
+                    }
                 }
             }
-
-
         }
     }
 
@@ -158,7 +156,8 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
                 Collections.swap(picturelist, i, i - 1)
             }
         }
-
+        //두 개 맞게 잘 바뀜 근데, 문제는 DB는 그대로라서 어림도 없다는 정도..?
+        //order을 추가하고 이를 통해서 순서를 바꿔야함
         //다시 setData하게 해야하나ㅋㅋ
         notifyItemMoved(fromPosition, toPosition)
     }

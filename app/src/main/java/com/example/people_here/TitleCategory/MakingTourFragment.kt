@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.people_here.MakingTour.HelpDiaLog
 import com.example.people_here.R
 import com.example.people_here.CourseContents.CourseContentsActivity
-import com.example.people_here.Remote.SignInView
-import com.example.people_here.SignIn.SignInActivity
+import com.example.people_here.Login.LoginPhoneActivity
 import com.example.people_here.databinding.FragmentMakingTourBinding
 
 class MakingTourFragment : Fragment() {
@@ -30,7 +29,7 @@ class MakingTourFragment : Fragment() {
             startActivity(intent)
         }
         binding.btnNext.setOnClickListener {
-            val intent = Intent(requireActivity(), SignInActivity::class.java)
+            val intent = Intent(requireActivity(), LoginPhoneActivity::class.java)
             startActivity(intent)
         }
         return binding.root

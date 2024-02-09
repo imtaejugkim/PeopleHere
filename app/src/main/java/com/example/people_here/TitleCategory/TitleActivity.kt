@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.people_here.AddPicture.CustomAlbumActivity
 import com.example.people_here.R
-import com.example.people_here.databinding.ActivityAddPictureBinding
 import com.example.people_here.databinding.ActivityTitleBinding
 
 class TitleActivity : AppCompatActivity() {

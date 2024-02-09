@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "751789187607",
+    "project_id": "peoplehere-745e7",
+    "storage_bucket": "peoplehere-745e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751789187607:android:59312ed4dd0fbd3b157252",
+        "android_client_info": {
+          "package_name": "com.example.people_here"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBXAt-L6FgqmBU7nkPE0e3vG_GJV6cBVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

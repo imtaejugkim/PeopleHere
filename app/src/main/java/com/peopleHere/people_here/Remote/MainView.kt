@@ -1,6 +1,9 @@
 package com.peopleHere.people_here.Remote
 
-class MainView {
-//    fun MainLoading()
-//    fun MainSuccess()
+import com.peopleHere.people_here.Data.MainData
+
+interface MainView {
+    fun MainLoading()
+    fun MainSuccess(content : ArrayList<MainData>)
+    fun MainFailure(code : Int, message : String)
 }

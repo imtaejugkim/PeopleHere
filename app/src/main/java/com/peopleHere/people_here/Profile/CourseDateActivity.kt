@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.datepicker.DayViewDecorator
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityCourseDateBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay

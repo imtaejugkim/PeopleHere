@@ -1,11 +1,13 @@
 package com.example.people_here.Login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import com.example.people_here.SignUp.SignUpActivity
 import com.example.people_here.databinding.ActivityVerifyPhoneBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -95,7 +97,8 @@ class VerifyPhoneActivity : AppCompatActivity() {
                     //인증성공
                     //회원가입 페이지로 넘기기
 
-
+                    val intent = Intent(this, SignUpActivity::class.java)
+                    startActivity(intent)
                 }
                 else {
                     //인증실패

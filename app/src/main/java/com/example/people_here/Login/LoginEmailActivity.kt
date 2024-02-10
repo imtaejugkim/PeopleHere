@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import com.example.people_here.Remote.AuthService
 import com.example.people_here.SignUp.SignUpActivity
 import com.example.people_here.databinding.ActivityLoginEmailBinding
 
@@ -20,10 +21,16 @@ class LoginEmailActivity : AppCompatActivity() {
             if (checkContinue) {
                 //여기서 server에서 받아서 false면 signUp으로 가고 true면 LoginEmailNext로 보내기
 
+                val email=binding.etEmail.text.toString()//아이디보냄
+                val authService= AuthService()//여기로 넘김
+                authService.checkEmail(email)//메소드 호출 따라서 엑티비에서 requset로 넘김
+
+
                 val intent = Intent(this, SignUpActivity::class.java)
                 intent.putExtra("email", binding.etEmail.text.toString())//이메일 보내기
                 startActivity(intent)
-                /*
+
+            /*
                     val intent = Intent(this, LoginEmailNextActivity::class.java)
                     intent.putExtra("email",binding.etEmail.text.toString())//이메일 보내기
                     startActivity(intent)*/

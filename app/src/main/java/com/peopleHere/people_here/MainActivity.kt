@@ -2,12 +2,12 @@ package com.peopleHere.people_here
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.peopleHere.people_here.databinding.ActivityMainBinding
 import com.peopleHere.people_here.TitleCategory.MakingTourFragment
 import com.peopleHere.people_here.MyTour.MakingCourseFragment
 import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.Main.MainFragment
 import com.peopleHere.people_here.WishList.WishFragment
-import com.peopleHere.people_here.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {

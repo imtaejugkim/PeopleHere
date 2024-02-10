@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".TitleCategory.CategoryActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_top_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="134dp"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,8 +18,10 @@
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cv_exit"
-            android:layout_width="100dp"
-            android:layout_height="28dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="100:28"
+            app:layout_constraintWidth_percent="0.27"
             android:layout_marginStart="14dp"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="10dp"
@@ -33,7 +36,7 @@
                 android:layout_marginTop="3dp"
                 android:text="@string/making_tour_exit"
                 android:textSize="14sp"
-
+                android:fontFamily="@font/pretendard_regular"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/cv_exit"/>
         </androidx.cardview.widget.CardView>
@@ -46,6 +49,7 @@
             android:text="5/6"
             android:textColor="@color/Orange6"
             android:textSize="14sp"
+            android:fontFamily="@font/pretendard_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cv_exit" />
 
@@ -58,479 +62,56 @@
             android:layout_marginTop="18dp"
             android:text="@string/making_tour_headline"
             android:textSize="20sp"
+            android:fontFamily="@font/suite_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_exit" />
 
         <TextView
             android:id="@+id/tv_supporting"
-            android:layout_width="328dp"
-            android:layout_height="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
             android:text="@string/making_tour_supporting"
             android:textColor="@color/Gray5"
             android:textSize="14sp"
+            android:fontFamily="@font/pretendard_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_headline" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        app:cardElevation="1dp"
-
-        android:id="@+id/cl_content_layout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/cl_top_app_bar_layout"/>
+    <ImageButton
+        android:id="@+id/ib_check"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight="0.05"
+        android:src="@drawable/inactive_18"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="7dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_top_app_bar_layout">
-        <!-- 로드 투어 -->
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-            android:id="@+id/cv_road_tour"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="16dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/cv_cafe_tour"
-            app:layout_constraintTop_toTopOf="@id/cl_content_layout">
+        app:layout_constraintTop_toBottomOf="@id/rv_category"/>
 
-            <ImageView
-                android:id="@+id/iv_road_tour"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/person_walking" />
-
-            <TextView
-                android:id="@+id/tv_road_tour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_road_tour"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-        <!-- 카페 투어 -->
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_cafe_tour"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintEnd_toStartOf="@id/cv_food_tour"
-            app:layout_constraintStart_toEndOf="@id/cv_road_tour"
-            app:layout_constraintTop_toTopOf="@id/cl_content_layout">
-
-            <ImageView
-                android:id="@+id/iv_cafe_tour"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/group_26086201" />
-
-            <TextView
-                android:id="@+id/tv_cafe_tour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_cafe_tour"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-
-        <!-- 맛집 투어 -->
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-            android:id="@+id/cv_food_tour"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cv_cafe_tour"
-            app:layout_constraintTop_toTopOf="@id/cl_content_layout">
-
-            <ImageView
-                android:id="@+id/iv_food_tour"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/fork_and_knifeat" />
-
-            <TextView
-                android:id="@+id/tv_food_tour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_food_tour"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-        <!-- 전시 관람-->
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_exhibition"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toStartOf="@id/cv_road_tour"
-            app:layout_constraintTop_toBottomOf="@id/cv_road_tour"
-            app:layout_constraintEnd_toStartOf="@id/cv_activity">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="19dp"
-                    app:cardBackgroundColor="@color/Orange4"
-                    app:cardCornerRadius="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </androidx.cardview.widget.CardView>
-
-                <ImageView
-                    android:id="@+id/iv_exhibition"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginBottom="44dp"
-                    android:elevation="8dp"
-                    android:src="@drawable/framed_picture"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_exhibition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="22.5dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="@string/making_tour_exhibition"
-                    android:textColor="@color/Gray5"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_exhibition" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_activity"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toEndOf="@id/cv_exhibition"
-            app:layout_constraintEnd_toStartOf="@id/cv_picnic"
-            app:layout_constraintTop_toTopOf="@id/cv_exhibition">
-
-            <ImageView
-                android:id="@+id/iv_activity"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/parachute" />
-
-            <TextView
-                android:id="@+id/tv_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_activity"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-        <!--피크닉-->
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_picnic"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="@id/cv_food_tour"
-            app:layout_constraintStart_toEndOf="@id/cv_activity"
-            app:layout_constraintTop_toTopOf="@id/cv_activity">
-
-            <ImageView
-                android:id="@+id/iv_picnic"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/basket_with_baguette_32" />
-
-            <TextView
-                android:id="@+id/tv_picnic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_picnic"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-        <!-- 랜드마크-->
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_landmark"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toStartOf="@id/cv_exhibition"
-            app:layout_constraintTop_toBottomOf="@id/cv_exhibition">
-
-            <ImageView
-                android:id="@+id/iv_landmark"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/camera" />
-
-            <TextView
-                android:id="@+id/tv_landmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_landmark"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-
-        <!--힐링투어-->
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_healing"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toEndOf="@id/cv_landmark"
-            app:layout_constraintTop_toTopOf="@id/cv_landmark">
-
-            <ImageView
-                android:id="@+id/iv_healing"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/desert" />
-
-            <TextView
-                android:id="@+id/tv_healing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_healing_tour"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-        <!-- 파티-->
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1.5dp"
-
-            android:id="@+id/cv_party"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toEndOf="@id/cv_healing"
-            app:layout_constraintTop_toTopOf="@id/cv_healing">
-
-            <ImageView
-                android:id="@+id/iv_party"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/cocktail" />
-
-            <TextView
-                android:id="@+id/tv_party"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_party"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1dp"
-
-            android:id="@+id/cv_night_view"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toStartOf="@id/cv_landmark"
-            app:layout_constraintTop_toBottomOf="@id/cv_landmark">
-
-            <ImageView
-                android:id="@+id/iv_night_view"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/night_city" />
-
-            <TextView
-                android:id="@+id/tv_night_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_night_view"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            app:cardElevation="1dp"
-
-            android:id="@+id/cv_notyet"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toEndOf="@id/cv_night_view"
-            app:layout_constraintTop_toTopOf="@id/cv_night_view">
-
-            <ImageView
-                android:id="@+id/iv_notyet"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/desert" />
-
-            <TextView
-                android:id="@+id/tv_notyet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_healing_tour"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-        <!-- 파티-->
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_notyet2"
-            android:layout_width="100dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            app:cardBackgroundColor="@color/Gray1"
-            app:cardCornerRadius="20dp"
-            app:layout_constraintStart_toEndOf="@id/cv_notyet"
-            app:layout_constraintTop_toTopOf="@id/cv_notyet">
-
-            <ImageView
-                android:id="@+id/iv_notyet2"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/cocktail" />
-
-            <TextView
-                android:id="@+id/tv_notyet2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="52dp"
-                android:gravity="center"
-                android:text="@string/making_tour_party"
-                android:textColor="@color/Gray5"
-                android:textSize="14sp" />
-        </androidx.cardview.widget.CardView>
-
-        <ImageButton
-            android:id="@+id/ib_check"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/inactive_18"
-            app:layout_constraintStart_toStartOf="@id/cv_night_view"
-            app:layout_constraintTop_toBottomOf="@+id/cv_notyet" />
-
-        <TextView
-            android:id="@+id/tv_no_choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="13dp"
-            android:text="@string/making_tour_no_choice"
-            android:textColor="@color/Gray5"
-            app:layout_constraintStart_toEndOf="@id/ib_check"
-            app:layout_constraintTop_toBottomOf="@id/cv_night_view" />
-
-        <ImageButton
-            android:id="@+id/ib_help"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/filled_18"
-            app:layout_constraintEnd_toEndOf="@id/cv_notyet2"
-            app:layout_constraintTop_toBottomOf="@+id/cv_notyet2"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <TextView
+        android:id="@+id/tv_no_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/making_tour_no_choice"
+        android:textColor="@color/Gray5"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretendard_regular"
+        app:layout_constraintStart_toEndOf="@id/ib_check"
+        app:layout_constraintTop_toTopOf="@id/ib_check"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_back"

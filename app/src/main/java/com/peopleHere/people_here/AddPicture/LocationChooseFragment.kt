@@ -62,16 +62,15 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
     private fun usingAdapter() {
 
         val locationlist = arrayListOf(
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소1"),
-            LocationChooseData(R.drawable.img, "장소2")
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1",false),
         )
         locationChooseAdapter = LocationChooseAdapter(locationlist)
 
@@ -82,10 +81,6 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
             LocationChooseAdapter.OnItemClickListener {
             override fun onItemClick(locationlist: LocationChooseData) {
                 binding.btnChoose.setBackgroundResource(R.drawable.making_tour_button_next)
-
-
-
-
 
                 // val bottomsheet= CostFragment()
                 //bottomsheet.show(supportFragmentManager, bottomsheet.tag)

@@ -6,7 +6,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
-import com.example.people_here.databinding.ActivityLoginEmailNextBinding
+import com.peopleHere.people_here.databinding.ActivityLoginEmailNextBinding
 
 class LoginEmailNextActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginEmailNextBinding
@@ -60,10 +60,10 @@ class LoginEmailNextActivity : AppCompatActivity() {
             override fun afterTextChanged(editable: Editable) {
 
                 if (editable.length >=8) {//8자면 이상이여야 하니 ㅇㅇ
-                    binding.cvContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_next)
+                    binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue= true
                 } else {//클릭 불가능 하게도 설정하기
-                    binding.cvContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_close)//설정 회색으로
+                    binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_close)//설정 회색으로
                     checkContinue=false
                 }
             }

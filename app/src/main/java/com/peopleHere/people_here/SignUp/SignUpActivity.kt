@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import com.example.people_here.AddPicture.LocationChooseFragment
-import com.example.people_here.R
-import com.example.people_here.databinding.ActivitySignUpBinding
+import com.peopleHere.people_here.R
+import com.peopleHere.people_here.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding

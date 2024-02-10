@@ -4,15 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.people_here.Remote.AuthService
-import com.example.people_here.Remote.SignInView
-import com.example.people_here.databinding.ActivitySignInBinding
+import com.peopleHere.people_here.Remote.AuthService
+import com.peopleHere.people_here.Remote.SignInView
+import com.peopleHere.people_here.databinding.ActivitySignInBinding
 
-class SignInActivity : AppCompatActivity(),SignInView {
-    lateinit var binding:ActivitySignInBinding
+class SignInActivity : AppCompatActivity(), SignInView {
+    lateinit var binding: ActivitySignInBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivitySignInBinding.inflate(layoutInflater)
+        binding= ActivitySignInBinding.inflate(layoutInflater)
 
         //여기 엮기 뭐랑?아이디랑
         //TODO: 로그인 로직 구현하기

@@ -10,11 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.recyclerview.widget.RecyclerView
-import com.example.people_here.Data.CategoryData
-import com.example.people_here.R
-import com.example.people_here.databinding.ItemActivityCategoryBinding
+import com.peopleHere.people_here.Data.CategoryData
+import com.peopleHere.people_here.R
+import com.peopleHere.people_here.databinding.ItemActivityCategoryBinding
 
-class CategoryAdapter(val categorylist: List<CategoryData>,var CheckClicked:Int) :
+class CategoryAdapter(val categorylist: List<CategoryData>, var CheckClicked:Int) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
     var CountItem: Int = 0 //3개가 되면 더 이상 누를 수 없게

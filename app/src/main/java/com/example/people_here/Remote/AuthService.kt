@@ -99,19 +99,18 @@ class AuthService {
                 ) {
                     //여기가 실행 x인데?
                     var resp = response.body()//여기 token이랑 nickname두개 받는데 어케 처리>
-
                     Log.d("CheckEmail", resp.toString())//로그에 찍기
-
                     when (resp!!.status) {//nullable 하고code부분 받아
                         200 -> {//성공
                             val checkEmailResponse = resp.result//emailAvailable&message
                             checkEmailResponse?.let {
-
+                                ApplicationClass.mSharedPreferencesManager.edit()
+                                    .putBoolean("email_result",resp.result.emailAvailable).apply()
+                                //결과값 String으로 저장
                                 Log.d(
-                                    "CheckEmail2",
+                                    "UserEmail_어째서?",
                                     "Boolean: ${resp.result.emailAvailable}"
                                 )
-                                //TODO:여기서 sharedrpeference에 넣고, loginActivity에서 가져와서 텍스트 전달?
                             }
                         }
 

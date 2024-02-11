@@ -14,7 +14,6 @@
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -22,16 +21,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.People_Here"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CourseContents.FullImageActivity"
+            android:exported="false" />
+        <activity
             android:name=".Profile.SetTimeActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Profile.CalendarActivity"
-            android:exported="false"/>
-<!--        <activity-->
-<!--            android:name=".Profile.CourseDateActivity"-->
-<!--            android:exported="false"/>-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Profile.CourseDateActivity" -->
+        <!-- android:exported="false"/> -->
         <activity
             android:name=".Profile.CourseManageFalseActivity"
             android:exported="false" />

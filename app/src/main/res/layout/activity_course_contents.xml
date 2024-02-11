@@ -107,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="@font/suite_bold"
                     android:text="홍대 소품샵 둘러보기 NULL"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -116,6 +117,7 @@
                     android:id="@+id/cv_tour_region_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintHeight="132:22"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_tour_title">
@@ -134,6 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:fontFamily="@font/pretendard_regular"
                         android:text="성동구 외 1개 null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_tour_region"
@@ -154,6 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:fontFamily="@font/pretendard_regular"
                         android:text="4시간 null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_tour_time"
@@ -162,6 +166,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_category"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
@@ -333,13 +338,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:fontFamily="@font/suite_bold"
                 android:text="@string/tour_contents_meeting_course"
                 app:layout_constraintTop_toBottomOf="@id/rv_tour_contents_question"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@id/guide_start"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/view_course_images"
+                android:id="@+id/view_entire_images"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="20dp"
@@ -348,14 +354,153 @@
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
                 app:layout_constraintTop_toBottomOf="@id/tv_meeting_course">
 
-                <ImageView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/view_course_images_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/img_example_contents"/>
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/iv_day_trip_info_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_example_contents"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/view_course_images_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_day_trip_info_2"
+                        android:layout_width="0dp"
+                        android:background="@drawable/rectangle_none_10_left"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/view_center"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iv_day_trip_info_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_example_contents"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/view_center"
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toEndOf="@id/cl_day_trip_info_2"
+                        app:layout_constraintEnd_toStartOf="@id/cl_day_trip_info_3"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_day_trip_info_3"
+                        android:layout_width="0dp"
+                        app:layout_constraintStart_toEndOf="@id/view_center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:background="@drawable/rectangle_none_10_right"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iv_day_trip_info_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_example_contents"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/view_course_images_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_day_trip_info_4"
+                        android:layout_width="0dp"
+                        android:background="@drawable/rectangle_none_10_left"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/view_center_2"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iv_day_trip_info_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_example_contents"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/view_center_2"
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toEndOf="@id/cl_day_trip_info_4"
+                        app:layout_constraintEnd_toStartOf="@id/cl_day_trip_info_5"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_day_trip_info_5"
+                        android:layout_width="0dp"
+                        app:layout_constraintStart_toEndOf="@id/view_center_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:background="@drawable/rectangle_none_10_right"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iv_day_trip_info_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/view_center_3"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_example_contents"/>
+
+                        <View
+                            android:id="@+id/view_center_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            app:layout_constraintTop_toBottomOf="@id/iv_day_trip_info_5"
+                            app:layout_constraintBottom_toTopOf="@id/iv_day_trip_info_6"/>
+
+                        <ImageView
+                            android:id="@+id/iv_day_trip_info_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_example_contents"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/view_center_3"/>
+
+                        <TextView
+                            android:id="@+id/tv_add_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="+null"
+                            android:layout_marginBottom="6dp"
+                            android:layout_marginEnd="8dp"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/suite_bold"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_day_trip_info_6"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/tv_meeting_course_info"
@@ -364,7 +509,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
-                app:layout_constraintTop_toBottomOf="@id/view_course_images"
+                app:layout_constraintTop_toBottomOf="@id/view_entire_images"
                 android:textSize="14sp"
                 android:maxLines="10"
                 android:text="더\n미\n데\n이\n터\n더\n더미\n더미데이\n더미데이터\n더\n여기부터 늘어남"/>

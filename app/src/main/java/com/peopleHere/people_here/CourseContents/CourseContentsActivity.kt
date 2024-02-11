@@ -1,14 +1,19 @@
 package com.peopleHere.people_here.CourseContents
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CourseQuestionData
+import com.peopleHere.people_here.Data.MainCourseData
 import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
@@ -22,12 +27,13 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
     private var questionAdapter : CoursesQuestionAdapter ?= null
-    private lateinit var key : String
+    private var key : Int = 0
+    private var courseData : CourseContentsResponse ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCourseContentsBinding.inflate(layoutInflater)
-        key = intent.getStringExtra("key") ?: ""
+        key = intent.getIntExtra("key", 0)
 
         initViewPager()
         initDataManager(key)
@@ -58,6 +64,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     }
 
     private fun initDummyImageData() {
+
         imgList.add("https://media.istockphoto.com/id/1482199015/ko/사진/행복한-강아지-웨일스-어-코기-14-주령-개가-윙크하고-헐떡이고-흰색에-고립되어-앉아-있습니다.jpg?s=612x612&w=is&k=20&c=CkTkWxs_QitkIcwMhbE155bnuLBoRBQ_AQaDNRh0Bh8=")
         imgList.add("https://cdn.pixabay.com/photo/2019/08/07/14/11/dog-4390885_1280.jpg")
         imgList.add("https://cdn.pixabay.com/photo/2019/07/23/13/51/shepherd-dog-4357790_1280.jpg")
@@ -82,7 +89,9 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     }
 
     private fun initIndicators() {
-        val indicators = Array(min(imgList.size, 5)) { ImageView(this) }
+        binding.llIndicatorContainer.removeAllViews()
+        val indicatorsCount = min(imgList.size, 5) // 인디케이터의 개수는 이미지 리스트의 크기와 5 중 작은 값
+        val indicators = Array(indicatorsCount) { ImageView(this) }
         val layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -114,17 +123,17 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
 
     // 현재 페이지에 따라 인디케이터를 업데이트하는 함수
     private fun updateIndicators(position: Int) {
-        val childCount = binding.llIndicatorContainer.childCount
-        val indicatorPosition = when {
-            imgList.size <= 5 -> position
-            position >= imgList.size - 1 -> 4 // 마지막 이미지
-            position >= 3 -> 3 // 네 번째 이미지부터 마지막에서 두 번째 이미지까지
-            else -> position // 그 이외의 경우
+        val indicatorsCount = binding.llIndicatorContainer.childCount
+        val actualPosition = when {
+            imgList.size <= 5 -> position // 5개 이하인 경우, position
+            position >= imgList.size - 1 -> indicatorsCount - 1 // 마지막 이미지인 경우, 인디케이터
+            position >= 4 && imgList.size > 5 -> min(position, indicatorsCount - 1) // 이미지 개수가 5개 초과인 경우, 4번째부터는 위치 고정
+            else -> position
         }
 
-        for (i in 0 until childCount) {
+        for (i in 0 until indicatorsCount) {
             val imageView = binding.llIndicatorContainer.getChildAt(i) as ImageView
-            if (i == indicatorPosition) {
+            if (i == actualPosition) {
                 imageView.setImageResource(R.drawable.ic_indicator_active)
             } else {
                 imageView.setImageResource(R.drawable.ic_indicator_inactive)
@@ -132,12 +141,13 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         }
     }
 
-    private fun initDataManager(tourId : String) {
+    private fun initDataManager(tourId : Int) {
         val token = getJwt()
         Log.d("token",token)
         if(token.isNotEmpty()){
             val authService = AuthService()
             authService.setCourseContentsView(this)
+            Log.d("tourId",tourId.toString())
             authService.courseContentsInfo(tourId)
         }else{
             Log.d("token 오류","token 오류")
@@ -149,10 +159,100 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     }
 
     override fun CourseContentsSuccess(content: CourseContentsResponse) {
-        TODO("Not yet implemented")
+        courseData = content
+
+        initCourseInfo(courseData!!)
+    }
+
+    private fun initCourseInfo(courseData : CourseContentsResponse) {
+        // contents 젤 위 사진
+        val newImgList = courseData.places.mapNotNull {
+            it.imageUrls.firstOrNull() }
+        (binding.vpTourContents.adapter as CourseContentsImageAdapter).updateImages(newImgList)
+
+        initIndicators()
+        binding.vpTourContents.currentItem = binding.vpTourContents.currentItem
+
+        // 코스 정보
+        binding.tvTourTitle.text = courseData.tourName
+        binding.tvTourRegion.text = courseData.places.map {
+            it.address[0]
+        }.toString()
+        binding.tvTourTime.text = courseData.time
+
+        // 코스 대장
+        binding.tvMeetingPeopleName.text = courseData.userName
+        val userImageUrl = courseData.userImageUrl
+        if (userImageUrl.startsWith("https://")) {
+            Glide.with(this)
+                .load(userImageUrl)
+                .into(binding.ivMeetingPeopleImage)
+        }
+
+        // 코스 사진 설명
+        initDayTripInfo(newImgList)
+        binding.tvMeetingCourseInfo.post {
+            binding.tvMeetingCourseInfo.text = courseData.content
+            if (binding.tvMeetingCourseInfo.lineCount > 10) {
+                binding.btnCourseInfoMore.visibility = View.VISIBLE
+            }else{
+                binding.btnCourseInfoMore.visibility = View.INVISIBLE
+            }
+        }
+        binding.btnCourseInfoMore.setOnClickListener {
+            binding.tvMeetingCourseInfo.maxLines = Integer.MAX_VALUE
+        }
+    }
+
+    private fun initDayTripInfo(imgUrls: List<String>) {
+        when(imgUrls.size) {
+            0,1 -> {
+                binding.viewCourseImages1.visibility = View.VISIBLE
+                binding.viewCourseImages2.visibility = View.GONE
+                binding.viewCourseImages3.visibility = View.GONE
+                binding.tvAddImage.visibility = View.GONE
+                Glide.with(this).load(imgUrls[0]).into(binding.ivDayTripInfo1)
+            }
+            2 -> {
+                binding.viewCourseImages1.visibility = View.GONE
+                binding.viewCourseImages2.visibility = View.VISIBLE
+                binding.viewCourseImages3.visibility = View.GONE
+                binding.tvAddImage.visibility = View.GONE
+                Glide.with(this).load(imgUrls[0]).into(binding.ivDayTripInfo2)
+                Glide.with(this).load(imgUrls[1]).into(binding.ivDayTripInfo3)
+            }
+
+            3 -> {
+                binding.viewCourseImages1.visibility = View.GONE
+                binding.viewCourseImages2.visibility = View.GONE
+                binding.viewCourseImages3.visibility = View.VISIBLE
+                binding.tvAddImage.visibility = View.GONE
+                Glide.with(this).load(imgUrls[0]).into(binding.ivDayTripInfo4)
+                Glide.with(this).load(imgUrls[1]).into(binding.ivDayTripInfo5)
+                Glide.with(this).load(imgUrls[2]).into(binding.ivDayTripInfo6)
+            }
+            else ->{
+                binding.viewCourseImages1.visibility = View.GONE
+                binding.viewCourseImages2.visibility = View.GONE
+                binding.viewCourseImages3.visibility = View.VISIBLE
+                binding.tvAddImage.visibility = View.VISIBLE
+                Glide.with(this).load(imgUrls[0]).into(binding.ivDayTripInfo4)
+                Glide.with(this).load(imgUrls[1]).into(binding.ivDayTripInfo5)
+                Glide.with(this).load(imgUrls[2]).into(binding.ivDayTripInfo6)
+                binding.tvAddImage.text = "+${imgUrls.size - 3}"
+            }
+        }
+
+        binding.viewEntireImages.setOnClickListener {
+            val intent = Intent(this, FullImageActivity()::class.java)
+            intent.putExtra("imgSize",imgUrls.size)
+            intent.putStringArrayListExtra("imgList", ArrayList(imgUrls))
+            startActivity(intent)
+        }
     }
 
     override fun CourseContentsFailure(status: Int, message: String) {
-        TODO("Not yet implemented")
+        Log.d("통신O에러1",status.toString())
+        Log.d("통신O에러2",message)
     }
 }

@@ -22,6 +22,12 @@ class CourseContentsImageAdapter(val context : Context, val imgList : MutableLis
         return ViewHolder(binding)
     }
 
+    fun updateImages(newImages: List<String>) {
+        imgList.clear()
+        imgList.addAll(newImages)
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int = imgList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

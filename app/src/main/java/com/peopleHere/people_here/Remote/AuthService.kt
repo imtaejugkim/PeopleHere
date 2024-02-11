@@ -52,7 +52,7 @@ class AuthService {
         })
     }
 
-    fun courseContentsInfo(tourId : String) {
+    fun courseContentsInfo(tourId : Int) {
 //        mainView.MainLoading()
         authService.courseContentsInfo(tourId).enqueue(object : Callback<BaseResponse<CourseContentsResponse>> {
             override fun onResponse(
@@ -62,8 +62,8 @@ class AuthService {
                 Log.d("response", response.toString())
                 if (response.isSuccessful) {
                     val resp = response.body()
-                    Log.d("Main Response Body", resp.toString())
-                    Log.d("Main Response Body result", resp?.result.toString())
+                    Log.d("CourseContents Response Body", resp.toString())
+                    Log.d("CourseContents Response Body result", resp?.result.toString())
                     when (resp!!.status) {
                         200 -> courseContentsView.CourseContentsSuccess(resp.result)
                         else -> courseContentsView.CourseContentsFailure(resp.status, resp.message)

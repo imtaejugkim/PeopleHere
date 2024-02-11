@@ -103,6 +103,7 @@ class MainFragment : Fragment() , MainView {
         mainAdapter!!.setOnItemClickListener(object : MainAdapter.OnItemClickListener{
             override fun onItemClick(tourListInfo : MainData) {
                 val intent = Intent(requireActivity(), CourseContentsActivity::class.java)
+                Log.d("tourId",tourListInfo.tourId.toString())
                 intent.putExtra("key", tourListInfo.tourId)
                 startActivity(intent)
             }

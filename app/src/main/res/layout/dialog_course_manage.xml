@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="298dp"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius_12_white"
     android:paddingTop="12dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
@@ -32,6 +32,7 @@
             android:id="@+id/tv_dialog_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
             android:text="null"
             android:textColor="@color/black"
             android:textSize="16sp"/>
@@ -40,6 +41,7 @@
             android:id="@+id/tv_dialog_month_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
             android:text="@string/text_month"
             android:textColor="@color/black"
             android:textSize="16sp"/>
@@ -48,6 +50,7 @@
             android:id="@+id/tv_dialog_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
             android:text="null"
             android:layout_marginStart="4dp"
             android:textColor="@color/black"
@@ -57,6 +60,7 @@
             android:id="@+id/tv_dialog_day_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
             android:text="@string/text_day"
             android:textColor="@color/black"
             android:textSize="16sp"/>
@@ -78,8 +82,9 @@
         app:tabTextColor="@color/black"/>
     
     <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_calendar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_enter_date"/>
 

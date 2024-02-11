@@ -1,6 +1,7 @@
 package com.peopleHere.people_here.CourseContents
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -8,22 +9,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.peopleHere.people_here.Data.CourseQuestionData
+import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.R
+import com.peopleHere.people_here.Remote.AuthService
+import com.peopleHere.people_here.Remote.CourseContentsResponse
+import com.peopleHere.people_here.Remote.CourseContentsView
 import com.peopleHere.people_here.databinding.ActivityCourseContentsBinding
 import java.lang.Integer.min
 
-class CourseContentsActivity : AppCompatActivity() {
+class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     private lateinit var binding: ActivityCourseContentsBinding
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
     private var questionAdapter : CoursesQuestionAdapter ?= null
+    private lateinit var key : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCourseContentsBinding.inflate(layoutInflater)
-        intent.getSerializableExtra("key")
+        key = intent.getStringExtra("key") ?: ""
 
         initViewPager()
+        initDataManager(key)
 
         //백엔드 통신시 추가될 데이터 형식입니다.
         initDummyImageData()
@@ -123,5 +130,29 @@ class CourseContentsActivity : AppCompatActivity() {
                 imageView.setImageResource(R.drawable.ic_indicator_inactive)
             }
         }
+    }
+
+    private fun initDataManager(tourId : String) {
+        val token = getJwt()
+        Log.d("token",token)
+        if(token.isNotEmpty()){
+            val authService = AuthService()
+            authService.setCourseContentsView(this)
+            authService.courseContentsInfo(tourId)
+        }else{
+            Log.d("token 오류","token 오류")
+        }
+    }
+
+    override fun CourseContentsLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun CourseContentsSuccess(content: CourseContentsResponse) {
+        TODO("Not yet implemented")
+    }
+
+    override fun CourseContentsFailure(status: Int, message: String) {
+        TODO("Not yet implemented")
     }
 }

@@ -24,11 +24,12 @@ class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<Mai
     inner class ViewHolder(val binding : ItemMainTourListBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(tourListInfo : MainData){
-            binding.tvMainTourListTitle.text = tourListInfo.name
-            binding.tvMainTourListTime.text = tourListInfo.time.toString()
+            binding.tvMainTourListTitle.text = tourListInfo.tourName
+            binding.tvMainTourListTime.text = tourListInfo.time
             binding.clItemMainTourList.setOnClickListener {
                 itemClickListener.onItemClick(tourListInfo)
             }
+            binding.tvMainTourListLocation.text = tourListInfo.time
 
 //            binding.icMainTourHeart.setImageResource(initHeartImage(tourListInfo))
             binding.icMainTourHeart.setOnClickListener {
@@ -39,7 +40,7 @@ class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<Mai
 //            binding.tvMainTourListLocation.text = initLocationText(tourListInfo)
 
             // 내부 RecyclerView 초기화 및 어댑터 설정
-            val innerAdapter = MainCourseAdapter(tourListInfo.places) // 가정: MainTourListData에 내부 리스트 데이터가 포함됨
+            val innerAdapter = MainCourseAdapter(tourListInfo.places, tourListInfo) // 가정: MainTourListData에 내부 리스트 데이터가 포함됨
             binding.rvMainTourListCourse.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvMainTourListCourse.adapter = innerAdapter
         }

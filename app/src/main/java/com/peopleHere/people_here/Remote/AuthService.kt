@@ -11,6 +11,7 @@ import retrofit2.Response
 class AuthService {
     private val authService = ApplicationClass.retrofit.create(RetrofitInterface::class.java)
     private lateinit var mainView: MainView
+    private lateinit var courseContentsView: CourseContentsView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -19,6 +20,10 @@ class AuthService {
 
     fun setMainView(mainView: MainView) {
         this.mainView = mainView
+    }
+
+    fun setCourseContentsView(courseContentsView: CourseContentsView){
+        this.courseContentsView = courseContentsView
     }
 
     fun mainInfo() {
@@ -41,6 +46,32 @@ class AuthService {
             }
 
             override fun onFailure(call: Call<BaseResponse<MainResponse>>, t: Throwable) {
+                Log.d("Main Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun courseContentsInfo(tourId : String) {
+//        mainView.MainLoading()
+        authService.courseContentsInfo(tourId).enqueue(object : Callback<BaseResponse<CourseContentsResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<CourseContentsResponse>>,
+                response: Response<BaseResponse<CourseContentsResponse>>
+            ) {
+                Log.d("response", response.toString())
+                if (response.isSuccessful) {
+                    val resp = response.body()
+                    Log.d("Main Response Body", resp.toString())
+                    Log.d("Main Response Body result", resp?.result.toString())
+                    when (resp!!.status) {
+                        200 -> courseContentsView.CourseContentsSuccess(resp.result)
+                        else -> courseContentsView.CourseContentsFailure(resp.status, resp.message)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<CourseContentsResponse>>, t: Throwable) {
                 Log.d("Main Failed", t.toString())
             }
 

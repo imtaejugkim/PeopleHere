@@ -9,9 +9,10 @@ import com.peopleHere.people_here.Data.MainCourseData
 import com.peopleHere.people_here.databinding.ItemMainTourListCourse1Binding
 import com.peopleHere.people_here.databinding.ItemMainTourListCourse2Binding
 import com.bumptech.glide.Glide
+import com.peopleHere.people_here.Data.MainData
 import com.peopleHere.people_here.R
 
-class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>, private val mainData: MainData) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val TYPE_FIRST_ITEM = 0
@@ -23,11 +24,11 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) :
     }
 
     inner class FirstItemViewHolder(val binding: ItemMainTourListCourse1Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tourListInfo: MainCourseData) {
+        fun bind(tourListInfo: MainCourseData, tourListInfo2 : MainData) {
 //            binding.ivMainTourListUser.setImageResource(context, binding.ivMainTourListUser, tourListInfo)
 //            binding.tvMainTourListUser.text = tourListInfo.content
             setImage(binding.root.context, binding.ivMainTourListUser, tourListInfo)
-            binding.tvMainTourListUser.text = tourListInfo.content
+            binding.tvMainTourListUser.text = tourListInfo2.userName
         }
     }
 
@@ -67,8 +68,9 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = mainCourseData[position]
+        val item2 = mainData
         when (holder) {
-            is FirstItemViewHolder -> holder.bind(item)
+            is FirstItemViewHolder -> holder.bind(item, item2)
             is OtherItemViewHolder -> holder.bind(item)
         }
     }

@@ -10,8 +10,8 @@ interface RetrofitInterface {
     @GET("api/tours")
     fun mainInfo() : Call<BaseResponse<MainResponse>>
 
-    @GET("api/tours/{toursId}")
-    fun courseContentsInfo(@Path("tourId") tourId : String)
+    @GET("api/tours/{id}")
+    fun courseContentsInfo(@Path("id") id : String)
     : Call<BaseResponse<CourseContentsResponse>>
 
 }

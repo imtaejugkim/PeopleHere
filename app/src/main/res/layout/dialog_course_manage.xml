@@ -80,13 +80,12 @@
         app:tabIndicatorFullWidth="true"
         app:tabRippleColor="@color/white"
         app:tabTextColor="@color/black"/>
-    
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_calendar"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_enter_date"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

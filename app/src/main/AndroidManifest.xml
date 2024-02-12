@@ -24,6 +24,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CourseContents.ReviewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_review"
+            android:theme="@style/Theme.People_Here" />
+        <activity
             android:name=".CourseContents.FullImageActivity"
             android:exported="false" />
         <activity

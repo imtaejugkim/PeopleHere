@@ -1,8 +1,6 @@
 package com.peopleHere.people_here.Data
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class MainData (
     @SerializedName("tourId") val tourId: Int,
@@ -11,12 +9,14 @@ data class MainData (
     @SerializedName("userName") val userName: String,
     @SerializedName("userImageUrl") val userImageUrl: String,
     @SerializedName("time") val time: String,
+    @SerializedName("content") val content : String,
     @SerializedName("places") val places: ArrayList<MainCourseData>,
     @SerializedName("categoryNames") val categoryNames: List<String>,
     @SerializedName("participants") val participants: List<Any>,
     @SerializedName("status") val status: String,
     @SerializedName("createdAt") val createdAt: String,
-    @SerializedName("updatedAt") val updatedAt: String
+    @SerializedName("updatedAt") val updatedAt: String,
+    @SerializedName("wished") val wished : Boolean
 //    var mainTourListTitle : String,
 //    var mainTourListTime : String,
 //    var mainTourHeart : Boolean,

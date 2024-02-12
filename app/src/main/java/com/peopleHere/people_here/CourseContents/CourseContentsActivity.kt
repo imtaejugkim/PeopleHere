@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CourseQuestionData
-import com.peopleHere.people_here.Data.MainCourseData
+import com.peopleHere.people_here.Data.CourseReviewData
 import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
@@ -27,6 +27,8 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
     private var questionAdapter : CoursesQuestionAdapter ?= null
+    private var reviewData : ArrayList<CourseReviewData> = arrayListOf()
+    private var reviewAdapter : CourseReviewAdapter ?= null
     private var key : Int = 0
     private var courseData : CourseContentsResponse ?= null
 
@@ -39,7 +41,6 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         initDataManager(key)
 
         //백엔드 통신시 추가될 데이터 형식입니다.
-        initDummyImageData()
         initDummyQuestionData()
 
         initRecyclerView()
@@ -49,6 +50,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
+
 
         setContentView(binding.root)
     }
@@ -61,18 +63,16 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
                 CourseQuestionData("가장 기억에 남는 여행지는?","이탈리아의 로마, Trastevere\n해질 무렵 테베레 강을 건너 광장으로 가면 달빛 아래 매일 밤 끊이지 않는 음악과 거리 공연, 춤추는 사람들...")
             )
         )
-    }
 
-    private fun initDummyImageData() {
-
-        imgList.add("https://media.istockphoto.com/id/1482199015/ko/사진/행복한-강아지-웨일스-어-코기-14-주령-개가-윙크하고-헐떡이고-흰색에-고립되어-앉아-있습니다.jpg?s=612x612&w=is&k=20&c=CkTkWxs_QitkIcwMhbE155bnuLBoRBQ_AQaDNRh0Bh8=")
-        imgList.add("https://cdn.pixabay.com/photo/2019/08/07/14/11/dog-4390885_1280.jpg")
-        imgList.add("https://cdn.pixabay.com/photo/2019/07/23/13/51/shepherd-dog-4357790_1280.jpg")
-        imgList.add("https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_1280.jpg")
-        imgList.add("https://cdn.pixabay.com/photo/2017/09/25/13/12/puppy-2785074_1280.jpg")
-        imgList.add("https://media.istockphoto.com/id/1480747819/ko/사진/닥스-순드와-고양이-가장-친한-친구.jpg?s=2048x2048&w=is&k=20&c=lyjV_IffYM2g2xAey6T6uon4gYkbu_KRlKnZsWPg_ZU=")
-        imgList.add("https://cdn.pixabay.com/photo/2018/05/11/08/11/dog-3389729_1280.jpg")
-        imgList.add("https://media.istockphoto.com/id/1267541412/ko/사진/빨간-산타-클로스-모자와-웃는-표정으로-크리스마스를-축하하는-행복한-강아지-개.jpg?s=2048x2048&w=is&k=20&c=iDp7DehrScAiZTNH-MnP05eOOaTpN3SVv-8DIH5dfXY=")
+        reviewData.addAll(
+            arrayListOf(
+                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 1,"사장님이 최고에요!"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 2,"사장님이 나빠요!"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 3,"사장님이 최고에요!\n최고\n최고\n최고"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 4,"사장님이 최고에요!"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 5,"사장님이 나빠요!")
+            )
+        )
     }
 
     private fun initRecyclerView() {
@@ -80,8 +80,18 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         binding.rvTourContentsQuestion.adapter = questionAdapter
         binding.rvTourContentsQuestion.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
-    }
 
+        reviewAdapter = CourseReviewAdapter(applicationContext, reviewData)
+        binding.rvReview.adapter = reviewAdapter
+        binding.rvReview.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.HORIZONTAL, false)
+
+        val itemDecorationMargin = resources.getDimensionPixelSize(R.dimen.recycler_view_item_margin)
+        binding.rvReview.addItemDecoration(MarginRecyclerItem(itemDecorationMargin))
+
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvReview)
+    }
 
     private fun initViewPager() {
         binding.vpTourContents.adapter = CourseContentsImageAdapter(applicationContext, imgList)
@@ -201,6 +211,17 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         }
         binding.btnCourseInfoMore.setOnClickListener {
             binding.tvMeetingCourseInfo.maxLines = Integer.MAX_VALUE
+        }
+
+        // 코스 후기 넘어가기
+        initReview(courseData)
+    }
+
+    private fun initReview(courseData: CourseContentsResponse) {
+        binding.llReviewButton.setOnClickListener {
+            val intent = Intent(this, ReviewActivity()::class.java)
+            intent.putExtra("key",reviewData)
+            startActivity(intent)
         }
     }
 

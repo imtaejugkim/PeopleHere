@@ -21,5 +21,7 @@
     <dimen name="image_width">156dp</dimen>
 
     <!-- 마진, 패딩 크기 정의 -->
+    <dimen name="recycler_view_item_margin">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

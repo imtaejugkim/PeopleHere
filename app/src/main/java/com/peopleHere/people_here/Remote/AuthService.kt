@@ -1,7 +1,6 @@
 package com.peopleHere.people_here.Remote
 
 import android.util.Log
-import com.peopleHere.people_here.Remote.MainView
 import com.peopleHere.people_here.ApplicationClass
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,7 +27,7 @@ class AuthService {
 
     fun mainInfo() {
 //        mainView.MainLoading()
-        authService.mainInfo().enqueue(object : Callback<BaseResponse<MainResponse>> {
+        authService.mainInfo(0, 10, listOf("createdAt,desc")).enqueue(object : Callback<BaseResponse<MainResponse>> {
             override fun onResponse(
                 call: Call<BaseResponse<MainResponse>>,
                 response: Response<BaseResponse<MainResponse>>
@@ -36,8 +35,8 @@ class AuthService {
                 Log.d("response", response.toString())
                 if (response.isSuccessful) {
                     val resp = response.body()
-                    Log.d("Main Response Body", resp.toString())
-                    Log.d("Main Response Body result", resp?.result.toString())
+//                    Log.d("Main Response Body", resp.toString())
+//                    Log.d("Main Response Body result", resp?.result.toString())
                     when (resp!!.status) {
                         200 -> mainView.MainSuccess(resp.result.content)
                         else -> mainView.MainFailure(resp.status, resp.message)

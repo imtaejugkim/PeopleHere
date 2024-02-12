@@ -1,3 +1,5 @@
+package com.peopleHere.people_here.Profile
+import TabLayoutVPAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ class CalendarBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var date : String
     private var month : Int = 0
     private var year : Int = 0
+    private var share : Boolean = false
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -38,7 +41,10 @@ class CalendarBottomSheetFragment : BottomSheetDialogFragment() {
         TabLayoutMediator(binding.tlEnterDate, binding.vpCalendar) { tab, position ->
             tab.text = tabList[position]
         }.attach()
+
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

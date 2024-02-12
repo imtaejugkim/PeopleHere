@@ -14,15 +14,18 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CourseQuestionData
 import com.peopleHere.people_here.Data.CourseReviewData
+import com.peopleHere.people_here.Data.CourseScheduleData
 import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.CourseContentsResponse
 import com.peopleHere.people_here.Remote.CourseContentsView
+import com.peopleHere.people_here.Remote.UpcomingDateResponse
+import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCourseContentsBinding
 import java.lang.Integer.min
 
-class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
+class CourseContentsActivity : AppCompatActivity() , CourseContentsView, UpcomingDateView {
     private lateinit var binding: ActivityCourseContentsBinding
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
@@ -31,6 +34,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
     private var reviewAdapter : CourseReviewAdapter ?= null
     private var key : Int = 0
     private var courseData : CourseContentsResponse ?= null
+    private var scheduleData : CourseScheduleData ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         initDataManager(key)
 
         //백엔드 통신시 추가될 데이터 형식입니다.
-        initDummyQuestionData()
+        initDummyData()
 
         initRecyclerView()
         initIndicators()
@@ -55,7 +59,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         setContentView(binding.root)
     }
 
-    private fun initDummyQuestionData() {
+    private fun initDummyData() {
         questionData.addAll(
             arrayListOf(
                 CourseQuestionData("가장 기억에 남는 여행지는?","이탈리아의 로마, Trastevere\n해질 무렵 테베레 강을 건너 광장으로 가면 달빛 아래 매일 밤 끊이지 않는 음악과 거리 공연, 춤추는 사람들..."),
@@ -157,22 +161,15 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         if(token.isNotEmpty()){
             val authService = AuthService()
             authService.setCourseContentsView(this)
+            authService.setUpcomingDateView(this)
             Log.d("tourId",tourId.toString())
             authService.courseContentsInfo(tourId)
+            authService.upcomingDateInfo(tourId)
         }else{
             Log.d("token 오류","token 오류")
         }
     }
 
-    override fun CourseContentsLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun CourseContentsSuccess(content: CourseContentsResponse) {
-        courseData = content
-
-        initCourseInfo(courseData!!)
-    }
 
     private fun initCourseInfo(courseData : CourseContentsResponse) {
         // contents 젤 위 사진
@@ -213,14 +210,16 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
             binding.tvMeetingCourseInfo.maxLines = Integer.MAX_VALUE
         }
 
-        // 코스 후기 넘어가기
+        // 코스 후기
         initReview(courseData)
     }
 
     private fun initReview(courseData: CourseContentsResponse) {
+        binding.tvReviewName.text = courseData.userName
+        binding.tvReviewCount.text = reviewData.size.toString()
         binding.llReviewButton.setOnClickListener {
             val intent = Intent(this, ReviewActivity()::class.java)
-            intent.putExtra("key",reviewData)
+//            intent.putExtra("key",reviewData)
             startActivity(intent)
         }
     }
@@ -272,8 +271,31 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView {
         }
     }
 
+    override fun CourseContentsLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun CourseContentsSuccess(content: CourseContentsResponse) {
+        courseData = content
+
+        initCourseInfo(courseData!!)
+    }
+
     override fun CourseContentsFailure(status: Int, message: String) {
-        Log.d("통신O에러1",status.toString())
-        Log.d("통신O에러2",message)
+        Log.d("코스컨텐츠에러1",status.toString())
+        Log.d("코스컨텐츠에러2",message)
+    }
+
+    override fun UpcomingDateLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun UpcomingDateSuccess(content: ArrayList<UpcomingDateResponse>) {
+        Log.d("데이터 잘 넘어옴","데이터 잘 넘어옴")
+    }
+
+    override fun UpcomingDateFailure(status: Int, message: String) {
+        Log.d("가까운일정에러1",status.toString())
+        Log.d("가까운일정에러2",message)
     }
 }

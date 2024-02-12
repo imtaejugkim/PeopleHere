@@ -214,6 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/tour_contents_meeting_people"
+                android:fontFamily="@font/suite_bold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
                 app:layout_constraintTop_toBottomOf="@id/cl_dash_line1" />
@@ -240,6 +241,7 @@
                         android:id="@+id/iv_meeting_people_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:scaleType="fitXY"
                         android:src="@drawable/img_example" />
 
                 </androidx.cardview.widget.CardView>
@@ -251,6 +253,7 @@
                     android:layout_marginStart="16dp"
                     android:text="레이첼 null"
                     android:textSize="18sp"
+                    android:fontFamily="@font/suite_bold"
                     app:layout_constraintStart_toEndOf="@id/cv_meeting_people_image"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -279,6 +282,7 @@
                         android:layout_marginStart="7dp"
                         android:text="@string/tour_contents_meeting_people_language"
                         android:textSize="14sp"
+                        android:fontFamily="@font/pretendard_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_message"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -298,6 +302,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:fontFamily="@font/pretendard_medium"
                         android:text="한국어, 영어, 중국어, null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/view_line"
@@ -321,12 +326,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:lineHeight="22sp"
+                    android:textSize="14sp"
+                    android:textFontWeight="500"
                     android:text="서울 26년 토박이 쩝쩝박사 🍕🧀🥖\n26년차 경력으로 맛집을 소개드려요.\n많이 걷고 맛있게 먹고 즐겁게 수다 떠는 것을 좋아해요.신나고 맛있는 한국 여행을 원한다면 저와 함께 떠나요! 여기는 끊는 것 없이 좀 길더라도 투어리더의 자기소개를 전부 보여주는 것도 괜찮을 것 같다는 생각이 들어요." />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_tour_contents_question"
+                tools:listitem="@layout/item_course_contents_question"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
@@ -507,6 +517,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:lineHeight="22sp"
+                android:textFontWeight="400"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
                 app:layout_constraintTop_toBottomOf="@id/view_entire_images"
@@ -532,6 +545,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="@string/tour_contents_meeting_place"
+                android:textColor="@color/Orange5"
+                android:fontFamily="@font/suite_bold"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
                 app:layout_constraintTop_toBottomOf="@id/btn_course_info_more"
                 android:layout_marginTop="40dp"/>
@@ -595,6 +610,7 @@
                 app:layout_constraintTop_toBottomOf="@id/cl_dash_line2"
                 android:text="레이첼null"
                 android:layout_marginTop="40dp"
+                android:fontFamily="@font/suite_bold"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -605,6 +621,8 @@
                 app:layout_constraintStart_toEndOf="@id/tv_review_name"
                 app:layout_constraintTop_toTopOf="@id/tv_review_name"
                 app:layout_constraintBottom_toBottomOf="@id/tv_review_name"
+                android:fontFamily="@font/suite_bold"
+                android:layout_marginStart="4dp"
                 android:text="@string/tour_contents_review"
                 android:textSize="20sp"/>
 
@@ -614,6 +632,7 @@
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:clipToPadding="false"
+                android:fontFamily="@font/suite_bold"
                 android:paddingEnd="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_review_name"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
@@ -637,6 +656,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:fontFamily="@font/pretendard_medium"
                     android:text="@string/tour_contents_review_first"/>
 
                 <TextView
@@ -645,12 +665,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textSize="14sp"
+                    android:fontFamily="@font/pretendard_medium"
                     android:text="null"/>
 
                 <TextView
                     android:id="@+id/tv_review_last"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
                     android:textSize="14sp"
                     android:text="@string/tour_contents_review_last"/>
 
@@ -694,6 +716,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
+                android:fontFamily="@font/suite_bold"
                 app:layout_constraintTop_toBottomOf="@id/cl_dash_line3"
                 app:layout_constraintStart_toStartOf="@id/guide_start"
                 android:text="@string/tour_contents_coming_date"/>

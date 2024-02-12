@@ -19,4 +19,8 @@ interface RetrofitInterface {
     fun courseContentsInfo(@Path("id") id : Int)
     : Call<BaseResponse<CourseContentsResponse>>
 
+    @GET("api/tour-dates/{tourId}/dates")
+    fun upcomingDateInfo(@Path("tourId") tourId : Int)
+            : Call<BaseResponse<ArrayList<UpcomingDateResponse>>>
+
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="16dp"
+    android:layout_marginBottom="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/rectangle_gray2_12">
 
@@ -55,35 +56,13 @@
             app:layout_constraintStart_toStartOf="@id/tv_user_name"/>
 
         <TextView
-            android:id="@+id/tv_review_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/tv_review_month_string"
-            app:layout_constraintEnd_toStartOf="@id/tv_review_year_string"
-            android:text="2010"
-            android:textSize="12sp"
-            android:textColor="@color/Gray8"
-            android:fontFamily="@font/pretendard_regular"/>
-
-        <TextView
-            android:id="@+id/tv_review_year_string"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_year"
-            app:layout_constraintTop_toTopOf="@id/tv_review_month_string"
-            app:layout_constraintEnd_toStartOf="@id/tv_review_month"
-            android:textSize="12sp"
-            android:layout_marginEnd="4dp"
-            android:textColor="@color/Gray8"
-            android:fontFamily="@font/pretendard_regular"/>
-
-        <TextView
-            android:id="@+id/tv_review_month"
+            android:id="@+id/tv_when_before"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tv_review_month_string"
             app:layout_constraintEnd_toStartOf="@id/tv_review_month_string"
-            android:text="15"
+            android:text="1주"
+            android:layout_marginEnd="4dp"
             android:textSize="12sp"
             android:textColor="@color/Gray8"
             android:fontFamily="@font/pretendard_regular"/>
@@ -94,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_month"
+            android:text="@string/review_date"
             android:textSize="12sp"
             android:textColor="@color/Gray8"
             android:fontFamily="@font/pretendard_regular"/>

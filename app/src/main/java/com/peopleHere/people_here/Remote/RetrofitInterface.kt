@@ -1,7 +1,9 @@
 package com.peopleHere.people_here.Remote
 
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -22,5 +24,13 @@ interface RetrofitInterface {
     @GET("api/tour-dates/{tourId}/dates")
     fun upcomingDateInfo(@Path("tourId") tourId : Int)
             : Call<BaseResponse<ArrayList<UpcomingDateResponse>>>
+
+    @GET("api/users/{id}/tours")
+    fun bringCourseInfo(@Path("id") id : Int, @Query("option") option : String)
+            : Call<BaseResponse<ArrayList<BringCourseResponse>>>
+
+    @POST("api/users/wishlist/{tourId}")
+    fun changeWishInfo(@Path("tourId") tourId : Int)
+            : Call<BaseResponse<ChangeWishResponse>>
 
 }

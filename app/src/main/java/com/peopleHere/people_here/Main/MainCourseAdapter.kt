@@ -27,17 +27,27 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>, p
         fun bind(tourListInfo: MainCourseData, tourListInfo2 : MainData) {
 //            binding.ivMainTourListUser.setImageResource(context, binding.ivMainTourListUser, tourListInfo)
 //            binding.tvMainTourListUser.text = tourListInfo.content
-            setImage(binding.root.context, binding.ivMainTourListUser, tourListInfo)
+            setImage1(binding.root.context, binding.ivMainTourListUser, tourListInfo2)
             binding.tvMainTourListUser.text = tourListInfo2.userName
         }
     }
 
-    private fun setImage(context: Context, imageView: ImageView, tourListInfo: MainCourseData) {
+    private fun setImage2(context: Context, imageView: ImageView, tourListInfo: MainCourseData) {
         if(tourListInfo.imageUrls[0] == "string") {
-            imageView.setImageResource(R.drawable.img_example_user)
+            imageView.setImageResource(R.drawable.img_example_contents)
         } else {
             Glide.with(context)
                 .load(tourListInfo.imageUrls[0])
+                .into(imageView)
+        }
+    }
+
+    private fun setImage1(context: Context, imageView: ImageView, tourListInfo: MainData) {
+        if(tourListInfo.userImageUrl == "string") {
+            imageView.setImageResource(R.drawable.img_example_user)
+        } else {
+            Glide.with(context)
+                .load(tourListInfo.userImageUrl)
                 .into(imageView)
         }
     }
@@ -47,8 +57,8 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>, p
         fun bind(tourListInfo: MainCourseData) {
 //            binding.ivMainTourListUserCourse.setImageResource(tourListInfo.id)
 //            binding.tvItemMainTourListRegion.text = tourListInfo.address
-            setImage(binding.root.context, binding.ivMainTourListUserCourse, tourListInfo)
-            binding.tvItemMainTourListRegion.text = tourListInfo.address
+            setImage2(binding.root.context, binding.ivMainTourListUserCourse, tourListInfo)
+            binding.tvItemMainTourListRegion.text = tourListInfo.content
         }
     }
 

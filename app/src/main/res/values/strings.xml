@@ -139,6 +139,7 @@
     <string name="tour_contents_meeting_place">장소</string>
     <string name="tour_contents_review">님에 대한 후기</string>
     <string name="tour_contents_review_first">후기</string>
+    <string name="tour_contents_date">일정</string>
     <string name="tour_contents_review_last">개 모두 보기</string>
     <string name="tour_contents_coming_date">가까운 일정</string>
     <string name="tour_contents_correction">수정하기</string>

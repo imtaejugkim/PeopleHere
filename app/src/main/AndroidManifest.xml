@@ -35,13 +35,8 @@
         <activity
             android:name=".Profile.CalendarActivity"
             android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".Profile.CourseDateActivity" -->
-        <!-- android:exported="false"/> -->
         <activity
-            android:name=".Profile.CourseManageFalseActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Profile.CourseManageTrueActivity"
+            android:name=".Profile.DayTripManageActivity"
             android:exported="false" />
         <activity
             android:name=".MakingTour.OnBoardingActivity"

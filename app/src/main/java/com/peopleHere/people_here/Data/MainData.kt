@@ -8,7 +8,7 @@ data class MainData (
     @SerializedName("userId") val userId: String,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImageUrl") val userImageUrl: String,
-    @SerializedName("time") val time: String,
+    @SerializedName("time") val time: Int,
     @SerializedName("content") val content : String,
     @SerializedName("places") val places: ArrayList<MainCourseData>,
     @SerializedName("categoryNames") val categoryNames: List<String>,
@@ -16,7 +16,7 @@ data class MainData (
     @SerializedName("status") val status: String,
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("updatedAt") val updatedAt: String,
-    @SerializedName("wished") val wished : Boolean
+    @SerializedName("wished") var wished : Boolean
 //    var mainTourListTitle : String,
 //    var mainTourListTime : String,
 //    var mainTourHeart : Boolean,

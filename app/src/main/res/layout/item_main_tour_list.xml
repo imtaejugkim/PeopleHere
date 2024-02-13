@@ -27,25 +27,21 @@
         android:layout_marginRight="4dp"
         android:src="@drawable/ic_main_empty_heart"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/cl_main_tour_list_info"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_main_tour_list_title"
-        app:layout_constraintBottom_toTopOf="@id/rv_main_tour_list_category"
-        app:layout_constraintEnd_toEndOf="@id/tv_main_tour_list_title">
+        app:layout_constraintBottom_toTopOf="@id/rv_main_tour_list_category">
 
         <ImageView
             android:id="@+id/iv_main_tour_list_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_location_14"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_location_14"/>
 
         <TextView
             android:id="@+id/tv_main_tour_list_location"
@@ -54,21 +50,15 @@
             android:layout_marginStart="4dp"
             android:text="null 지역"
             android:fontFamily="@font/pretendard_regular"
-            android:textSize="@dimen/item_main_tour_list_time"
-            app:layout_constraintStart_toEndOf="@id/iv_main_tour_list_location"
-            app:layout_constraintTop_toTopOf="@id/iv_main_tour_list_location"
-            app:layout_constraintBottom_toBottomOf="@id/iv_main_tour_list_location"/>
+            android:textSize="@dimen/item_main_tour_list_time"/>
 
         <ImageView
             android:id="@+id/iv_main_tour_list_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_clock_14"
-            android:layout_marginStart="12dp"
-            app:layout_constraintStart_toEndOf="@id/tv_main_tour_list_location"
-            app:layout_constraintEnd_toStartOf="@id/tv_main_tour_list_time"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_gravity="center"
+            android:layout_marginStart="12dp"/>
 
         <TextView
             android:id="@+id/tv_main_tour_list_time"
@@ -77,12 +67,9 @@
             android:layout_marginStart="4dp"
             android:text="null시간"
             android:fontFamily="@font/pretendard_regular"
-            android:textSize="@dimen/item_main_tour_list_cost"
-            app:layout_constraintStart_toEndOf="@id/iv_main_tour_list_clock"
-            app:layout_constraintTop_toTopOf="@id/tv_main_tour_list_location"
-            app:layout_constraintBottom_toBottomOf="@id/tv_main_tour_list_location"/>
+            android:textSize="@dimen/item_main_tour_list_cost"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_main_tour_list_category"

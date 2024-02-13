@@ -27,31 +27,46 @@ class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<Mai
 
         fun bind(tourListInfo : MainData){
             binding.tvMainTourListTitle.text = tourListInfo.tourName
-            binding.tvMainTourListTime.text = tourListInfo.time
+
+            val hours = tourListInfo.time / 60
+            val minutes = tourListInfo.time % 60
+            binding.tvMainTourListTime.text = if (minutes > 0) {
+                "${hours}시간 ${minutes}분"
+            } else {
+                "${hours}시간"
+            }
             binding.clItemMainTourList.setOnClickListener {
                 itemClickListener.onItemClick(tourListInfo)
             }
-            binding.tvMainTourListLocation.text = tourListInfo.time
+            binding.tvMainTourListLocation.text = tourListInfo.time.toString()
 
             binding.icMainTourHeart.setImageResource(initHeartImage(tourListInfo.wished))
             binding.icMainTourHeart.setOnClickListener {
                 heartClickListener.onHeartClick(adapterPosition)
-                Log.d("1번 하트", booleanHeart.toString())
             }
 
-//            binding.tvMainTourListLocation.text = initLocationText(placesInfo)
-//            binding.tvMainTourListLocation.text = initLocationText(tourListInfo)
+            if (tourListInfo.places.size > 1) {
+                val addCount = tourListInfo.places.size - 1
+                binding.tvMainTourListLocation.text = "${tourListInfo.places[0].address} 외 ${addCount}개"
+            } else if (tourListInfo.places.isNotEmpty()) {
+                binding.tvMainTourListLocation.text = tourListInfo.places[0].address
+            } else {
+                binding.tvMainTourListLocation.text = "위치 정보 없음"
+            }
 
             // 내부 RecyclerView 초기화 및 어댑터 설정
-            val innerAdapter = MainCourseAdapter(tourListInfo.places, tourListInfo) // 가정: MainTourListData에 내부 리스트 데이터가 포함됨
+            val innerAdapter = MainCourseAdapter(tourListInfo.places, tourListInfo)
             binding.rvMainTourListCourse.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvMainTourListCourse.adapter = innerAdapter
+
+            val innerAdapter2 = MainCategoryAdapter(tourListInfo.categoryNames)
+            binding.rvMainTourListCategory.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+            binding.rvMainTourListCategory.adapter = innerAdapter2
         }
     }
 
     private fun initHeartImage(heartInfo: Boolean) : Int {
         booleanHeart = heartInfo
-        Log.d("2번 하트",booleanHeart.toString())
         val heartIconResId = if (booleanHeart) {
             R.drawable.ic_main_filled_heart
         } else {
@@ -60,15 +75,6 @@ class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<Mai
 
         return heartIconResId
     }
-
-//    private fun initLocationText(placeInfo: MainCourseData): String {
-//        val locationText = when {
-//            placeInfo.address.size > 1 -> "${placeInfo.places.} 외 ${placeInfo.address.size - 1}개"
-//            placeInfo.address.isNotEmpty() -> placeInfo.mainTourListRegion[0]
-//            else -> "Null지역"
-//        }
-//        return locationText
-//    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

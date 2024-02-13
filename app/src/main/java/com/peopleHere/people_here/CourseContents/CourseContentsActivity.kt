@@ -16,6 +16,7 @@ import com.peopleHere.people_here.Data.CourseQuestionData
 import com.peopleHere.people_here.Data.CourseReviewData
 import com.peopleHere.people_here.Data.CourseScheduleData
 import com.peopleHere.people_here.Local.getJwt
+import com.peopleHere.people_here.Main.MainCategoryAdapter
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.CourseContentsResponse
@@ -30,11 +31,13 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
     private var questionAdapter : CoursesQuestionAdapter ?= null
+    private var categoryAdapter : MainCategoryAdapter ?= null
+    private var comingDateAdapter : CourseComingDateAdapter ?= null
     private var reviewData : ArrayList<CourseReviewData> = arrayListOf()
     private var reviewAdapter : CourseReviewAdapter ?= null
     private var key : Int = 0
     private var courseData : CourseContentsResponse ?= null
-    private var scheduleData : CourseScheduleData ?= null
+    private var upcomingData : ArrayList<UpcomingDateResponse> ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,6 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
-
 
         setContentView(binding.root)
     }
@@ -155,21 +157,6 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         }
     }
 
-    private fun initDataManager(tourId : Int) {
-        val token = getJwt()
-        Log.d("token",token)
-        if(token.isNotEmpty()){
-            val authService = AuthService()
-            authService.setCourseContentsView(this)
-            authService.setUpcomingDateView(this)
-            Log.d("tourId",tourId.toString())
-            authService.courseContentsInfo(tourId)
-            authService.upcomingDateInfo(tourId)
-        }else{
-            Log.d("token 오류","token 오류")
-        }
-    }
-
 
     private fun initCourseInfo(courseData : CourseContentsResponse) {
         // contents 젤 위 사진
@@ -182,12 +169,26 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         // 코스 정보
         binding.tvTourTitle.text = courseData.tourName
-        binding.tvTourRegion.text = courseData.places.map {
-            it.address[0]
-        }.toString()
-        binding.tvTourTime.text = courseData.time
 
-        // 코스 대장
+        val addressList = courseData.places.map { it.address }
+        binding.tvTourRegion.text = if (addressList.size > 1) {
+            "${addressList.first()} 외 ${addressList.size - 1}개"
+        } else {
+            "주소 정보 없음"
+        }
+        val hours = courseData.time / 60
+        val minutes = courseData.time % 60
+        binding.tvTourTime.text = if (minutes > 0) {
+            "${hours}시간 ${minutes}분"
+        } else {
+            "${hours}시간"
+        }
+        categoryAdapter = MainCategoryAdapter(courseData.categoryNames)
+        binding.rvCategory.adapter = categoryAdapter
+        binding.rvCategory.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.HORIZONTAL, false)
+
+        // 코스 만나게 될 사람
         binding.tvMeetingPeopleName.text = courseData.userName
         val userImageUrl = courseData.userImageUrl
         if (userImageUrl.startsWith("https://")) {
@@ -203,7 +204,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
             if (binding.tvMeetingCourseInfo.lineCount > 10) {
                 binding.btnCourseInfoMore.visibility = View.VISIBLE
             }else{
-                binding.btnCourseInfoMore.visibility = View.INVISIBLE
+                binding.btnCourseInfoMore.visibility = View.GONE
             }
         }
         binding.btnCourseInfoMore.setOnClickListener {
@@ -271,6 +272,18 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         }
     }
 
+    private fun initComingDate(
+        courseData: CourseContentsResponse,
+        upcomingData: ArrayList<UpcomingDateResponse>
+    ) {
+        comingDateAdapter = CourseComingDateAdapter(courseData, upcomingData)
+        binding.rvComingDate.adapter = comingDateAdapter
+        binding.rvComingDate.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL, false)
+
+        binding.tvComingCount.text = upcomingData.size.toString()
+    }
+
     override fun CourseContentsLoading() {
         TODO("Not yet implemented")
     }
@@ -279,6 +292,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         courseData = content
 
         initCourseInfo(courseData!!)
+        initUpcomingDataManager(key)
     }
 
     override fun CourseContentsFailure(status: Int, message: String) {
@@ -291,11 +305,34 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     }
 
     override fun UpcomingDateSuccess(content: ArrayList<UpcomingDateResponse>) {
-        Log.d("데이터 잘 넘어옴","데이터 잘 넘어옴")
+        upcomingData = content
+
+        courseData?.let {
+            initComingDate(it, upcomingData!!)
+        }
     }
 
     override fun UpcomingDateFailure(status: Int, message: String) {
         Log.d("가까운일정에러1",status.toString())
         Log.d("가까운일정에러2",message)
+    }
+
+    private fun initDataManager(tourId : Int) {
+        val token = getJwt()
+        Log.d("token",token)
+        if(token.isNotEmpty()){
+            val authService = AuthService()
+            authService.setCourseContentsView(this)
+            Log.d("tourId",tourId.toString())
+            authService.courseContentsInfo(tourId)
+        }else{
+            Log.d("token 오류","token 오류")
+        }
+    }
+
+    private fun initUpcomingDataManager(tourId: Int) {
+        val authService = AuthService()
+        authService.setUpcomingDateView(this)
+        authService.upcomingDateInfo(tourId)
     }
 }

@@ -12,7 +12,8 @@ class AuthService {
     private lateinit var mainView: MainView
     private lateinit var courseContentsView: CourseContentsView
     private lateinit var upcomingDateView: UpcomingDateView
-
+    private lateinit var bringCourseView: BringCourseView
+    private lateinit var changeWishView: ChangeWishView
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
 //        this.signUpView = signUpView
@@ -28,6 +29,14 @@ class AuthService {
 
     fun setUpcomingDateView(upcomingDateView: UpcomingDateView){
         this.upcomingDateView = upcomingDateView
+    }
+
+    fun setBringCourseView(bringCourseView: BringCourseView){
+        this.bringCourseView = bringCourseView
+    }
+
+    fun setChangeWishView(changeWishView: ChangeWishView){
+        this.changeWishView = changeWishView
     }
 
     fun mainInfo() {
@@ -89,7 +98,7 @@ class AuthService {
                 call: Call<BaseResponse<ArrayList<UpcomingDateResponse>>>,
                 response: Response<BaseResponse<ArrayList<UpcomingDateResponse>>>
             ) {
-                Log.d("Upcoming response", response.toString())
+//                Log.d("Upcoming response", response.toString())
                 if (response.isSuccessful) {
                     val resp = response.body()
                     Log.d("Upcoming Response Body", resp.toString())
@@ -102,6 +111,58 @@ class AuthService {
             }
 
             override fun onFailure(call: Call<BaseResponse<ArrayList<UpcomingDateResponse>>>, t: Throwable) {
+                Log.d("Upcoming Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun bringCourseInfo(id : Int, option : String) {
+//        mainView.MainLoading()
+        authService.bringCourseInfo(id, option).enqueue(object : Callback<BaseResponse<ArrayList<BringCourseResponse>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<ArrayList<BringCourseResponse>>>,
+                response: Response<BaseResponse<ArrayList<BringCourseResponse>>>
+            ) {
+                Log.d("BringCourse response", response.toString())
+                if (response.isSuccessful) {
+                    val resp = response.body()
+                    Log.d("BringCourse Response Body", resp.toString())
+                    Log.d("BringCourse Response Body result", resp?.result.toString())
+                    when (resp!!.status) {
+                        200 -> bringCourseView.BringCourseSuccess(resp.result)
+                        else -> bringCourseView.BringCourseFailure(resp.status, resp.message)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<ArrayList<BringCourseResponse>>>, t: Throwable) {
+                Log.d("Upcoming Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun changeWishInfo(tourId: Int) {
+//        mainView.MainLoading()
+        authService.changeWishInfo(tourId).enqueue(object : Callback<BaseResponse<ChangeWishResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<ChangeWishResponse>>,
+                response: Response<BaseResponse<ChangeWishResponse>>
+            ) {
+                Log.d("ChangeWish response", response.toString())
+                if (response.isSuccessful) {
+                    val resp = response.body()
+                    Log.d("ChangeWish Response Body", resp.toString())
+                    Log.d("ChangeWish Response Body result", resp?.result.toString())
+                    when (resp!!.status) {
+                        200 -> changeWishView.ChangeWishSuccess()
+                        else -> changeWishView.ChangeWishFailure(resp.status, resp.message)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<ChangeWishResponse>>, t: Throwable) {
                 Log.d("Upcoming Failed", t.toString())
             }
 

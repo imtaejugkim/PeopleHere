@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
+    android:layout_marginBottom="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/rectangle_gray2_12">
 
@@ -17,85 +18,11 @@
             android:id="@+id/tv_coming_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2010"
+            android:text="2010년 14월 24일 (화)"
             android:textSize="16sp"
             android:textColor="@color/Gray8"
             android:fontFamily="@font/pretendard_semibold"/>
 
-        <TextView
-            android:id="@+id/tv_coming_year_string"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/text_year"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginStart="4dp"
-            android:text="13"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_month_string"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/text_month"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginStart="4dp"
-            android:text="32"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_day_string"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/text_day"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_date_before"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginStart="4dp"
-            android:text="@string/coming_date_before"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="활"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
-
-        <TextView
-            android:id="@+id/tv_coming_date_after"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/coming_date_after"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/Gray8"/>
     </LinearLayout>
 
     <TextView
@@ -119,21 +46,10 @@
         app:layout_constraintTop_toBottomOf="@id/ll_coming_date">
 
         <TextView
-            android:id="@+id/tv_time_exist_first_string"
-            app:layout_constraintStart_toStartOf="@id/ll_coming_date"
-            app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
-            android:textSize="14sp"
-            android:textColor="@color/Gray6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="오전"/>
-
-        <TextView
             android:id="@+id/tv_time_exist_first"
             app:layout_constraintStart_toStartOf="@id/ll_coming_date"
             app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
             android:textSize="14sp"
-            android:layout_marginStart="4dp"
             android:textColor="@color/Gray6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -151,17 +67,6 @@
             android:text="@string/coming_date_center"/>
 
         <TextView
-            android:id="@+id/tv_time_exist_second_string"
-            app:layout_constraintStart_toStartOf="@id/ll_coming_date"
-            app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
-            android:textSize="14sp"
-            android:textColor="@color/Gray6"
-            android:layout_marginStart="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="오후"/>
-
-        <TextView
             android:id="@+id/tv_time_exist_second"
             app:layout_constraintStart_toStartOf="@id/ll_coming_date"
             app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
@@ -177,8 +82,9 @@
         android:id="@+id/btn_coming_date_enjoy"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="74:42"
         app:layout_constraintTop_toTopOf="@id/ll_coming_date"
-        app:layout_constraintBottom_toBottomOf="@id/ll_time_exist"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/pretendard_medium"
         android:textSize="14sp"

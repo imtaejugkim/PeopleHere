@@ -2,6 +2,7 @@ package com.peopleHere.people_here
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.peopleHere.people_here.databinding.ActivityMainBinding
 import com.peopleHere.people_here.TitleCategory.MakingTourFragment
 import com.peopleHere.people_here.MyTour.MakingCourseFragment

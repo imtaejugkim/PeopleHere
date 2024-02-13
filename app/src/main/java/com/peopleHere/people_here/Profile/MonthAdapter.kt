@@ -19,7 +19,7 @@ class MonthAdapter(val calendarData : ArrayList<CalendarData>,
             binding.rvDate.layoutManager = GridLayoutManager(binding.rvDate.context, 7)
 //            binding.rvDate.adapter = DateAdapter(item.day)
 
-            binding.rvDate.adapter = DateAdapter(item, item.month, item.year, dateClickListener) // 수정
+            binding.rvDate.adapter = DateAdapter(item, item.month, item.year, dateClickListener)
 
         }
     }

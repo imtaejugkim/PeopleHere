@@ -71,35 +71,6 @@ class CalendarActivity : AppCompatActivity() {
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
-//    private fun showCalendarDialog(date: String, month: Int, year: Int) {
-//        val dlgBinding = DialogCourseManageBinding.inflate(layoutInflater)
-//        val dialogBuilder = android.app.AlertDialog.Builder(this)
-//        calendarDialog = dialogBuilder.setView(dlgBinding.root).show()
-//
-//        dlgBinding.tvDialogMonth.text = month.toString()
-//        dlgBinding.tvDialogDay.text = date
-//
-//        dlgBinding.vpCalendar.adapter = TabLayoutVPAdapter(this)
-//        TabLayoutMediator(dlgBinding.tlEnterDate, dlgBinding.vpCalendar){tab, position ->
-//            tab.text = tabList[position]
-//        }.attach()
-//
-//        val density = resources.displayMetrics.density
-//        val widthPx = (272 * density).toInt()
-//        val heightPx = (500 * density).toInt()
-//
-//        calendarDialog?.window?.setLayout(widthPx, heightPx)
-//        calendarDialog?.window?.setGravity(Gravity.BOTTOM)
-//        calendarDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-//        dlgBinding.btnKeepGoing.setOnClickListener {
-//            sequenceDialog?.dismiss()
-//        }
-//
-//        dlgBinding.btnExit.setOnClickListener {
-//            sequenceDialog?.dismiss()
-//        }
-//    }
 
     private fun calculateDays(year: Int, month: Int) : ArrayList<String> {
         val dayList = ArrayList<String>()

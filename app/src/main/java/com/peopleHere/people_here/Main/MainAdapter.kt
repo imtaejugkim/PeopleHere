@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.Main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.peopleHere.people_here.Data.MainCourseData
 class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<MainAdapter.ViewHolder>(){
     private lateinit var itemClickListener: OnItemClickListener
     private lateinit var heartClickListener : OnHeartClickListener
+    private var booleanHeart : Boolean = false
 
     interface OnItemClickListener{
         fun onItemClick(tourListInfo: MainData)
@@ -31,9 +33,10 @@ class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<Mai
             }
             binding.tvMainTourListLocation.text = tourListInfo.time
 
-//            binding.icMainTourHeart.setImageResource(initHeartImage(tourListInfo))
+            binding.icMainTourHeart.setImageResource(initHeartImage(tourListInfo.wished))
             binding.icMainTourHeart.setOnClickListener {
                 heartClickListener.onHeartClick(adapterPosition)
+                Log.d("1번 하트", booleanHeart.toString())
             }
 
 //            binding.tvMainTourListLocation.text = initLocationText(placesInfo)
@@ -46,15 +49,17 @@ class MainAdapter(val mainData : ArrayList<MainData>) : RecyclerView.Adapter<Mai
         }
     }
 
-//    private fun initHeartImage(tourListInfo: MainData) : Int {
-//        val heartIconResId = if (tourListInfo.mainTourHeart) {
-//            R.drawable.ic_main_filled_heart
-//        } else {
-//            R.drawable.ic_main_empty_heart
-//        }
-//
-//        return heartIconResId
-//    }
+    private fun initHeartImage(heartInfo: Boolean) : Int {
+        booleanHeart = heartInfo
+        Log.d("2번 하트",booleanHeart.toString())
+        val heartIconResId = if (booleanHeart) {
+            R.drawable.ic_main_filled_heart
+        } else {
+            R.drawable.ic_main_empty_heart
+        }
+
+        return heartIconResId
+    }
 
 //    private fun initLocationText(placeInfo: MainCourseData): String {
 //        val locationText = when {

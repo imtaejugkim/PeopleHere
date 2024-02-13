@@ -29,7 +29,7 @@ class SetTimeActivity : AppCompatActivity(){
 
     private fun initBack() {
         binding.icCancel.setOnClickListener {
-            onBackPressed()
+            finish()
         }
     }
 

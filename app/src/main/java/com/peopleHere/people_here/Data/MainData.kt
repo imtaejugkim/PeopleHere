@@ -3,17 +3,20 @@ package com.peopleHere.people_here.Data
 import com.google.gson.annotations.SerializedName
 
 data class MainData (
-    @SerializedName("id") val id: Int,
-    @SerializedName("name") val name: String,
-    @SerializedName("startDate") val startDate: String,
+    @SerializedName("tourId") val tourId: Int,
+    @SerializedName("tourName") val tourName: String,
+    @SerializedName("userId") val userId: String,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userImageUrl") val userImageUrl: String,
     @SerializedName("time") val time: Int,
-    @SerializedName("imageUrl") val imageUrl: String,
-    @SerializedName("content") val content: String,
+    @SerializedName("content") val content : String,
     @SerializedName("places") val places: ArrayList<MainCourseData>,
     @SerializedName("categoryNames") val categoryNames: List<String>,
+    @SerializedName("participants") val participants: List<Any>,
     @SerializedName("status") val status: String,
     @SerializedName("createdAt") val createdAt: String,
-    @SerializedName("updatedAt") val updatedAt: String
+    @SerializedName("updatedAt") val updatedAt: String,
+    @SerializedName("wished") var wished : Boolean
 //    var mainTourListTitle : String,
 //    var mainTourListTime : String,
 //    var mainTourHeart : Boolean,

@@ -1,23 +1,29 @@
 package com.peopleHere.people_here.Profile
 
-import android.app.AlertDialog
+import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import com.peopleHere.people_here.Data.CalendarData
+import com.peopleHere.people_here.Main.MainAdapter
 import com.peopleHere.people_here.databinding.ActivityCalendarBinding
+import com.peopleHere.people_here.databinding.DialogCourseManageBinding
 import com.peopleHere.people_here.databinding.DialogMakingTourAddListSequenceBinding
 import java.util.Calendar
 
 class CalendarActivity : AppCompatActivity() {
     lateinit var binding : ActivityCalendarBinding
     private var calendarList : ArrayList<CalendarData> = arrayListOf()
-    var dateAdapter : DateAdapter ?= null
+    private var monthAdapter : MonthAdapter ?= null
+    private var dateAdapter : DateAdapter ?= null
+    private var calendarDialog : Dialog?= null
+    private val tabList = arrayListOf("참여 차단", "참여 가능으로 설정")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -27,14 +33,15 @@ class CalendarActivity : AppCompatActivity() {
 //        binding.rvDate.layoutManager = GridLayoutManager(this,7)
         binding.rvWeek.adapter = WeekAdapter(arrayListOf("일","월","화","수","목","금","토"))
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         initRecyclerView()
 
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvMonth.layoutManager = layoutManager
-
         val cal = Calendar.getInstance()
         val currentYear = cal.get(Calendar.YEAR)
         val currentMonth = cal.get(Calendar.MONTH) + 1 // Calendar.MONTH는 0부터 시작하므로 +1
@@ -51,8 +58,23 @@ class CalendarActivity : AppCompatActivity() {
 
         }
 
-        binding.rvMonth.adapter = MonthAdapter(calendarList)
+        monthAdapter = MonthAdapter(calendarList, object : DateAdapter.OnDateClickListener {
+            override fun onDateClick(date: String, month: Int, year: Int) {
+                showCalendarDialog(date, month, year)
+            }
+        })
+
+        binding.rvMonth.adapter = monthAdapter
+        binding.rvMonth.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL, false)
+
     }
+
+    private fun showCalendarDialog(date: String, month: Int, year: Int) {
+        val bottomSheetFragment = CalendarBottomSheetFragment.newInstance(date, month, year)
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
+
 
     private fun calculateDays(year: Int, month: Int) : ArrayList<String> {
         val dayList = ArrayList<String>()

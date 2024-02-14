@@ -19,7 +19,7 @@ class ProfileFragment : Fragment() {
 
 //        임의이동
         binding.example.setOnClickListener {
-            val intent = Intent(requireActivity(), CalendarActivity::class.java)
+            val intent = Intent(requireActivity(), DayTripManageActivity::class.java)
             startActivity(intent)
         }
         return binding.root

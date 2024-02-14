@@ -18,6 +18,7 @@ class MakingTourTimeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         setContentView(binding.root)
     }
 }

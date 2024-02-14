@@ -10,9 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.recyclerview.widget.RecyclerView
-import com.example.people_here.Data.CategoryData
-import com.example.people_here.R
-import com.example.people_here.databinding.ItemActivityCategoryBinding
+import com.peopleHere.people_here.Data.CategoryData
+import com.peopleHere.people_here.R
+import com.peopleHere.people_here.databinding.ItemActivityCategoryBinding
 
 class CategoryAdapter(val categorylist: List<CategoryData>,var CheckClicked:Int) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {

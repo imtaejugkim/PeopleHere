@@ -8,7 +8,7 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.people_here.databinding.ActivityLoginPhoneBinding
+import com.peopleHere.people_here.databinding.ActivityLoginPhoneBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -182,11 +182,11 @@ class LoginPhoneActivity : AppCompatActivity() {
                 if (editable.length == 13) {//한글자 이상이면 검정색
                     val phoneNumberWithHyphen = editable.toString() // 하이푼이 포함된 전화번호 문자열
                     phoneNumberWithoutHyphen = phoneNumberWithHyphen.replace("-", "") // 하이푼 제거
-                    binding.cvContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_next)
+                    binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue=true
 
                 } else {//클릭 불가능 하게도 설정하기
-                    binding.cvContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_close)//설정 회색으로
+                    binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_close)//설정 회색으로
                     checkContinue=false
                 }
             }

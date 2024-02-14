@@ -11,7 +11,6 @@ import com.peopleHere.people_here.databinding.ActivityCategoryBinding
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.peopleHere.people_here.Data.CategoryData
-import com.peopleHere.people_here.IntroduceCaution.IntroduceActivity
 
 
 class CategoryActivity : AppCompatActivity() {

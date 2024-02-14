@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import com.example.people_here.ApplicationClass
-import com.example.people_here.Remote.AuthService
-import com.example.people_here.SignUp.SignUpActivity
-import com.example.people_here.databinding.ActivityLoginEmailBinding
 import com.peopleHere.people_here.ApplicationClass
+import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.SignUp.SignUpActivity
+import com.peopleHere.people_here.databinding.ActivityLoginEmailBinding
 
 class LoginEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginEmailBinding
@@ -75,10 +73,10 @@ class LoginEmailActivity : AppCompatActivity() {
 
                 if (editable.length > 0) {//6자면 검정색
 
-                    binding.cvContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_next)
+                    binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue = true
                 } else {//클릭 불가능 하게도 설정하기
-                    binding.cvContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_close)//설정 회색으로
+                    binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_close)//설정 회색으로
                     checkContinue = false
                 }
             }

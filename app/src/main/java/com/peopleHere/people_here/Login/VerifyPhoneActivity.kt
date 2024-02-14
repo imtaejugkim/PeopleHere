@@ -7,8 +7,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import com.example.people_here.SignUp.SignUpActivity
-import com.example.people_here.databinding.ActivityVerifyPhoneBinding
+import com.peopleHere.people_here.SignUp.SignUpActivity
+import com.peopleHere.people_here.databinding.ActivityVerifyPhoneBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -126,10 +126,10 @@ class VerifyPhoneActivity : AppCompatActivity() {
 
                 if (editable.length == 6) {//6자면 검정색
                     val phoneNumberWithHyphen = editable.toString() // 하이푼이 포함된 전화번호 문자열
-                    binding.btnContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_next)
+                    binding.btnContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue= true
                 } else {//클릭 불가능 하게도 설정하기
-                    binding.btnContinue.setBackgroundResource(com.example.people_here.R.drawable.making_tour_button_close)//설정 회색으로
+                    binding.btnContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_close)//설정 회색으로
                     checkContinue=false
                 }
             }

@@ -11,9 +11,9 @@ android {
 
     defaultConfig {
         applicationId = "com.peopleHere.people_here"
-        minSdk = 28
+        minSdk = 30
         targetSdk = 33
-        versionCode = 2
+        versionCode = 3
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

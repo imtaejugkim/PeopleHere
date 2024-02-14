@@ -33,6 +33,10 @@ class CalendarActivity : AppCompatActivity() {
 //        binding.rvDate.layoutManager = GridLayoutManager(this,7)
         binding.rvWeek.adapter = WeekAdapter(arrayListOf("일","월","화","수","목","금","토"))
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         initRecyclerView()
 
     }

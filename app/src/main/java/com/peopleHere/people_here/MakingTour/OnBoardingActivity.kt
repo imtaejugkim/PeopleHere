@@ -29,6 +29,10 @@ class OnBoardingActivity : AppCompatActivity(){
         initIndicators()
         setupViewPagerListener()
 
+        binding.ivOnBoardingCancel.setOnClickListener {
+            finish()
+        }
+
         binding.btnNext.setOnClickListener {
             val intent = Intent()
 

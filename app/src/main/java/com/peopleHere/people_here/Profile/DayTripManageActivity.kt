@@ -18,6 +18,7 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
     private var inactiveAdapter : InactiveTripAdapter?= null
     private var deletedAdapter : DeletedAdapter?= null
     private var dayTripData : ArrayList<BringCourseResponse> = arrayListOf()
+    private var tourId : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDayTripManageBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
             finish()
         }
 
-        initDataManager(6, "created")
+        initDataManager(1, "created")
         initRecyclerView()
 
         setContentView(binding.root)
@@ -39,7 +40,6 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
             LinearLayoutManager.VERTICAL, false)
         binding.rvStop.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)
-
 
         binding.rvActive.layoutManager = BlockScrollManager(this)
         binding.rvInactive.layoutManager = BlockScrollManager(this)
@@ -66,6 +66,8 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
         activeAdapter!!.setOnItemClickListener(object : ActiveTripAdapter.OnItemClickListener{
             override fun onItemClick(dayTripInfo : BringCourseResponse) {
                 val intent = Intent(this@DayTripManageActivity, CalendarActivity::class.java)
+                tourId = dayTripInfo.tourId
+                intent.putExtra("tourId",tourId)
                 startActivity(intent)
             }
         })
@@ -73,6 +75,8 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
         inactiveAdapter!!.setOnItemClickListener(object : InactiveTripAdapter.OnItemClickListener{
             override fun onItemClick(dayTripInfo : BringCourseResponse) {
                 val intent = Intent(this@DayTripManageActivity, CalendarActivity::class.java)
+                tourId = dayTripInfo.tourId
+                intent.putExtra("tourId",tourId)
                 startActivity(intent)
             }
         })
@@ -80,6 +84,8 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
         deletedAdapter!!.setOnItemClickListener(object : DeletedAdapter.OnItemClickListener{
             override fun onItemClick(dayTripInfo : BringCourseResponse) {
                 val intent = Intent(this@DayTripManageActivity, CalendarActivity::class.java)
+                tourId = dayTripInfo.tourId
+                intent.putExtra("tourId",tourId)
                 startActivity(intent)
             }
         })

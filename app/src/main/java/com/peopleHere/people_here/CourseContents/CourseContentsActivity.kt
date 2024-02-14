@@ -38,6 +38,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     private var key : Int = 0
     private var courseData : CourseContentsResponse ?= null
     private var upcomingData : ArrayList<UpcomingDateResponse> ?= null
+    private var tourTime : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,13 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         binding.btnBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.btnPossibleEnjoy.setOnClickListener {
+            val intent = Intent(this, PossibleEnjoyActivity::class.java)
+            intent.putExtra("key",key)
+            intent.putExtra("tourTime",tourTime)
+            startActivity(intent)
         }
 
         setContentView(binding.root)
@@ -293,6 +301,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         initCourseInfo(courseData!!)
         initUpcomingDataManager(key)
+        tourTime = content.time
     }
 
     override fun CourseContentsFailure(status: Int, message: String) {

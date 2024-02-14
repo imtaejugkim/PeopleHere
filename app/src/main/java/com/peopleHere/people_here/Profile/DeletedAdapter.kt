@@ -37,8 +37,13 @@ class DeletedAdapter(val context : Context, val dayTripData : ArrayList<BringCou
 
                 binding.tvMainTourListTime.text = item.time
 
-                if (dayTripData.size > 1) {
-                    binding.tvMainTourListLocation.text = "${item.places[0].address} 외 ${dayTripData.size - 1}개"
+                if (item.places.size > 1) {
+                    val addCount = item.places.size - 1
+                    binding.tvMainTourListLocation.text = "${item.places[0].address} 외 ${addCount}개"
+                } else if (item.places.isNotEmpty()) {
+                    binding.tvMainTourListLocation.text = item.places[0].address
+                } else {
+                    binding.tvMainTourListLocation.text = "위치 정보 없음"
                 }
 
                 binding.btnShowDate.setOnClickListener {

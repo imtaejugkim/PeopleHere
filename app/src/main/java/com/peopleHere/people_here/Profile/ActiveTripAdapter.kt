@@ -37,15 +37,18 @@ class ActiveTripAdapter(val context : Context, val dayTripData : ArrayList<Bring
 
                 binding.tvMainTourListTime.text = item.time
 
-                binding.tvMainTourListLocation.text = item.places.mapIndexed { index, place ->
-                    "${place.address}${if (index < item.places.size - 1) ", " else ""}"
-                }.joinToString("")
+                if (item.places.size > 1) {
+                    val addCount = item.places.size - 1
+                    binding.tvMainTourListLocation.text = "${item.places[0].address} 외 ${addCount}개"
+                } else if (item.places.isNotEmpty()) {
+                    binding.tvMainTourListLocation.text = item.places[0].address
+                } else {
+                    binding.tvMainTourListLocation.text = "위치 정보 없음"
+                }
 
                 binding.btnShowDate.setOnClickListener {
                     itemClickListener.onItemClick(item)
                 }
-            }else{
-
             }
         }
 

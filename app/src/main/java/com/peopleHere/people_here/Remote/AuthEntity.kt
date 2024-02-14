@@ -35,7 +35,7 @@ data class CourseContentsResponse (
 data class UpcomingDateResponse (
     @SerializedName("id") val id : Int,
     @SerializedName("date") val date : String,
-    @SerializedName("time") val time : String,
+    @SerializedName("time") val time : String?,
     @SerializedName("status") val status : String,
     @SerializedName("participants") val participants : ArrayList<ScheduleParticipants>
 )

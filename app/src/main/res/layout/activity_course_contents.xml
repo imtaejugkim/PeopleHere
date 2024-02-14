@@ -767,6 +767,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_possible_enjoy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="85dp"
@@ -779,7 +780,6 @@
                 app:layout_constraintEnd_toEndOf="@id/guide_end"
                 app:layout_constraintTop_toBottomOf="@id/ll_coming_date_button"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.peopleHere.people_here"
-        minSdk = 30
+        minSdk = 28
         targetSdk = 33
         versionCode = 3
         versionName = "1.0"

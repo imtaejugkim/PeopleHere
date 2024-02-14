@@ -142,7 +142,7 @@
     <string name="tour_contents_date">일정</string>
     <string name="tour_contents_review_last">개 모두 보기</string>
     <string name="tour_contents_coming_date">가까운 일정</string>
-    <string name="tour_contents_correction">수정하기</string>
+    <string name="tour_contents_correction">참여 가능한 일정</string>
     <string name="review_title">님에 대한 후기</string>
     <string name="review_count">개</string>
     <string name="review_date">전</string>
@@ -152,6 +152,8 @@
     <string name="coming_date_center">-</string>
     <string name="coming_date_enjoy">참여</string>
     <string name="coming_date_ongoing">참여 요청 중</string>
+    <string name="day_trip_contents_possible_enjoy">참여 가능한 일정·</string>
+
 
     <!--dialog_help 투어 유형 이름 정리 -->
     <string name="dialog_help_example">투어 유형 예시</string>
@@ -253,8 +255,6 @@
         <item name="night">오후</item>
     </string-array>
     <string name="set_time_register">저장</string>
-
-
 
 
 </resources>

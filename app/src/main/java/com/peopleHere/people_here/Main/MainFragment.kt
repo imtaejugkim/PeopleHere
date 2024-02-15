@@ -27,7 +27,7 @@ class MainFragment : Fragment() , MainView, ChangeWishView {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(layoutInflater)
-        authService = AuthService()
+        authService = AuthService(requireContext())
 
         //백앤드 통신 시 변경될 데이터 추가 방식입니다.
         initRecyclerView()

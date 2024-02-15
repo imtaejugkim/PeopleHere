@@ -108,7 +108,7 @@ class DayTripManageActivity : AppCompatActivity() , BringCourseView {
         val token = getJwt()
         Log.d("token",token)
         if(token.isNotEmpty()){
-            val authService = AuthService()
+            val authService = AuthService(this)
             authService.setBringCourseView(this)
             authService.bringCourseInfo(id, option)
         }else{

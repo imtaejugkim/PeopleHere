@@ -38,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/guide_bottom"/>
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

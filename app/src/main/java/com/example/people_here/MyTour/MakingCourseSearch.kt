@@ -21,7 +21,7 @@ class MakingCourseSearch : AppCompatActivity() {
 
 
         if (!Places.isInitialized()){
-            Places.initialize(applicationContext,"AIzaSyD0MzRUdtrKzAA90oq79azSYFkMNLvLyi8")
+            Places.initialize(applicationContext,"AIzaSyB3WLa8PNBaMOK2OQm1U64Hb6RetEu-E1g")
         }
 
         // Initialize the AutocompleteSupportFragment.

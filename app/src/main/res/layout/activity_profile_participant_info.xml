@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile_participant_info">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile_participant_info_top_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/iv_profile_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_profile_comming_meet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineHeight="24sp"
+            android:text="다가오는 만남"
+            android:textColor="@color/Gray8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Gray1.5"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_profile_participant_info_top_appbar" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_profile_comming_meet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/line">
+
+        <ImageView
+            android:id="@+id/iv_profile_region_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_example_place" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_profile_region_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="홍대에서 만나는 디자인과 예술 "
+        android:textColor="@color/Gray8"
+        android:textSize="@dimen/main_search_recent_region"
+        app:layout_constraintStart_toEndOf="@id/cv_profile_comming_meet"
+        app:layout_constraintTop_toTopOf="@id/cv_profile_comming_meet" />
+
+    <ImageView
+        android:id="@+id/tv_profile_region_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_margintop="4dp"
+        android:src="@drawable/profile_location"
+        app:layout_constraintStart_toEndOf="@id/cv_profile_comming_meet"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_region_title" />
+
+    <TextView
+        android:id="@+id/tv_profile_region_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_margintop="4dp"
+        android:text="성동구 외 1개"
+        android:textColor="@color/Gray6"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_region_icon"
+        app:layout_constraintStart_toEndOf="@id/tv_profile_region_icon"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_region_title" />
+
+
+    <ImageView
+        android:id="@+id/tv_profile_clock_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_margintop="4dp"
+        android:src="@drawable/profile_clock"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_region_icon"
+        app:layout_constraintStart_toEndOf="@id/tv_profile_region_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_region_title" />
+
+    <TextView
+        android:id="@+id/tv_profile_clock_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_margintop="4dp"
+        android:text="4시간"
+        android:textColor="@color/Gray6"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_region_icon"
+        app:layout_constraintStart_toEndOf="@id/tv_profile_clock_icon"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_region_title" />
+
+
+    <ImageView
+        android:id="@+id/profile_cutting_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:color="@color/Gray1.5"
+        android:src="@drawable/profile_cutting_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_clock_detail" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_meet_person"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/making_tour_add_list_place_info"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/profile_cutting_line">
+
+        <TextView
+            android:id="@+id/tv_meet_person_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="만나게 될 사람"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="레이첼"
+            android:textColor="@color/Gray7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_meet_person_title" />
+
+
+        <TextView
+            android:id="@+id/tv_profile_lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="구사언어"
+            android:textColor="@color/Gray6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_name" />
+
+        <ImageView
+            android:id="@+id/iv_profile_mini_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/profile_mini_line"
+            app:layout_constraintBottom_toBottomOf="@id/tv_profile_lang"
+            app:layout_constraintStart_toEndOf="@id/tv_profile_lang"
+            app:layout_constraintTop_toTopOf="@id/tv_profile_lang" />
+
+        <TextView
+            android:id="@+id/tv_lan_details"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="한국어, 영어, 스페인어, 일본어, 중국어, n개국어를 할 수 있는 능력자"
+            android:textColor="@color/Gray6"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_mini_line"
+            app:layout_constraintTop_toTopOf="@id/tv_profile_lang" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_item_home_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_item_home_thumbnail_img"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_olivia" />
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_schedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rectangle_main_1"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/cl_meet_person">
+
+        <TextView
+            android:id="@+id/cl_schedule_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일정"
+            android:textColor="@color/Gray8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/profile_date_orange"
+            android:lineHeight="18sp"
+            android:lineSpacingExtra="4sp"
+            android:paddingHorizontal="8dp"
+            android:text="내일 만나요"
+            android:textColor="@color/Orange5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cl_schedule_title" />
+
+        <TextView
+            android:id="@+id/cl_schedule_title_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="2023년 11월 11일 (수) 오전 9시"
+            android:textColor="@color/Gray8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_schedule_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_place"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rectangle_main_1"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/cl_schedule">
+
+        <TextView
+            android:id="@+id/cl_place_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="처음 만나는 장소"
+            android:textColor="@color/Gray8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cl_place_title_details_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="건국대학교"
+            android:textColor="@color/Gray7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_place_title" />
+
+        <TextView
+            android:id="@+id/cl_place_title_details_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서울특별시 광진구 능동로 120"
+            android:textColor="@color/Gray6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_place_title_details_1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile_dash_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_place">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:src="@drawable/dash_line_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="8.5dp"
+            android:layout_height="17dp"
+            android:background="@drawable/half_circle_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="8.5dp"
+            android:layout_height="17dp"
+            android:background="@drawable/half_circle_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_order_place"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/cl_profile_dash_line">
+
+        <ImageView
+            android:id="@+id/iv_order_place_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_place_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_order_place_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="건국대학교"
+            app:layout_constraintStart_toEndOf="@id/iv_order_place_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_order_place_icon" />
+
+        <TextView
+            android:id="@+id/tv_order_place_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="서울특별시 광진구 아차산로 225"
+            app:layout_constraintStart_toEndOf="@id/iv_order_place_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_place_title" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile_dash_line_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_order_place">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:src="@drawable/dash_line_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="8.5dp"
+            android:layout_height="17dp"
+            android:background="@drawable/half_circle_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="8.5dp"
+            android:layout_height="17dp"
+            android:background="@drawable/half_circle_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/guide_end"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/cl_profile_dash_line_3"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/iv_profile_cancel_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_cancel_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_profile_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="만남 취소하기"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_cancel_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_cancel_icon"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_cancel_icon"
+            android:layout_marginStart="10dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_profile_cancel"
+            android:src="@drawable/profile_arrow_icon"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

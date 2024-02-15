@@ -23,7 +23,7 @@ class SignInActivity : AppCompatActivity(), SignInView {
         binding.emailSignInButton.setOnClickListener{
             val id=binding.email.text.toString()//아이디보냄
             val pw=binding.password.text.toString()//텍스트보soa
-            val authService= AuthService()//여기로 넘김
+            val authService= AuthService(this)//여기로 넘김
             authService.setSignInView(this)//자신이 상속해서 자신 넣어주기
             authService.signin(id,pw)//메소드 호출 따라서 엑티비에서 requset로 넘김
             Log.d("id",id)

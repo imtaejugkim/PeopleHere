@@ -48,7 +48,7 @@ class MainFragment : Fragment() , MainView {
         val token = getJwt()
         Log.d("token",token)
         if(token.isNotEmpty()){
-            val authService = AuthService()
+            val authService = AuthService(requireContext())
             authService.setMainView(this)
             authService.mainInfo()
         }else{

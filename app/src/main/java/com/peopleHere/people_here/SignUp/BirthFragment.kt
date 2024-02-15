@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.SignUp
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +9,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.room.util.findColumnIndexBySuffix
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.peopleHere.people_here.ForCommunicate
+import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.FragmentBirthBinding
 
-class BirthFragment : BottomSheetDialogFragment() {
+class BirthFragment(callback:ForCommunicate) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBirthBinding
+
+    val callBack:ForCommunicate
+
+    init {
+        callBack=callback
+    }
+
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,20 +40,13 @@ class BirthFragment : BottomSheetDialogFragment() {
         binding.npDayPicker.maxValue = 31
         binding.npDayPicker.minValue = 1
         //여기다시
-
         binding.cvOk.setOnClickListener {
+
             val intent = Intent(requireContext(), SignUpActivity::class.java)
             //data 넘기기 잘 담겨지긴 하데 넘기는게 안되네용?
-            Log.d("year",binding.npYearPicker.value.toString())
-            intent.putExtra("year", binding.npYearPicker.value.toString())
-            intent.putExtra("month", binding.npMonthPicker.value.toString())
-            intent.putExtra("day", binding.npDayPicker.value.toString())
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.remove(this)
-            transaction.commit()            //이렇게 하면 넘겨지지 않나~
+            callBack.callBackExample(binding.npYearPicker.value,binding.npMonthPicker.value,binding.npDayPicker.value)
+            dismiss()
         }
-
-
         return binding.root
 
 

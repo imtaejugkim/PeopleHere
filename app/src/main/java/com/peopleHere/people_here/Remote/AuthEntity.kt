@@ -40,8 +40,17 @@ data class JwtToken(
     @SerializedName("refreshToken") val refreshToken: String
 )
 //로그인 되어있나 체크하는 req
-data class CheckEmailRequest(
+
+data class SignUpRequest(
     @SerializedName("email")val email:String,
+    @SerializedName("password")val password:String,
+    @SerializedName("firstName")val firstName:String,
+    @SerializedName("lastName")val lastName:String,
+    @SerializedName("birth")val birth:String,
+    @SerializedName("gender")val gender:String,
+)
+data class SignUpResponse(
+    @SerializedName("userId")val userId:Int,
 )
 
 data class CheckEmailResponse(

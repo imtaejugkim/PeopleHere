@@ -52,7 +52,8 @@
             android:paddingStart="6dp"
             android:text="@string/item_add_picture_name"
             android:textColor="@color/Gray1"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:fontFamily="@font/pretendard_regular"/>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -75,6 +76,7 @@
             android:layout_marginTop="3dp"
             android:paddingStart="6dp"
             android:text="@string/item_add_picture_string"
+            android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/Gray7"
             android:textSize="14sp"/>
     </androidx.cardview.widget.CardView>

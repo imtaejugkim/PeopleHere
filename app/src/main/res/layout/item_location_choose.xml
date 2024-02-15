@@ -53,6 +53,7 @@
                 android:text="null지역"
                 android:textColor="@color/Gray8"
                 android:textSize="@dimen/main_search_recent_region"
+                android:fontFamily="@font/pretendard_regular"
                 app:layout_goneMarginStart="16dp"
                 app:layout_constraintStart_toEndOf="@id/cv_main_tour_list_user_course"
                 app:layout_constraintTop_toTopOf="parent"

@@ -103,7 +103,8 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
 
             //한 번 그냥 이것도 fragment로 해보기..ㅠㅠ
             //selectPictureDialog.getWindow()!!.setGravity(Gravity.BOTTOM);
-            //selectPictureDialog.show()
+            //selectPictureDialog.s
+        // how()
 
             //또 다이어로그에선 생명주기떄매 안되네 ㅋㅋ
         }

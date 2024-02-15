@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <ImageView
+        android:id="@+id/iv_on_boarding_picture"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="335:297"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_onboarding_1"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cv_on_boarding_number"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/circle_orange5_26"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_on_boarding_picture">
+
+        <TextView
+            android:id="@+id/tv_on_boarding_number"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:text="1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_on_boarding_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_semibold"
+        android:textSize="18sp"
+        android:lineHeight="24sp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="피플히어에서 여행자들과\n만나보세요 null"
+        app:layout_constraintTop_toBottomOf="@id/cv_on_boarding_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

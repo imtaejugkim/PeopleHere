@@ -9,10 +9,11 @@
     <color name="Gray3">#DBDBE0</color>
     <color name="Gray4">#CACDD2</color>
     <color name="Gray5">#9FA4A9</color>
+    <color name="Gray5.5">#646B72</color>
     <color name="Gray6">#464C52</color>
     <color name="Gray7">#26282B</color>
     <color name="Gray8">#1B1D1F</color>
-
+    <color name="Gray7_0.8">#CC26282B</color>
 
     <color name="Orange1">#FFF2EB</color>
     <color name="Orange3">#FFC5A8</color>
@@ -21,7 +22,7 @@
     <color name="Orange6">#F66015</color>
 
     <color name="Red1">#FFF0ED</color>
-    <color name="Red2"></color>
+    <color name="Red2">#FFDAD3</color>
     <color name="Red3">#F17272</color>
 
 </resources>

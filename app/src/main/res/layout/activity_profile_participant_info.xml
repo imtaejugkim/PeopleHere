@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".profile_participant_info">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_start"
@@ -92,7 +91,6 @@
         android:layout_marginStart="15dp"
         android:text="홍대에서 만나는 디자인과 예술 "
         android:textColor="@color/Gray8"
-        android:textSize="@dimen/main_search_recent_region"
         app:layout_constraintStart_toEndOf="@id/cv_profile_comming_meet"
         app:layout_constraintTop_toTopOf="@id/cv_profile_comming_meet" />
 

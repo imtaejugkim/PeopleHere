@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".IntroduceCaution.CautionActivity">
 
     <androidx.cardview.widget.CardView
@@ -25,7 +26,8 @@
             android:layout_marginTop="3dp"
             android:text="@string/activity_caution_exit"
             android:textSize="14sp"
-
+            android:textColor="@color/Gray6"
+            android:fontFamily="@font/pretendard_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cv_exit"/>
     </androidx.cardview.widget.CardView>
@@ -39,6 +41,7 @@
         android:text="5/8"
         android:textColor="@color/Orange6"
         android:textSize="14sp"
+        android:fontFamily="@font/pretendard_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cv_exit" />
 
@@ -51,6 +54,8 @@
         android:layout_marginTop="18dp"
         android:text="@string/activity_caution_headline"
         android:textSize="20sp"
+        android:textColor="@color/Gray8"
+        android:fontFamily="@font/suite_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_exit" />
     <TextView
@@ -62,6 +67,7 @@
         android:text="@string/activity_caution_guideline"
         android:textColor="@color/Gray5"
         android:textSize="14sp"
+        android:fontFamily="@font/pretendard_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_headline" />
 
@@ -111,6 +117,7 @@
         android:text="@string/cost_input_item_next"
         android:textSize="16sp"
         android:textColor="@color/white"
+        android:fontFamily="@font/pretendard_regular"
         android:layout_marginEnd="16dp"
         android:background="@drawable/making_tour_button_close"
         app:layout_constraintEnd_toEndOf="parent"

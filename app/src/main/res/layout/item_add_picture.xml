@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cl"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="181dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:id="@+id/iv_picture"
+            android:src="@drawable/basic_image"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:scaleType="centerCrop"/>
+    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/iv_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:elevation="2dp"
+        android:src="@drawable/round_cancel"
+        app:layout_constraintTop_toBottomOf="@id/cv_picture"
+        app:layout_constraintBottom_toTopOf="@id/cv_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cv_picture"
+        app:layout_constraintBottom_toBottomOf="@id/cv_picture"
+        android:layout_marginEnd="5dp"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:cardBackgroundColor="@color/Gray7_0.8"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/cv_picture"
+        app:layout_constraintStart_toStartOf="@id/cv_picture">
+        <TextView
+            android:id="@+id/tv_location_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingEnd="6dp"
+            android:paddingStart="6dp"
+            android:text="@string/item_add_picture_name"
+            android:textColor="@color/Gray1"
+            android:textSize="14sp"
+            android:fontFamily="@font/pretendard_regular"/>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:visibility="invisible"
+        android:id="@+id/cv_string"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintTop_toTopOf="@id/cv_picture"
+        app:layout_constraintStart_toStartOf="@id/cv_picture">
+        <TextView
+            android:id="@+id/tv_repre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="6dp"
+            android:layout_marginTop="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/item_add_picture_string"
+            android:fontFamily="@font/pretendard_regular"
+            android:textColor="@color/Gray7"
+            android:textSize="14sp"/>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

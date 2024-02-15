@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.People_Here"  parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/white</item>
@@ -9,11 +10,18 @@
 
     <style name="Theme.People_Here" parent="Base.Theme.People_Here" />
 
-    <style name="Theme.TransparentStatusBar" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Status bar color. -->
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+    <style name="calendarWeekText" parent="TextAppearance.AppCompat.Button">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textColor">@color/Gray5</item>
     </style>
 
+    <style name="calendarDateText" parent="TextAppearance.AppCompat.Button">
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textColor">@color/Gray8</item>
+    </style>
+
+<!--    <style name="calendarHeaderText" parent="TextAppearance.AppCompat.Button">-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:textColor">#00FFFF</item>-->
+<!--    </style>-->
 </resources>

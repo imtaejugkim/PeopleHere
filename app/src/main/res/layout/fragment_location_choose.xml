@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:maxHeight="496dp"
     android:id="@+id/cl_wrap"
+    android:background="@drawable/location_choose_bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddPicture.LocationChooseFragment">
 
@@ -28,6 +29,7 @@
         android:text="@string/fragment_location_choose_choose_location"
         android:textSize="16sp"
         android:textColor="@color/Gray8"
+        android:fontFamily="@font/pretendard_regular"
         android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +57,7 @@
         android:text="@string/fragment_location_choose_choose"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:fontFamily="@font/pretendard_regular"
         android:layout_gravity="bottom"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="32dp"

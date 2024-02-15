@@ -30,7 +30,13 @@
         android:theme="@style/Theme.People_Here"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity android:name="com.example.people_here.ProfileParticipantActivity"
+        <activity android:name=".MyTour.MakingCourseSearchActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Main.MainSearchActivity"
+            android:exported="false"/>
+        <activity
+            android:name="com.example.people_here.ProfileParticipantActivity"
             android:exported="false"/>
         <activity
             android:name=".DaytripRequest.RequestWithDrawActivity"

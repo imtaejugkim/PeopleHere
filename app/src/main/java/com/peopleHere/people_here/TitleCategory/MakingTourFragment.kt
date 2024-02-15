@@ -11,6 +11,7 @@ import com.peopleHere.people_here.MakingTour.HelpDiaLog
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.CourseContents.CourseContentsActivity
 import com.peopleHere.people_here.databinding.FragmentMakingTourBinding
+import com.peopleHere.people_here.Login.LoginPhoneActivity
 
 class MakingTourFragment : Fragment() {
     var isclicked: Int = 0
@@ -25,6 +26,10 @@ class MakingTourFragment : Fragment() {
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
         binding.cvFoodTour.setOnClickListener{
             val intent = Intent(requireActivity(), CourseContentsActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnNext.setOnClickListener {
+            val intent = Intent(requireActivity(), LoginPhoneActivity::class.java)
             startActivity(intent)
         }
         return binding.root

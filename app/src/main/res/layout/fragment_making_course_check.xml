@@ -20,6 +20,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp"/>
 
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_my_tour_time_exit"
             android:layout_width="100dp"

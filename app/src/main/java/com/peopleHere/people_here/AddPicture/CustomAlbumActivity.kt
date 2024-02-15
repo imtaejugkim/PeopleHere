@@ -41,7 +41,6 @@ CustomAlbumActivity : AppCompatActivity() {
             val intent = Intent(this, AddPictureActivity::class.java)
             for (i in 0 until customAlbumAdapter!!.uriList.size) {//null~5일듯
                 // 각 아이템에 대한 처리
-
                 val uri = customAlbumAdapter!!.uriList[i]
                 Log.d("qwer",uri)
                 intent.putExtra("uri_$i", uri)

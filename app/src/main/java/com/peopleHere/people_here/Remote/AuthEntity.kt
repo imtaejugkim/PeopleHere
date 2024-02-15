@@ -16,6 +16,43 @@ data class MainResponse(
     @SerializedName("totalElements") val totalElements : Int
 )
 
+
+data class MainPlace(
+    @SerializedName("id") val id: Int,
+    @SerializedName("content") val content: String,
+    @SerializedName("imageUrls") val imageUrls: List<String>,
+    @SerializedName("address") val address: String,
+    @SerializedName("order") val order: Int
+)
+
+
+data class SignInRequest(//로그인에 보낼거
+    @SerializedName("email")val email:String,
+    @SerializedName("password")val password:String,
+    //아이디 비번만 받게
+    //SerializedName이란:HTTP 통신 요청 들어갈때 저 문자열 안에 key값으로 매핑 들어감
+)
+
+data class SignInResponse<T>(//닉네임과 토큰 얘네 Shared에 저장되게 하기 putString으로
+    @SerializedName("userId")val userId:String,
+    @SerializedName("token")val token:T,
+)
+
+data class JwtToken(
+    @SerializedName("grantType") val grantType: String,
+    @SerializedName("accessToken") val accessToken: String,
+    @SerializedName("refreshToken") val refreshToken: String
+)
+//로그인 되어있나 체크하는 req
+data class CheckEmailRequest(
+    @SerializedName("email")val email:String,
+)
+
+data class CheckEmailResponse(
+    @SerializedName("message")val message:String,
+    @SerializedName("emailAvailable")val emailAvailable:Boolean,
+)
+
 data class CourseContentsResponse (
     @SerializedName("tourId") val tourId: Int,
     @SerializedName("tourName") val tourName: String,

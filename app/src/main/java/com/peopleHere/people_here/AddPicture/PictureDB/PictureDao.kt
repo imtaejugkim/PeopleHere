@@ -9,7 +9,6 @@ import androidx.room.Update
 @Dao
 interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-
     fun addPicture(picture:PictureEntity)
     @Update
     fun UpdatePicture(picture:PictureEntity)
@@ -19,4 +18,6 @@ interface PictureDao {
 
     @Query("SELECT*FROM PictureEntitytable")//이걸 getProducts
     fun getPicture():List<PictureEntity>//LiveData 껴야 하는지?
+    @Update
+    fun update(picture: PictureEntity)
 }

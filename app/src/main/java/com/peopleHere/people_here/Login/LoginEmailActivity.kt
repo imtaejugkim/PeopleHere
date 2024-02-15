@@ -69,7 +69,7 @@ class LoginEmailActivity : AppCompatActivity(), CheckEmailCallback {
             override fun afterTextChanged(editable: Editable) {
 
                 //checkEmail()
-                if (checkEmail()) {/
+                if (checkEmail()) {
                     binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue = true
                 } else {//클릭 불가능 하게도 설정하기

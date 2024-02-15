@@ -330,7 +330,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         val token = getJwt()
         Log.d("token",token)
         if(token.isNotEmpty()){
-            val authService = AuthService()
+            val authService = AuthService(this)
             authService.setCourseContentsView(this)
             Log.d("tourId",tourId.toString())
             authService.courseContentsInfo(tourId)
@@ -340,7 +340,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     }
 
     private fun initUpcomingDataManager(tourId: Int) {
-        val authService = AuthService()
+        val authService = AuthService(this)
         authService.setUpcomingDateView(this)
         authService.upcomingDateInfo(tourId)
     }

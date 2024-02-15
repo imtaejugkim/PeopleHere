@@ -84,7 +84,7 @@ class PossibleEnjoyActivity : AppCompatActivity() , UpcomingDateView {
         val token = getJwt()
         Log.d("token",token)
         if(token.isNotEmpty()){
-            val authService = AuthService()
+            val authService = AuthService(this)
             authService.setUpcomingDateView(this)
             Log.d("tourId",tourId.toString())
             authService.upcomingDateInfo(tourId)

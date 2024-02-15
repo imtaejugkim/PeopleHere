@@ -166,7 +166,8 @@
         app:layout_constraintTop_toBottomOf="@id/tv_profile_next_meet"
         tools:listitem="@layout/profile_item_product" />
 
-    <TextView
+
+        <TextView
         android:id="@+id/tv_profile_past_meet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

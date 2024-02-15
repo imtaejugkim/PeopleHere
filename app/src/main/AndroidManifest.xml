@@ -42,7 +42,7 @@
             android:name=".Login.VerifyPhoneActivity"
             android:exported="false" />
         <activity
-            android:name=".Login.LoginPhoneActivity"
+            android:name=".Login.LoginPhoneActivity"/>
         <activity
             android:name=".CourseContents.ReviewActivity"
             android:exported="false" />

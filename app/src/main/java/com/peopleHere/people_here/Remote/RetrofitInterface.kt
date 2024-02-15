@@ -43,9 +43,4 @@ interface RetrofitInterface {
     fun signup(
         @Body request: SignUpRequest
     ):Call<BaseResponse<SignUpResponse>>
-
-    @GET("/api/tour-dates/{tourId}/dates")
-    fun showDatesInfo(@Path("tourId") tourId : Int)
-    : Call<BaseResponse<ShowDatesResponse>>
-
 }

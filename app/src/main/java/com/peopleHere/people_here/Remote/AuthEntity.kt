@@ -105,11 +105,3 @@ data class BringCourseResponse (
 data class ChangeWishResponse(
     @SerializedName("result") val result : String
 )
-
-data class ShowDatesResponse (
-    @SerializedName("id") val id : Int,
-    @SerializedName("date") val date : String,
-    @SerializedName("time") val time : String?,
-    @SerializedName("status") val status : String,
-    @SerializedName("participants") val participants : ArrayList<ScheduleParticipants>
-)

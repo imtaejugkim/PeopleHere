@@ -25,7 +25,6 @@ class AuthService(private val context: Context) {
     private lateinit var upcomingDateView: UpcomingDateView
     private lateinit var bringCourseView: BringCourseView
     private lateinit var changeWishView: ChangeWishView
-    private lateinit var showDatesView: ShowDatesView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -98,10 +97,6 @@ class AuthService(private val context: Context) {
 
     fun setChangeWishView(changeWishView: ChangeWishView){
         this.changeWishView = changeWishView
-    }
-
-    fun setShowDatesView(showDatesView: ShowDatesView){
-        this.showDatesView = showDatesView
     }
 
     fun mainInfo() {
@@ -355,36 +350,6 @@ class AuthService(private val context: Context) {
 
                 override fun onFailure(
                     call: Call<BaseResponse<ChangeWishResponse>>,
-                    t: Throwable
-                ) {
-                    Log.d("Upcoming Failed", t.toString())
-                }
-
-            })
-    }
-
-    fun showDatesInfo(tourId: Int) {
-//        mainView.MainLoading()
-        authService.showDatesInfo(tourId)
-            .enqueue(object : Callback<BaseResponse<ShowDatesView>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<ShowDatesView>>,
-                    response: Response<BaseResponse<ShowDatesView>>
-                ) {
-                    Log.d("ChangeWish response", response.toString())
-                    if (response.isSuccessful) {
-                        val resp = response.body()
-                        Log.d("ChangeWish Response Body", resp.toString())
-                        Log.d("ChangeWish Response Body result", resp?.result.toString())
-                        when (resp!!.status) {
-                            200 -> changeWishView.ChangeWishSuccess()
-                            else -> changeWishView.ChangeWishFailure(resp.status, resp.message)
-                        }
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<BaseResponse<ShowDatesView>>,
                     t: Throwable
                 ) {
                     Log.d("Upcoming Failed", t.toString())

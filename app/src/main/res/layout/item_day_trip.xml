@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginBottom="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/rectangle_gray2_12">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_day_trip_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홍대에서 만나는 null"
+            android:textSize="14sp"
+            android:textColor="@color/Gray8"
+            android:fontFamily="@font/pretendard_bold"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_trip_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="6dp">
+
+            <ImageView
+                android:id="@+id/iv_trip_image"
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_example_user"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main_tour_list_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/cv_trip_image"
+            app:layout_constraintTop_toTopOf="@id/cv_trip_image">
+
+            <ImageView
+                android:id="@+id/iv_main_tour_list_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_main_tour_list_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="null 지역"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="@dimen/item_main_tour_list_time"
+                app:layout_constraintStart_toEndOf="@id/iv_main_tour_list_location"
+                app:layout_constraintTop_toTopOf="@id/iv_main_tour_list_location"
+                app:layout_constraintBottom_toBottomOf="@id/iv_main_tour_list_location"/>
+
+            <ImageView
+                android:id="@+id/iv_main_tour_list_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_clock_14"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toEndOf="@id/tv_main_tour_list_location"
+                app:layout_constraintEnd_toStartOf="@id/tv_main_tour_list_time"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_main_tour_list_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="null시간"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="@dimen/item_main_tour_list_cost"
+                app:layout_constraintStart_toEndOf="@id/iv_main_tour_list_clock"
+                app:layout_constraintTop_toTopOf="@id/tv_main_tour_list_location"
+                app:layout_constraintBottom_toBottomOf="@id/tv_main_tour_list_location"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/tv_when_before"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_making_tour_add_list_dots"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_show_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_gray8_8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_trip_image"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:text="@string/course_manage_true_calendar"
+            android:fontFamily="@font/pretendard_medium"
+            android:textFontWeight="500"
+            android:lineHeight="22sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

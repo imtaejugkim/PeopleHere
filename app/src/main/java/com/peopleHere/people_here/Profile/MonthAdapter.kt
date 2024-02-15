@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.peopleHere.people_here.Data.CalendarData
 import com.peopleHere.people_here.databinding.ItemCalendarMonthBinding
 
-class MonthAdapter(val calendarData : ArrayList<CalendarData>) : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
+class MonthAdapter(val calendarData : ArrayList<CalendarData>,
+                   val dateClickListener: DateAdapter.OnDateClickListener)
+    : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding : ItemCalendarMonthBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : CalendarData){
@@ -17,7 +19,7 @@ class MonthAdapter(val calendarData : ArrayList<CalendarData>) : RecyclerView.Ad
             binding.rvDate.layoutManager = GridLayoutManager(binding.rvDate.context, 7)
 //            binding.rvDate.adapter = DateAdapter(item.day)
 
-            binding.rvDate.adapter = DateAdapter(item)
+            binding.rvDate.adapter = DateAdapter(item, item.month, item.year, dateClickListener)
 
         }
     }

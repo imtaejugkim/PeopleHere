@@ -7,6 +7,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import com.peopleHere.people_here.SignUp.SignUpActivity
+import com.peopleHere.people_here.databinding.ActivityVerifyPhoneBinding
+
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential

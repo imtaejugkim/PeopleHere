@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+
 import androidx.core.widget.addTextChangedListener
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ForCommunicate

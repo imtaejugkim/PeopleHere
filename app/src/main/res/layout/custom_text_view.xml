@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tab"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:textSize="14sp"
+    android:fontFamily="@font/pretendard_medium"
+    android:textFontWeight="500"
+    android:textStyle="normal"
+    android:textColor="@color/Gray5" /> <!-- 기본 텍스트 색상 지정 -->

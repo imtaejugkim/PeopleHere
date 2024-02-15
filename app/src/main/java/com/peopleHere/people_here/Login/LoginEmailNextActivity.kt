@@ -86,6 +86,7 @@ class LoginEmailNextActivity : AppCompatActivity() {
                 } else {//클릭 불가능 하게도 설정하기
                     binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_close)//설정 회색으로
                     checkContinue = false
+
                 }
             }
         })

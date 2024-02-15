@@ -16,6 +16,7 @@ import com.peopleHere.people_here.SignUp.SignUpActivity
 import com.peopleHere.people_here.databinding.ActivityLoginEmailBinding
 import java.util.regex.Pattern
 
+
 class LoginEmailActivity : AppCompatActivity(), CheckEmailCallback {
     private lateinit var binding: ActivityLoginEmailBinding
     private var checkContinue: Boolean = false
@@ -66,8 +67,9 @@ class LoginEmailActivity : AppCompatActivity(), CheckEmailCallback {
 
 
             override fun afterTextChanged(editable: Editable) {
+
                 //checkEmail()
-                if (checkEmail()) {//true면 되게
+                if (checkEmail()) {/
                     binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue = true
                 } else {//클릭 불가능 하게도 설정하기

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginBottom="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/rectangle_gray2_12">
+
+    <LinearLayout
+        android:id="@+id/ll_coming_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_coming_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2010년 14월 24일 (화)"
+            android:textSize="16sp"
+            android:textColor="@color/Gray8"
+            android:fontFamily="@font/pretendard_semibold"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_time_none"
+        app:layout_constraintStart_toStartOf="@id/ll_coming_date"
+        app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        android:textSize="14sp"
+        android:textColor="@color/Gray6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/coming_date_none"/>
+
+    <LinearLayout
+        android:id="@+id/ll_time_exist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/ll_coming_date"
+        app:layout_constraintTop_toBottomOf="@id/ll_coming_date">
+
+        <TextView
+            android:id="@+id/tv_time_exist_first"
+            app:layout_constraintStart_toStartOf="@id/ll_coming_date"
+            app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
+            android:textSize="14sp"
+            android:textColor="@color/Gray6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="9:00"/>
+
+        <TextView
+            android:id="@+id/tv_time_exist_center"
+            app:layout_constraintStart_toStartOf="@id/ll_coming_date"
+            app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
+            android:textSize="14sp"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/Gray6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/coming_date_center"/>
+
+        <TextView
+            android:id="@+id/tv_time_exist_second"
+            app:layout_constraintStart_toStartOf="@id/ll_coming_date"
+            app:layout_constraintTop_toBottomOf="@id/ll_coming_date"
+            android:textSize="14sp"
+            android:textColor="@color/Gray6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="1:00"/>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_coming_date_enjoy"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="74:42"
+        app:layout_constraintTop_toTopOf="@id/ll_coming_date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="14sp"
+        android:background="@drawable/rectangle_gray8_8"
+        android:text="@string/coming_date_enjoy"
+        android:textColor="@color/white"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_coming_date_none"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/ll_coming_date"
+        app:layout_constraintBottom_toBottomOf="@id/ll_time_exist"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:background="@drawable/rectangle_gray8_8"
+        android:text="@string/coming_date_ongoing"
+        android:textColor="@color/white"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

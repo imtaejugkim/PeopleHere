@@ -9,11 +9,14 @@ import android.util.Log
 import android.widget.Toast
 import com.peopleHere.people_here.SignUp.SignUpActivity
 import com.peopleHere.people_here.databinding.ActivityVerifyPhoneBinding
+
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.peopleHere.people_here.SignUp.SignUpActivity
+import com.peopleHere.people_here.databinding.ActivityVerifyPhoneBinding
 import java.util.concurrent.TimeUnit
 
 class VerifyPhoneActivity : AppCompatActivity() {
@@ -24,7 +27,7 @@ class VerifyPhoneActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityVerifyPhoneBinding.inflate(layoutInflater)
+        binding= ActivityVerifyPhoneBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth=FirebaseAuth.getInstance()
         val receivedIntent = intent

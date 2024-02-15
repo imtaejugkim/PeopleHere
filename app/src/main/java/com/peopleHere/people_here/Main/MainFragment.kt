@@ -50,6 +50,8 @@ class MainFragment : Fragment() , MainView, ChangeWishView {
         val token = getJwt()
         Log.d("token",token)
         if(token.isNotEmpty()){
+
+            val authService = AuthService(requireContext())
             authService.setMainView(this)
             authService.setChangeWishView(this)
             authService.mainInfo()

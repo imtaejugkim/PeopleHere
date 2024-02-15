@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".DaytripRequest.RequestWithDrawActivity">
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/x"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.06" />
+
+    <TextView
+        android:id="@+id/tv_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/suite_bold"
+        android:text="@string/activity_request_with_draw_meeting"
+        android:textColor="@color/Gray8"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_cancel"
+        app:layout_constraintTop_toTopOf="@id/iv_cancel" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/Gray2"
+        app:layout_constraintTop_toBottomOf="@id/tv_meeting" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_sending_message"
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_for_img"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="36dp"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_cancel"
+                app:layout_constraintWidth_percent="0.152">
+
+                <ImageView
+                    android:id="@+id/iv_course_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_example" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/suite_bold"
+                android:text="홍대에서 만나는 null"
+                android:textColor="@color/Gray8"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/cv_for_img"
+                app:layout_constraintTop_toTopOf="@id/cv_for_img" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location_14"
+                app:layout_constraintBottom_toBottomOf="@id/tv_location"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="성동구 외 null"
+                android:textColor="@color/Gray6"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/iv_location"
+                app:layout_constraintTop_toTopOf="@id/iv_location" />
+
+            <ImageView
+                android:id="@+id/iv_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_clock_14"
+                app:layout_constraintBottom_toBottomOf="@id/tv_location"
+                app:layout_constraintStart_toEndOf="@id/tv_location"
+                app:layout_constraintTop_toTopOf="@id/tv_location" />
+
+            <TextView
+                android:id="@+id/tv_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="null 시간"
+                android:textColor="@color/Gray6"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/iv_clock"
+                app:layout_constraintTop_toTopOf="@id/tv_location" />
+
+            <ImageView
+                android:id="@+id/iv_line"
+                android:layout_width="match_parent"
+                android:layout_height="17dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/cuttingline"
+                app:layout_constraintTop_toBottomOf="@id/tv_location" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_person"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="53dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintDimensionRatio="328:102"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_location"
+                app:layout_constraintWidth_percent="0.911">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_meeting_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/suite_bold"
+                        android:text="@string/activity_request_with_draw_person"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_person_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="사람 이름 null"
+                        android:textColor="@color/Gray7"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_meeting_person" />
+
+                    <TextView
+                        android:id="@+id/tv_sepakable_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/activity_request_with_draw_speakable_languages"
+                        android:textColor="@color/Gray6"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_person_name" />
+
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="3dp"
+                        android:src="@drawable/line"
+                        app:layout_constraintStart_toEndOf="@id/tv_sepakable_language"
+                        app:layout_constraintTop_toTopOf="@id/tv_sepakable_language" />
+
+                    <TextView
+                        android:id="@+id/tv_language1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="null,null,null"
+                        android:textColor="@color/Gray6"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@id/tv_sepakable_language"
+                        app:layout_constraintTop_toBottomOf="@id/tv_person_name" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="14dp"
+                        android:src="@drawable/img_example_user"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintWidth_percent="0.155" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_schedule"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/Gray1"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintDimensionRatio="328:78"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_person"
+                app:layout_constraintWidth_percent="0.911">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_plan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16sp"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/suite_bold"
+                        android:text="@string/activity_request_with_draw_plan"
+                        android:textColor="@color/Gray8"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="여기에 날짜값 넣어주면 된당"
+                        android:textColor="@color/Gray8"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_plan" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_place"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/Gray1"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintDimensionRatio="328:96"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_schedule"
+                app:layout_constraintWidth_percent="0.911">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/suite_bold"
+                        android:text="@string/activity_request_with_draw_place"
+                        android:textColor="@color/Gray8"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_place_data1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="위치-건대"
+                        android:textColor="@color/Gray7"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_place" />
+
+                    <TextView
+                        android:id="@+id/tv_place_data2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="상세주소 적기"
+                        android:textColor="@color/Gray6"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_place_data1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/iv_line2"
+                android:layout_width="match_parent"
+                android:layout_height="17dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/cuttingline"
+                app:layout_constraintTop_toBottomOf="@id/cv_place" />
+
+            <ImageView
+                android:id="@+id/iv_course_img1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/placeico"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_line2"
+                app:layout_constraintWidth_percent="0.06" />
+
+            <TextView
+                android:id="@+id/tv_course_data1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="카누 팝업 스토어 : KANU ON THE TABLE"
+                android:textColor="@color/Gray8"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/iv_course_img1"
+                app:layout_constraintTop_toTopOf="@id/iv_course_img1" />
+
+            <TextView
+                android:id="@+id/tv_course_data1_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="서울특별시 광진구 아차산로 225"
+                android:textColor="@color/Gray5.5"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/iv_course_img1"
+                app:layout_constraintTop_toBottomOf="@id/tv_course_data1" />
+
+            <ImageView
+                android:id="@+id/iv_line3"
+                android:layout_width="match_parent"
+                android:layout_height="17dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/cuttingline"
+                app:layout_constraintTop_toBottomOf="@id/tv_course_data1_address" />
+
+            <ImageView
+                android:id="@+id/iv_cancel_request"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/cancel_request"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_line3"
+                app:layout_constraintWidth_percent="0.05" />
+
+            <TextView
+                android:id="@+id/tv_cancel_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@string/activity_request_with_draw_cancel_request"
+                android:textColor="@color/Gray8"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/iv_cancel_request"
+                app:layout_constraintTop_toTopOf="@id/iv_cancel_request" />
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/arrow_right"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_line3"
+                app:layout_constraintWidth_percent="0.05" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sending_message"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="328:52"
+        app:layout_constraintWidth_percent="0.91"
+        android:background="@drawable/add_list_next_button"
+        android:text="메세지 보내기"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:fontFamily="@font/pretendard_regular"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,11 +8,11 @@ import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.SignInView
 import com.peopleHere.people_here.databinding.ActivitySignInBinding
 
-class SignInActivity : AppCompatActivity(),SignInView {
-    lateinit var binding:ActivitySignInBinding
+class SignInActivity : AppCompatActivity(), SignInView {
+    lateinit var binding: ActivitySignInBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivitySignInBinding.inflate(layoutInflater)
+        binding= ActivitySignInBinding.inflate(layoutInflater)
 
         //여기 엮기 뭐랑?아이디랑
         //TODO: 로그인 로직 구현하기
@@ -23,7 +23,7 @@ class SignInActivity : AppCompatActivity(),SignInView {
         binding.emailSignInButton.setOnClickListener{
             val id=binding.email.text.toString()//아이디보냄
             val pw=binding.password.text.toString()//텍스트보soa
-            val authService= AuthService()//여기로 넘김
+            val authService= AuthService(this)//여기로 넘김
             authService.setSignInView(this)//자신이 상속해서 자신 넣어주기
             authService.signin(id,pw)//메소드 호출 따라서 엑티비에서 requset로 넘김
             Log.d("id",id)

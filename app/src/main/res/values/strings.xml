@@ -202,7 +202,7 @@
     <string name="activity_login_phone_login">\로그인 또는 회원가입</string>
     <string name="activity_login_phone_country">\국가/지역</string>
     <string name="activity_login_phone_korea">\대한민국 (+82)</string>
-    <string name="activity_login_phone_message">\입력한 번호로 인증 문자를 전송합니다. 일반 문자 메시지 및 데이터 요금이 부과됩니다.</string>
+    <string name="activity_login_phone_message">\입력한 번호로 인증 문자를 전송합니다.</string>
     <string name="activity_login_phone_continue">\계속</string>
     <string name="activity_login_phone_email">\이메일로 로그인</string>
     <string name="activity_login_phone_gmail">\구글로 로그인</string>
@@ -230,6 +230,8 @@
     <!--activity_login_email_next-->
     <string name="activity_login_email_email">\이메일</string>
     <string name="activity_login_email_see">\<u>표시</u></string>
+    <string name="activity_login_email_hide">\<u>숨김</u></string>
+
     <string name="activity_login_email_forgot">비밀번호를 잊으셨나요?</string>
     <string name="activity_login_email_reset">\<u>비밀번호 재설정</u></string>
 
@@ -275,6 +277,25 @@
     <!--making_tour 온보딩 이름 정리 -->
     <string name="making_tour_on_boarding">지금 내가 살고 있는 ‘이곳’을\n여행하려는 사람들에게\n소개해주고 싶은 장소가 있나요?</string>
     <string name="making_tour_on_boarding_start">시작하기</string>
+
+    <!--fragment_select_sex 이름 정리 -->
+    <string name="fragment_select_sex_select">성별을 선택해 주세요.</string>
+    <string name="fragment_select_sex_male">남성</string>
+    <string name="fragment_select_sex_female">여성</string>
+    <string name="fragment_select_sex_no">선택 안 함</string>
+    <!--activity_alarm_ok 이름 정리 -->
+    <string name="activity_alarm_ok_alarm">알림을 받으시겠어요?</string>
+    <string name="activity_alarm_ok_new">새로운 메시지, 다가오는 만남 등 \n   &#160;  중요한 소식을 놓치지 마세요.</string>
+    <string name="activity_alarm_ok_yes">네, 알림을 받을게요</string>
+    <string name="activity_alarm_ok_later">나중에 설정하기</string>
+    <!--activity_request_with_draw 이름 정리 -->
+    <string name="activity_request_with_draw_meeting">다가오는 만남</string>
+    <string name="activity_request_with_draw_person">만나게 될 사람</string>
+    <string name="activity_request_with_draw_speakable_languages">구사언어</string>
+    <string name="activity_request_with_draw_plan">일정</string>
+    <string name="activity_request_with_draw_place">처음 만나는 장소</string>
+    <string name="activity_request_with_draw_cancel_request">요청 철회하기</string>
+
     <!--profile 캘린더 이름 정리 -->
     <string-array name="week_label">
         <item name="monday">월</item>

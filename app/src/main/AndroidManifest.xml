@@ -31,6 +31,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Login.PasswordResetActivity"
+            android:exported="false" />
+        <activity
             android:name=".DaytripRequest.RequestWithDrawActivity"
             android:exported="false" />
         <activity
@@ -39,10 +42,9 @@
         <activity
             android:name=".Login.VerifyEmailActivity"
             android:exported="false" />
-      <activity
-            android:exported="false"
-            android:name=".CourseContents.PossibleEnjoyActivity"/>
-
+        <activity
+            android:name=".CourseContents.PossibleEnjoyActivity"
+            android:exported="false" />
         <activity
             android:name=".Login.LoginEmailNextActivity"
             android:exported="false" />
@@ -52,10 +54,8 @@
         <activity
             android:name=".Login.VerifyPhoneActivity"
             android:exported="false" />
+        <activity android:name=".Login.LoginPhoneActivity" />
         <activity
-            android:name=".Login.LoginPhoneActivity"/>
-        <activity
-
             android:name=".Profile.CalendarActivity"
             android:exported="false" />
         <activity

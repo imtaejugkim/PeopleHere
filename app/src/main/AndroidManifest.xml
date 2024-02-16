@@ -31,7 +31,20 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+
             android:name=".Login.PasswordResetActivity"
+             android:exported="false" />
+            android:name=".profile_login"
+            android:exported="false" />
+        <activity
+            android:name=".MyTour.MakingCourseSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Main.MainSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.people_here.ProfileParticipantActivity"
+
             android:exported="false" />
         <activity
             android:name=".DaytripRequest.RequestWithDrawActivity"
@@ -118,7 +131,7 @@
         <activity
             android:name=".CostInput.CostInputActivity"
             android:exported="false" />
-        <activity android:name=".Main.MainSearchActivity" />
+        <activity android:name=".Search.MainSearchActivity" />
         <activity android:name=".MakingTour.MakingTourAddListActivity" />
         <activity android:name=".MakingTour.MakingTourTimeActivity" />
         <activity
@@ -130,6 +143,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

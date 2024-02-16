@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 import androidx.core.content.res.ResourcesCompat
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
-import com.peopleHere.people_here.databinding.ActivityMainBinding
-import com.peopleHere.people_here.TitleCategory.MakingTourFragment
-
 import com.peopleHere.people_here.Main.MainFragment
 import com.peopleHere.people_here.MyTour.MakingCourseFragment
 import com.peopleHere.people_here.Profile.ProfileFragment

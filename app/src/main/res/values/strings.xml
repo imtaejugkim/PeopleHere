@@ -302,7 +302,6 @@
     <string name="activity_password_reset_input">새로운 비밀번호를 입력하세요.</string>
 
 
-
     <!--profile 캘린더 이름 정리 -->
     <string-array name="week_label">
         <item name="monday">월</item>

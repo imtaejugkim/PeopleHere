@@ -31,6 +31,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CourseContents.AppServiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".CourseContents.RequestEnjoyActivity"
             android:exported="false" />
         <activity

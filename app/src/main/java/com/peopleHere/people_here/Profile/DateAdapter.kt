@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CalendarData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
@@ -51,6 +52,7 @@ class DateAdapter(
                     if (dateStatus == "AVAILABLE") {
                         binding.tvDay.setTextColor(ContextCompat.getColor(context, R.color.Orange5))
                         binding.tvTime.visibility = View.VISIBLE
+                        binding.cvUserImage.visibility = View.GONE
                         if(dateTime == null){
                             binding.tvTime.text = "시간협의"
                         }else{
@@ -62,8 +64,16 @@ class DateAdapter(
                                 binding.tvTime.text = formattedTime
                             }
                         }
-                    } else {
+                    } else if(dateStatus == "CONFIRMED"){
+                        binding.tvDay.setTextColor(ContextCompat.getColor(context, R.color.Orange5))
+                        binding.tvTime.visibility = View.INVISIBLE
+                        binding.cvUserImage.visibility = View.VISIBLE
+                        Glide.with(context)
+                            .load(upcomingData[0])
+                            .into(binding.ivUserImage)
+                    }else{
                         binding.tvDay.setTextColor(Color.BLACK)
+                        binding.cvUserImage.visibility = View.GONE
                     }
                 }
 
@@ -79,6 +89,7 @@ class DateAdapter(
                 }
             } else {
                 binding.root.setOnClickListener(null)
+                binding.root.visibility = View.GONE
             }
         }
     }

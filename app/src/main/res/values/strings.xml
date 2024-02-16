@@ -197,6 +197,11 @@
 
     <!--toast_category-->
     <string name="toast_category_string">\최대 3개까지 선택할 수 있어요 </string>
+    <!--fragment_profile_first 이름 정리 -->
+    <string name="fragment_profile_first_login1">\사람들과 만남을 계획하려면</string>
+    <string name="fragment_profile_first_login2">로그인하세요</string>
+    <string name="fragment_profile_first_signup">로그인 또는 회원가입</string>
+
 
     <!--activity_login_phone-->
     <string name="activity_login_phone_login">\로그인 또는 회원가입</string>

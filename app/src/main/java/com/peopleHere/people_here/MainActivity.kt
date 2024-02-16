@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.peopleHere.people_here.Main.MainFragment
 import com.peopleHere.people_here.MyTour.MakingCourseFragment
+import com.peopleHere.people_here.Profile.ProfileFirstFragment
 import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.TitleCategory.MakingTourFragment
 import com.peopleHere.people_here.WishList.WishFragment
@@ -58,9 +59,17 @@ class MainActivity : AppCompatActivity() {
 
 
                 R.id.menu_profile -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, ProfileFragment()).commit()
-                    return@setOnItemSelectedListener true
+                    if(X_ACCESS_TOKEN=="Authorization"){
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_frm, ProfileFirstFragment()).commit()
+                        return@setOnItemSelectedListener true
+
+                    }else{
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_frm, ProfileFragment()).commit()
+                        return@setOnItemSelectedListener true
+
+                    }
                 }
 
                 else -> {

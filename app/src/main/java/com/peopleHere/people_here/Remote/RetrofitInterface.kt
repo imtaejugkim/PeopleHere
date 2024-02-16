@@ -26,7 +26,7 @@ interface RetrofitInterface {
 
     @GET("api/tour-dates/{tourId}/dates")
     fun upcomingDateInfo(@Path("tourId") tourId : Int)
-            : Call<BaseResponse<ArrayList<UpcomingDateResponse>>>
+    : Call<BaseResponse<ArrayList<UpcomingDateResponse>>>
 
     @GET("api/users/{id}/tours")
     fun bringCourseInfo(@Path("id") id : Int, @Query("option") option : String)
@@ -43,8 +43,10 @@ interface RetrofitInterface {
     fun signup(
         @Body request: SignUpRequest
     ):Call<BaseResponse<SignUpResponse>>
+
     @PUT("/api/users/password")
     fun changePassword(
         @Body request: String
     ): Call<ChangePasswordResponse>
+
 }

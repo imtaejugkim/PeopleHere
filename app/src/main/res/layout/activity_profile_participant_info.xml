@@ -457,6 +457,6 @@
             android:src="@drawable/profile_arrow_icon"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

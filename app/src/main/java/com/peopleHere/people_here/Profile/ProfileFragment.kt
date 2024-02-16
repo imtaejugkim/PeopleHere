@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.peopleHere.people_here.Local.getJwt
+
 import com.peopleHere.people_here.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {

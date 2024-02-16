@@ -1,7 +1,6 @@
 package com.peopleHere.people_here.Remote
 
 import com.google.gson.annotations.SerializedName
-import com.peopleHere.people_here.Data.CourseScheduleData
 import com.peopleHere.people_here.Data.MainCourseData
 import com.peopleHere.people_here.Data.MainData
 import com.peopleHere.people_here.Data.ScheduleParticipants
@@ -118,3 +117,5 @@ data class ChangePasswordResponse(
 data class Data(
     val dummy: Any? = null
 )
+
+

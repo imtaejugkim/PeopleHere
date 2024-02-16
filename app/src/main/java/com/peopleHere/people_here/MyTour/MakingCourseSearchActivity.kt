@@ -59,4 +59,4 @@ class MakingCourseSearchActivity : AppCompatActivity() {
         autocompleteFragment.setLocationBias(bounds)
         // Note: setLocationRestriction(bounds) can be used instead of setLocationBias(bounds) depending on the desired behavior
         autocompleteFragment.setSessionToken(token)
-    }
+    }}

@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MyTour.MyTourCheckFragment">
+        tools:context=".MyTour.MakingCourseCheckFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_start"
@@ -54,20 +54,63 @@
             app:layout_constraintTop_toBottomOf="@id/cv_my_tour_time_exit"
             app:layout_constraintStart_toStartOf="@id/guide_start"/>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_main_tour_list_user_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/guide_start"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_headline"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="4dp">
+
+        <ImageView
+            android:id="@+id/iv_main_search_recent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_example_place"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tv_main_search_recent_region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="null지역"
+        android:layout_marginStart="12dp"
+        android:textSize="@dimen/main_search_recent_region"
+        app:layout_constraintStart_toEndOf="@id/cv_main_tour_list_user_course"
+        app:layout_constraintTop_toTopOf="@id/cv_main_tour_list_user_course"
+        app:layout_constraintBottom_toTopOf="@id/tv_main_search_recent_place"/>
+
+    <TextView
+        android:id="@+id/tv_main_search_recent_place"
+        app:layout_constraintStart_toEndOf="@id/cv_main_tour_list_user_course"
+        app:layout_constraintBottom_toBottomOf="@id/cv_main_tour_list_user_course"
+        app:layout_constraintTop_toBottomOf="@id/tv_main_search_recent_region"
+        android:layout_marginStart="12dp"
+        android:text="null장소"
+        android:textColor="@color/Gray5"
+        android:textSize="@dimen/main_search_recent_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
         <View
             android:id="@+id/view_google_map"
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="360dp"
             android:background="@color/Gray2"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_headline"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_search_recent_place"
             />
+
+
 
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_re_select"
-            android:layout_width="96dp"
+            android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/cost_input_back_button"
@@ -75,7 +118,6 @@
             android:textColor="@color/Gray6"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/guide_start"
-            app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintEnd_toStartOf="@id/btn_correct"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -84,6 +126,7 @@
             android:layout_width="220dp"
             android:layout_height="52dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginStart="12dp"
             android:background="@drawable/cost_next_button"
             android:text="맞아요"
             android:textColor="@color/white"

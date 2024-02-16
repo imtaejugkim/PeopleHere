@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.peopleHere.people_here.Data.MainCourseData
 import com.peopleHere.people_here.Data.MainData
 import com.peopleHere.people_here.Data.ScheduleParticipants
+import java.io.Serializable
 
 
 //여기에 request, response 데이터 클래스 정의
@@ -81,7 +82,7 @@ data class UpcomingDateResponse (
     @SerializedName("time") val time : String?,
     @SerializedName("status") val status : String,
     @SerializedName("participants") val participants : ArrayList<ScheduleParticipants>
-)
+) : Serializable
 
 data class BringCourseResponse (
     @SerializedName("tourId") val tourId: Int,

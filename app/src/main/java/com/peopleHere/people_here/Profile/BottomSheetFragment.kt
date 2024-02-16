@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.peopleHere.people_here.R
+import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.databinding.DialogCourseManageBinding
 
 class CalendarBottomSheetFragment : BottomSheetDialogFragment() {
@@ -100,12 +101,13 @@ class CalendarBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(date: String, month: Int, year: Int): CalendarBottomSheetFragment {
+        fun newInstance(date: String, month: Int, year: Int, dateData : UpcomingDateResponse): CalendarBottomSheetFragment {
             return CalendarBottomSheetFragment().apply {
                 arguments = Bundle().apply {
                     putString("date", date)
                     putInt("month", month)
                     putInt("year", year)
+                    putSerializable("dateData", dateData)
                 }
             }
         }

@@ -10,6 +10,7 @@ import com.peopleHere.people_here.databinding.ItemCalendarMonthBinding
 
 class MonthAdapter(val calendarData : ArrayList<CalendarData>,
                    val upComingData : List<UpcomingDateResponse>,
+                   val showDialogListener: DateAdapter.ShowDialogListener,
                    val context : CalendarActivity,
                    val dateClickListener: DateAdapter.OnDateClickListener)
     : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
@@ -22,7 +23,7 @@ class MonthAdapter(val calendarData : ArrayList<CalendarData>,
             binding.rvDate.layoutManager = GridLayoutManager(binding.rvDate.context, 7)
 //            binding.rvDate.adapter = DateAdapter(item.day)
 
-            binding.rvDate.adapter = DateAdapter(item, item.month, item.year, dateClickListener, upComingData, context)
+            binding.rvDate.adapter = DateAdapter(item, item.month, item.year, dateClickListener, upComingData, context, showDialogListener)
 
         }
     }

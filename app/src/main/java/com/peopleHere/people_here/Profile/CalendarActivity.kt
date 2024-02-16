@@ -1,28 +1,21 @@
 package com.peopleHere.people_here.Profile
 
+import android.app.AlertDialog
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayoutMediator
 import com.peopleHere.people_here.Data.CalendarData
 import com.peopleHere.people_here.Local.getJwt
-import com.peopleHere.people_here.Main.MainAdapter
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCalendarBinding
-import com.peopleHere.people_here.databinding.DialogCourseManageBinding
-import com.peopleHere.people_here.databinding.DialogMakingTourAddListSequenceBinding
 import java.util.Calendar
 
-class CalendarActivity : AppCompatActivity() , UpcomingDateView{
+class CalendarActivity : AppCompatActivity() , UpcomingDateView, DateAdapter.ShowDialogListener{
     lateinit var binding : ActivityCalendarBinding
     private var calendarList : ArrayList<CalendarData> = arrayListOf()
     private var monthAdapter : MonthAdapter ?= null
@@ -67,9 +60,9 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
         }
 
-        monthAdapter = MonthAdapter(calendarList, upcomingData, this@CalendarActivity, object : DateAdapter.OnDateClickListener {
-            override fun onDateClick(date: String, month: Int, year: Int) {
-                showCalendarDialog(date, month, year)
+        monthAdapter = MonthAdapter(calendarList, upcomingData, this,this@CalendarActivity, object : DateAdapter.OnDateClickListener {
+            override fun onDateClick(date: String, month: Int, year: Int, dateData : UpcomingDateResponse) {
+                showCalendarDialog(date, month, year, dateData)
             }
         })
 
@@ -79,8 +72,8 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
     }
 
-    private fun showCalendarDialog(date: String, month: Int, year: Int) {
-        val bottomSheetFragment = CalendarBottomSheetFragment.newInstance(date, month, year)
+    private fun showCalendarDialog(date: String, month: Int, year: Int, dateData : UpcomingDateResponse) {
+        val bottomSheetFragment = CalendarBottomSheetFragment.newInstance(date, month, year, dateData)
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
@@ -141,6 +134,16 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         }else{
             Log.d("token 오류","token 오류")
         }
+    }
+
+    override fun showDialog() {
+        // 다이얼로그 표시 로직
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Title")
+            .setMessage("Message")
+            .setPositiveButton("OK", null)
+            .create()
+        dialog.show()
     }
 
 }

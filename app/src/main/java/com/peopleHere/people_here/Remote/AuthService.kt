@@ -117,11 +117,11 @@ class AuthService(private val context: Context) {
                     call: Call<BaseResponse<MainResponse>>,
                     response: Response<BaseResponse<MainResponse>>
                 ) {
-//                Log.d("response", response.toString())
+                Log.d("response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-//                    Log.d("Main Response Body", resp.toString())
-//                    Log.d("Main Response Body result", resp?.result.toString())
+                    Log.d("Main Response Body", resp.toString())
+                    Log.d("Main Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> mainView.MainSuccess(resp.result.content)
                             else -> mainView.MainFailure(resp.status, resp.message)

@@ -14,8 +14,6 @@ data class MainData (
     @SerializedName("categoryNames") val categoryNames: List<String>,
     @SerializedName("participants") val participants: List<Any>,
     @SerializedName("status") val status: String,
-    @SerializedName("createdAt") val createdAt: String,
-    @SerializedName("updatedAt") val updatedAt: String,
     @SerializedName("wished") var wished : Boolean
 //    var mainTourListTitle : String,
 //    var mainTourListTime : String,

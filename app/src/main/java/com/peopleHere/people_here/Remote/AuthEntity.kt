@@ -77,7 +77,7 @@ data class CourseContentsResponse (
 )
 
 data class UpcomingDateResponse (
-    @SerializedName("id") val id : Int,
+    @SerializedName("tourDateId") val id : Int,
     @SerializedName("date") val date : String,
     @SerializedName("time") val time : String?,
     @SerializedName("status") val status : String,
@@ -90,8 +90,8 @@ data class BringCourseResponse (
     @SerializedName("userId") val userId: String,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImageUrl") val userImageUrl: String,
-    @SerializedName("time") val time: String,
-    @SerializedName("content") val content : String,
+    @SerializedName("tourTime") val time: String,
+    @SerializedName("tourContent") val content : String,
     @SerializedName("places") val places: ArrayList<MainCourseData>,
     @SerializedName("categoryNames") val categoryNames: List<String>,
     @SerializedName("participants") val participants: List<Any>,

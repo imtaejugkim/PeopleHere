@@ -4,11 +4,15 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.peopleHere.people_here.Data.CalendarData
 import com.peopleHere.people_here.Local.getJwt
+import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.Remote.UpcomingDateView
@@ -24,10 +28,15 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
     private var tourId : Int = 0
     private var tourName : String ?= null
     private var upcomingData : ArrayList<UpcomingDateResponse> = arrayListOf()
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private val tabList = arrayListOf("참여 차단", "참여 가능으로 설정")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        initBottomSheet()
 
         tourId = intent.getIntExtra("tourId",0)
         tourName = intent.getStringExtra("tourName")
@@ -41,6 +50,7 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         binding.btnBack.setOnClickListener {
             finish()
         }
+
     }
 
     private fun initRecyclerView(upcomingData : ArrayList<UpcomingDateResponse>) {
@@ -72,11 +82,6 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
     }
 
-    private fun showCalendarDialog(date: String, month: Int, year: Int) {
-        val bottomSheetFragment = CalendarBottomSheetFragment.newInstance(date, month, year)
-        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-    }
-
 
     private fun calculateDays(year: Int, month: Int) : ArrayList<String> {
         val dayList = ArrayList<String>()
@@ -102,6 +107,43 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         return dayList
     }
 
+    private fun initBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.clBottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        bottomSheetBehavior.peekHeight = 0
+    }
+
+    private fun showCalendarDialog(date: String, month: Int, year: Int) {
+        showBottomSheet(date, month, year)
+
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+
+    private fun showBottomSheet(date: String, month: Int, year: Int) {
+        updateBottomSheetContent(date, month, year)
+
+        bottomSheetBehavior.peekHeight = 50
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // Handle slide changes if needed.
+            }
+        })
+    }
+
+    private fun updateBottomSheetContent(date: String, month: Int, year: Int) {
+        binding.tvDialogMonth.text = month.toString()
+        binding.tvDialogDay.text = date
+    }
+
     override fun UpcomingDateLoading() {
         TODO("Not yet implemented")
     }
@@ -109,11 +151,6 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
     override fun UpcomingDateSuccess(content: ArrayList<UpcomingDateResponse>) {
         upcomingData = content
         Log.d("받은 데이터", upcomingData.toString())
-//        classifiedData = classifyDataByMonth(content)
-
-//        binding.tvReviewCount.text = upcomingData.size.toString()
-//        enjoyAdapter?.notifyDataSetChanged()
-
 
         initRecyclerView(upcomingData)
     }

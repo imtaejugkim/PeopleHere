@@ -85,9 +85,6 @@
             android:name=".Profile.SetTimeActivity"
             android:exported="false" />
         <activity
-            android:name=".Profile.CalendarActivity"
-            android:exported="false" /> <!-- <activity -->
-        <activity
             android:name=".Profile.DayTripManageActivity"
             android:exported="false" />
         <activity
@@ -135,7 +132,6 @@
         <activity
             android:name=".CostInput.CostInputActivity"
             android:exported="false" />
-        <activity android:name=".Search.MainSearchActivity" />
         <activity android:name=".MakingTour.MakingTourAddListActivity" />
         <activity android:name=".MakingTour.MakingTourTimeActivity" />
         <activity

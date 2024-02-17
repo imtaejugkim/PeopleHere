@@ -27,7 +27,7 @@ class DateAdapter(
 //    private var previousSelectedStatus = false // 이전에 선택된 아이템의 상태
 
     interface OnDateClickListener {
-        fun onDateClick(date: String, month: Int, year: Int)
+        fun onDateClick(date: String, month: Int, year: Int, time: String?)
     }
 
     inner class ViewHolder(val binding: ItemCalendarDateBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -94,14 +94,14 @@ class DateAdapter(
                     }
 
                     binding.root.setOnClickListener {
+                        val dateTime = upcomingData.find { it.date == formattedDate }?.time
                         if (selectedPosition == position) {
-                            // 이미 선택된 아이템을 다시 클릭
                             selectedPosition = -1 // 선택 해제
                         } else {
                             selectedPosition = position // 새 아이템 선택
                         }
                         notifyDataSetChanged()
-                        dateClickListener.onDateClick(item, month, year)
+                        dateClickListener.onDateClick(item, month, year, dateTime)
                     }
                 }
             } else {

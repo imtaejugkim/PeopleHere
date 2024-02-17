@@ -27,6 +27,8 @@ class AuthService(private val context: Context) {
     private lateinit var upcomingDateView: UpcomingDateView
     private lateinit var bringCourseView: BringCourseView
     private lateinit var changeWishView: ChangeWishView
+    private lateinit var requestEnjoyView: RequestEnjoyView
+    private lateinit var joinConfirmView : JoinConfirmView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -109,6 +111,14 @@ class AuthService(private val context: Context) {
         this.changeWishView = changeWishView
     }
 
+    fun setRequestEnjoyView(requestEnjoyView: RequestEnjoyView) {
+        this.requestEnjoyView = requestEnjoyView
+    }
+
+    fun setJoinConfirmView(joinConfirmView: JoinConfirmView) {
+        this.joinConfirmView = joinConfirmView
+    }
+
     fun mainInfo() {
 //        mainView.MainLoading()
         authService.mainInfo(0, 10, listOf("createdAt,asc"))
@@ -117,11 +127,11 @@ class AuthService(private val context: Context) {
                     call: Call<BaseResponse<MainResponse>>,
                     response: Response<BaseResponse<MainResponse>>
                 ) {
-                Log.d("response", response.toString())
+//                Log.d("response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                    Log.d("Main Response Body", resp.toString())
-                    Log.d("Main Response Body result", resp?.result.toString())
+//                    Log.d("Main Response Body", resp.toString())
+//                    Log.d("Main Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> mainView.MainSuccess(resp.result.content)
                             else -> mainView.MainFailure(resp.status, resp.message)
@@ -412,4 +422,66 @@ class AuthService(private val context: Context) {
             })
 
     }
+
+    fun requestEnjoyInfo(tourDateId : Int) {
+//        mainView.MainLoading()
+        authService.requestEnjoyInfo(tourDateId)
+            .enqueue(object : Callback<BaseResponse<RequestEnjoyResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<RequestEnjoyResponse>>,
+                    response: Response<BaseResponse<RequestEnjoyResponse>>
+                ) {
+                    Log.d("RequestEnjoy response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("RequestEnjoy Response Body", resp.toString())
+                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> requestEnjoyView.RequestEnjoySuccess(resp.result)
+                            else -> requestEnjoyView.RequestEnjoyFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<RequestEnjoyResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("Upcoming Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun joinConfirmInfo(tourDateId : Int) {
+//        mainView.MainLoading()
+        authService.joinConfirmInfo(tourDateId)
+            .enqueue(object : Callback<BaseResponse<JoinConfirmResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<JoinConfirmResponse>>,
+                    response: Response<BaseResponse<JoinConfirmResponse>>
+                ) {
+                    Log.d("RequestEnjoy response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("RequestEnjoy Response Body", resp.toString())
+                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> joinConfirmView.JoinConfirmSuccess(resp.result)
+                            else -> joinConfirmView.JoinConfirmFialure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<JoinConfirmResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("Upcoming Failed", t.toString())
+                }
+
+            })
+    }
+
+
 }

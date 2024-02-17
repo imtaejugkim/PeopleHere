@@ -31,25 +31,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Login.PasswordResetActivity"
+            android:name=".CourseContents.SuccessRequestActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".profile_login"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".Login.PasswordResetActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".profile_login" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".MyTour.MakingCourseSearchActivity"
             android:exported="false" />
         <activity
             android:name=".Main.MainSearchActivity"
             android:exported="false" />
-        <activity
-            android:name="com.example.people_here.ProfileParticipantActivity"/>
-
+        <activity android:name="com.example.people_here.ProfileParticipantActivity" />
         <activity
             android:name=".CourseContents.AppServiceActivity"
             android:exported="false" />
-        <activity
-            android:name=".CourseContents.RequestEnjoyActivity"/>
+        <activity android:name=".CourseContents.RequestEnjoyActivity" />
         <activity
             android:name=".DaytripRequest.RequestWithDrawActivity"
             android:exported="false" />
@@ -143,7 +142,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

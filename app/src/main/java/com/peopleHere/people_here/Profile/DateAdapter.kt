@@ -22,19 +22,13 @@ class DateAdapter(
     private var dateClickListener: OnDateClickListener,
     private var upcomingData: List<UpcomingDateResponse>,
     private val context: Context,
-    private var showDialogListener: ShowDialogListener
 ) : RecyclerView.Adapter<DateAdapter.ViewHolder>() {
     private var selectedPosition = -1 // 현재 선택된 아이템
 //    private var previousSelectedStatus = false // 이전에 선택된 아이템의 상태
 
     interface OnDateClickListener {
-        fun onDateClick(date: String, month: Int, year: Int, dateData : UpcomingDateResponse)
+        fun onDateClick(date: String, month: Int, year: Int)
     }
-
-    interface ShowDialogListener {
-        fun showDialog()
-    }
-
 
     inner class ViewHolder(val binding: ItemCalendarDateBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -57,9 +51,6 @@ class DateAdapter(
                     binding.tvDay.setTextColor(Color.WHITE)
                     binding.cvUserImage.visibility = View.GONE
 
-                    if (participantData != null && participantData.participants.isNotEmpty()){
-                        showDialogListener.showDialog()
-                    }
                 } else {
                     // 다른 아이템
                     binding.root.setBackgroundColor(Color.TRANSPARENT)
@@ -110,7 +101,7 @@ class DateAdapter(
                             selectedPosition = position // 새 아이템 선택
                         }
                         notifyDataSetChanged()
-                        dateClickListener.onDateClick(item, month, year, dateData!!)
+                        dateClickListener.onDateClick(item, month, year)
                     }
                 }
             } else {

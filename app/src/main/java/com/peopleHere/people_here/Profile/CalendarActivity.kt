@@ -15,7 +15,7 @@ import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCalendarBinding
 import java.util.Calendar
 
-class CalendarActivity : AppCompatActivity() , UpcomingDateView, DateAdapter.ShowDialogListener{
+class CalendarActivity : AppCompatActivity() , UpcomingDateView{
     lateinit var binding : ActivityCalendarBinding
     private var calendarList : ArrayList<CalendarData> = arrayListOf()
     private var monthAdapter : MonthAdapter ?= null
@@ -60,9 +60,9 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView, DateAdapter.Sho
 
         }
 
-        monthAdapter = MonthAdapter(calendarList, upcomingData, this,this@CalendarActivity, object : DateAdapter.OnDateClickListener {
-            override fun onDateClick(date: String, month: Int, year: Int, dateData : UpcomingDateResponse) {
-                showCalendarDialog(date, month, year, dateData)
+        monthAdapter = MonthAdapter(calendarList, upcomingData,this@CalendarActivity, object : DateAdapter.OnDateClickListener {
+            override fun onDateClick(date: String, month: Int, year: Int) {
+                showCalendarDialog(date, month, year)
             }
         })
 
@@ -72,8 +72,8 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView, DateAdapter.Sho
 
     }
 
-    private fun showCalendarDialog(date: String, month: Int, year: Int, dateData : UpcomingDateResponse) {
-        val bottomSheetFragment = CalendarBottomSheetFragment.newInstance(date, month, year, dateData)
+    private fun showCalendarDialog(date: String, month: Int, year: Int) {
+        val bottomSheetFragment = CalendarBottomSheetFragment.newInstance(date, month, year)
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
@@ -134,16 +134,6 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView, DateAdapter.Sho
         }else{
             Log.d("token 오류","token 오류")
         }
-    }
-
-    override fun showDialog() {
-        // 다이얼로그 표시 로직
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Title")
-            .setMessage("Message")
-            .setPositiveButton("OK", null)
-            .create()
-        dialog.show()
     }
 
 }

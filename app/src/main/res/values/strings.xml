@@ -130,9 +130,11 @@
     <string name="day_trip_contents_possible_enjoy">참여 가능한 일정·</string>
 
     <!--request_enjoy_activity 이름 정리-->
+    <string name="tour_request_participate">참여 요청하기</string>
     <string name="tour_register_btn">동의 및 요청하기</string>
     <string name="tour_service_before">약관을 동의함으로써</string>
     <string name="tour_service_after">에 동의합니다.</string>
+    <string name="tour_dates">일정</string>
 
     <!--약관 동의 이름 정리 -->
     <string name="terms_of_service_1">법적 약관</string>

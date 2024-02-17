@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.peopleHere.people_here.R
@@ -93,6 +94,26 @@ class CalendarBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet!!)
+
+        // BottomSheet의 최소 높이 설정
+        bottomSheetBehavior.peekHeight = 300
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            // 슬라이드 동작 처리
+            }
+        })
+    }
 
 
     override fun onDestroyView() {
@@ -101,13 +122,12 @@ class CalendarBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(date: String, month: Int, year: Int, dateData : UpcomingDateResponse): CalendarBottomSheetFragment {
+        fun newInstance(date: String, month: Int, year: Int): CalendarBottomSheetFragment {
             return CalendarBottomSheetFragment().apply {
                 arguments = Bundle().apply {
                     putString("date", date)
                     putInt("month", month)
                     putInt("year", year)
-                    putSerializable("dateData", dateData)
                 }
             }
         }

@@ -1,5 +1,7 @@
 package com.peopleHere.people_here.Remote
 
+import com.peopleHere.people_here.Data.ChatData
+import com.peopleHere.people_here.Data.ProfileData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -36,6 +38,13 @@ interface RetrofitInterface {
     @GET("api/users/{id}/tours")
     fun bringCourseInfo(@Path("id") id : Int, @Query("option") option : String)
             : Call<BaseResponse<ArrayList<BringCourseResponse>>>
+    @GET("api/users/tour-date")
+    fun ProfileInfo()
+            : Call<BaseResponse<ProfileData>>
+
+    @GET("api/tour-dates/praticipants/{tourid}")
+    fun ChatUpdate(@Path("tourid") id : Int, @Query("tourid") tourid : String)
+            : Call<BaseResponse<ArrayList<ChatData>>>
 
     @POST("api/users/wishlist/{tourId}")
     fun changeWishInfo(@Path("tourId") tourId : Int)

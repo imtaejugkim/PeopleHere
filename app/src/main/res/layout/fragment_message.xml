@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="13dp"
-        android:text="@string/fragment_profile_first_profile"
+        android:text="@string/fragment_message_message"
         android:textSize="20sp"
         android:textColor="@color/Gray8"
         android:fontFamily="@font/suite_bold"

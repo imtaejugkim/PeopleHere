@@ -105,9 +105,7 @@ class AddPictureActivity : AppCompatActivity() {
                         )
 
                 }
-
                 (binding.rvPictures.adapter as AddPictureAdapter).setData(products)//datasetting 선언 했으니 가져가야함 아마 엮어주는 역할?
-
 
             }
 

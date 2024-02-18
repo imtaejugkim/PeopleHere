@@ -2,13 +2,16 @@ package com.peopleHere.people_here.Remote
 
 import android.content.Context
 import android.content.Intent
+import android.provider.ContactsContract.Profile
 import android.util.Log
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
+import com.peopleHere.people_here.Data.ProfileData
 import com.peopleHere.people_here.Login.LoginEmailNextActivity
 import com.peopleHere.people_here.Login.LoginPhoneNextActivity
 import com.peopleHere.people_here.Login.VerifyPhoneActivity
 import com.peopleHere.people_here.MainActivity
+import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.SignUp.SignUpActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +34,7 @@ class AuthService(private val context: Context) {
     private lateinit var changeWishView: ChangeWishView
     private lateinit var requestEnjoyView: RequestEnjoyView
     private lateinit var joinConfirmView: JoinConfirmView
+    private lateinit var profileView: ProfileView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -146,6 +150,10 @@ class AuthService(private val context: Context) {
 
     fun setMainView(mainView: MainView) {
         this.mainView = mainView
+    }
+
+    fun ProfileView(profileView: ProfileView) {
+        this.profileView = profileView
     }
 
     fun setCourseContentsView(courseContentsView: CourseContentsView) {
@@ -549,6 +557,72 @@ class AuthService(private val context: Context) {
             })
     }
 
+    fun profileInfo() {
+        authService.ProfileInfo()
+            .enqueue(object : Callback<BaseResponse<ProfileData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ProfileData>>,
+                    response: Response<BaseResponse<ProfileData>>
+                ) {
+                    Log.d("BringCourse response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("BringCourse Response Body", resp.toString())
+                        Log.d("BringCourse Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> profileView.ProfileSuccess(resp.result)//여기로 프로필 데이터받음
+                            else -> profileView.MainFailure(
+                                resp.status,
+                                resp.message
+                            )
+                        }
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ProfileData>>,
+                    t: Throwable
+                ) {
+                    Log.d("Upcoming Failed", t.toString())
+                }
+
+            })
+    }/*
+    fun chatUpdate(id: Int, option: String) {
+        authService.ProfileInfo()
+            .enqueue(object : Callback<BaseResponse<ProfileData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ProfileData>>,
+                    response: Response<BaseResponse<ProfileData>>
+                ) {
+                    Log.d("BringCourse response", response.toString())
+
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("BringCourse Response Body", resp.toString())
+                        Log.d("BringCourse Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> profileView.ProfileSuccess(resp.result)//여기로 프로필 데이터받음
+                            else -> profileView.MainFailure(
+                                resp.status,
+                                resp.message
+                            )
+                        }
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ProfileData>>,
+                    t: Throwable
+                ) {
+                    Log.d("Upcoming Failed", t.toString())
+                }
+
+            })
+    }
+*/
     fun changePassword(password: String) {
         authService.changePassword(password)
             .enqueue(object : Callback<ChangePasswordResponse> {

@@ -36,7 +36,7 @@ class CategoryAdapter(val categorylist: List<CategoryData>, var CheckClicked:Int
                 //false면 이렇게
             }
             binding.cvRoadTour.setOnClickListener {
-
+                itemClickListener.onItemClick(categorylist)
 
                 if (categorylist.isClicked) {
                     binding.cvRoadTour.setBackgroundResource(R.drawable.category_cv_false)

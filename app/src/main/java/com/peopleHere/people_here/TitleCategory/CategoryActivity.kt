@@ -25,6 +25,7 @@ class CategoryActivity : AppCompatActivity() {
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
         initDummyData()
+        IbCheckReset()
 
         categoryadapter = CategoryAdapter(categorylist, isclicked)
         binding.rvCategory.adapter = categoryadapter
@@ -33,11 +34,16 @@ class CategoryActivity : AppCompatActivity() {
         categoryadapter!!.setOnItemClickListener(object :
             CategoryAdapter.OnItemClickListener {
             override fun onItemClick(categoryData: CategoryData) {
-                TODO("Not yet implemented")
+                if(isclicked==1){
+                    isclicked=0
+                    binding.ibCheck.setImageResource(R.drawable.inactive_18)
+                }
+                updateButtonBackground(1)
             }
 
             override fun onItemNumChanged(num: Int) {
                 updateButtonBackground(num)
+
             }
 
         })
@@ -47,6 +53,7 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun updateButtonBackground(clickedItemNum: Int) {
+        IbCheckReset()
         if (isclicked == 1 || clickedItemNum > 0) { //isClicked는 어케함ㅋㅋ
             binding.btnNext.setBackgroundResource(R.drawable.add_list_next_button)
             binding.btnNext.setOnClickListener {
@@ -61,7 +68,6 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        IbCheckReset()
 
         super.onResume()
     }

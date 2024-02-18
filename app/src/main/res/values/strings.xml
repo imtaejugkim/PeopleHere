@@ -244,6 +244,10 @@
     <string name="fragment_profile_first_login2">로그인하세요</string>
     <string name="fragment_profile_first_signup">로그인 또는 회원가입</string>
     <string name="fragment_profile_first_profile">프로필</string>
+    <!--fragment_profile_first 이름 정리 -->
+    <string name="item_profile_no_text1">\피플히어를 둘러보고</string>
+    <string name="item_profile_no_text2">\사람들을 만나보세요</string>
+
     <!--fragment_message 이름 정리 -->
     <string name="fragment_message_message">\메세지</string>
     <string name="fragment_message_explain1">\메시지를 보려면 로그인하세요</string>

@@ -55,7 +55,7 @@
 
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이름넣기"
@@ -75,8 +75,8 @@
             android:textSize="12sp"
             android:textColor="@color/Gray6"
             android:fontFamily="@font/pretendard_regular"
-            app:layout_constraintStart_toStartOf="@id/tv_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_name"/>
+            app:layout_constraintStart_toStartOf="@id/tv_user_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_name"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_when"
@@ -149,7 +149,7 @@
             app:layout_constraintTop_toTopOf="@id/iv_flag_icon">
 
             <TextView
-                android:id="@+id/ll_places_tv_place"
+                android:id="@+id/tv_place"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="건국대학교"
@@ -168,7 +168,7 @@
                 android:textSize="12sp"
                 android:fontFamily="@font/pretendard_regular"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_places_tv_place" />
+                app:layout_constraintTop_toBottomOf="@id/tv_place" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

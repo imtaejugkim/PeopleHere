@@ -10,13 +10,15 @@ import com.peopleHere.people_here.databinding.ActivityTitleBinding
 
 class TitleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTitleBinding
+    var next:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityTitleBinding.inflate(layoutInflater)
         binding.btnNext.setOnClickListener {
-
-            val intent = Intent(this, CategoryActivity::class.java)
-            startActivity(intent)
+            if(next){
+                val intent = Intent(this, CategoryActivity::class.java)
+                startActivity(intent)
+            }
             //여기서 유형 띄우면 된다
         }
         ButtonOn()
@@ -44,7 +46,9 @@ class TitleActivity : AppCompatActivity() {
             override fun afterTextChanged(editable: Editable) {
                 if (editable.length > 0) {//한글자 이상이면 검정색
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
+                    next=true
                 } else {//클릭 불가능 하게도 설정하기
+                    next=false
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)//설정 회색으로
                 }
                 binding.tvCountNum.setText("${binding.etIntroduce.length()} /30")

@@ -53,7 +53,6 @@
         <activity
             android:name=".Main.MainSearchActivity"
             android:exported="false" />
-        <activity android:name="com.example.people_here.ProfileParticipantActivity" />
         <activity
             android:name=".CourseContents.AppServiceActivity"
             android:exported="false" />
@@ -105,7 +104,7 @@
             android:name=".Main.MainCourseMapActivity"
             android:exported="false" />
         <activity
-            android:name=".Login.SignInActivity"
+            android:name=".MakingTour.MakingTourCourseFinishActivity"
             android:exported="false" />
         <activity
             android:name=".SignUp.SignUpActivity"

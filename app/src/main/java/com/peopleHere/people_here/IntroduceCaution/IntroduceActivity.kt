@@ -1,9 +1,11 @@
 package com.peopleHere.people_here.IntroduceCaution
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import com.peopleHere.people_here.MakingTour.MakingTourCourseFinishActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityIntroduceBinding
 
@@ -15,10 +17,9 @@ class IntroduceActivity : AppCompatActivity() {
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
         ButtonOn()
         binding.btnNext.setOnClickListener {
-        //TODO: 여기 넘어가는거 막음
-        /*    val intent = Intent(this, CautionActivity::class.java)//화면전환
+            val intent = Intent(this, MakingTourCourseFinishActivity::class.java)//화면전환
             startActivity(intent)
-        */}
+        }
 
 
 

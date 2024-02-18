@@ -124,7 +124,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cv_main_search_on_searching"
+        android:id="@+id/cl_main_search_on_searching"
         android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"

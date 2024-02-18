@@ -12,12 +12,13 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.peopleHere.people_here.Data.MainSearchData
+import com.peopleHere.people_here.Data.MakingCourseSearchData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityMainSearchBinding
 
 class MainSearchActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainSearchBinding
-    private var mainSearchData: ArrayList<MainSearchData> = arrayListOf()
+    private var makingSearchData: ArrayList<MakingCourseSearchData> = arrayListOf()
     private var mainSearchRecentAdapter: MainSearchRecentAdapter? = null
     private lateinit var placesClient: PlacesClient
 
@@ -60,8 +61,9 @@ class MainSearchActivity : AppCompatActivity() {
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
             val suggestions = response.autocompletePredictions.map { prediction ->
-                MainSearchData(R.drawable.img_example_place, prediction.getPrimaryText(null).toString(),
-                    prediction.getSecondaryText(null).toString())
+                MakingCourseSearchData(prediction.getPrimaryText(null).toString(),
+                    prediction.getSecondaryText(null).toString(),
+                    "")
             }
 
             mainSearchRecentAdapter?.updateData(ArrayList(suggestions))
@@ -77,7 +79,7 @@ class MainSearchActivity : AppCompatActivity() {
 
 
     private fun initRecyclerView() {
-        mainSearchRecentAdapter = MainSearchRecentAdapter(mainSearchData)
+        mainSearchRecentAdapter = MainSearchRecentAdapter(makingSearchData)
         binding.rvMainSearchRecent.adapter = mainSearchRecentAdapter
         binding.rvMainSearchRecent.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)

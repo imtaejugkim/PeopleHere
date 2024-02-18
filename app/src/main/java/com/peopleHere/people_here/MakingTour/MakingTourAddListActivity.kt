@@ -4,13 +4,19 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
+import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -26,9 +32,16 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
 
-class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
+class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, MakingTourAddListAdapter.OnItemCountChangedListener{
     lateinit var binding: ActivityMakingTourAddListBinding
     private var googleMap: GoogleMap?= null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -37,11 +50,26 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
     private var isEditMode: Boolean = false
     private var sequenceDialog: Dialog? = null
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var location: LatLng? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMakingTourAddListBinding.inflate(layoutInflater)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val placeImage = intent.getStringExtra("placeImage")
+        val placeName = intent.getStringExtra("placeName")
+        val placeAddress = intent.getStringExtra("placeAddress")
+        val placeLatitude = intent.getDoubleExtra("placeLatitude", 0.0)
+        val placeLongitude = intent.getDoubleExtra("placeLongitude", 0.0)
+
+        location = LatLng(placeLatitude,placeLongitude)
+
+        // 받은 데이터를 사용하여 RecyclerView 리스트 업데이트
+        if (placeName != null && placeAddress != null && placeImage != null) {
+            updateRecyclerView(placeImage, placeName, placeAddress, location!!)
+        }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -52,16 +80,22 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                // 데이터 받기
                 val data: Intent? = result.data
-                // 받은 데이터로 무엇인가를 함
-                val newData = data?.getStringExtra("key") // 'key'는 받아올 데이터의 키
-                // newData를 리스트에 추가
+                // 받은 데이터로 리스트 업데이트
+                val newPlaceImage = data?.getStringExtra("placeImage")
+                val newPlaceName = data?.getStringExtra("placeName")
+                val newPlaceAddress = data?.getStringExtra("placeAddress")
+                val newPlaceLatitude = data?.getDoubleExtra("placeLatitude", 0.0) ?: 0.0
+                val newPlaceLongitude = data?.getDoubleExtra("placeLongitude", 0.0) ?: 0.0
+
+                if (newPlaceName != null && newPlaceAddress != null) {
+                    val newLocation = LatLng(newPlaceLatitude, newPlaceLongitude)
+                    updateRecyclerView(newPlaceImage.toString(), newPlaceName, newPlaceAddress, newLocation)
+                }
             }
         }
 
         initRecyclerView()
-        initDummyData()
         setupItemTouchHelper()
 
         binding.btnMakingTourAddListEditSequence.setOnClickListener {
@@ -70,6 +104,11 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
 
         binding.btnMakingTourAddListFinishSequence.setOnClickListener {
             initEditSequence()
+        }
+
+        binding.clAddList.setOnClickListener {
+            val intent = Intent(this, MakingCourseSearchActivity::class.java)
+            activityResultLauncher.launch(intent)
         }
 
         binding.btnAddListNext.setOnClickListener {
@@ -153,7 +192,6 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
 
             }
 
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // 추후 swipe 기능 추가 되면 추가
             }
@@ -164,33 +202,78 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback{
     }
 
 
-    private fun initDummyData() {
-        addListData.addAll(
-            arrayListOf(
-                MakingTourAddListData(1,R.drawable.img_example, "로니로티 건대점",0),
-                MakingTourAddListData(2,R.drawable.img_example, "로니로티 홍대점인데 text가 길어질 때 어떻게 표시 되는지 확인해보는 데이터",1),
-                MakingTourAddListData(3,R.drawable.img_example, "로니로티 숙대점",1),
-                MakingTourAddListData(4,R.drawable.img_example, "로니로티 성대점",1),
-                MakingTourAddListData(5,R.drawable.img_example, "로니로티 이대점",1),
-                MakingTourAddListData(6,R.drawable.img_example, "로니로티 연대점",1),
-                MakingTourAddListData(7,R.drawable.img_example, "로니로티 고대점",1),
-//                MakingTourAddListData(8,R.drawable.img_example, "로니로티 중대점",1),
-                MakingTourAddListData(8,R.drawable.img_example, "로니로티 중대점",2),
-                )
-        )
+    private fun updateRecyclerView(placeImage: String, placeName: String, placeAddress: String, location: LatLng) {
+        val newItem = MakingTourAddListData(placeImage, placeName, placeAddress, location)
+        AddListDataManager.addListData.add(newItem)
+        addListAdapter?.notifyDataSetChanged()
+        Log.d("싱글턴 데이터",AddListDataManager.addListData.toString())
+        updateMarkers()
     }
 
     private fun initRecyclerView() {
-        addListAdapter = MakingTourAddListAdapter(addListData)
+        addListAdapter = MakingTourAddListAdapter(AddListDataManager.addListData, this)
         binding.rvMakingTourAddListPlace.adapter = addListAdapter
-        binding.rvMakingTourAddListPlace.layoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.VERTICAL, false)
+        binding.rvMakingTourAddListPlace.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    }
+
+    private fun vectorToBitmap(drawableId: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(this, drawableId)
+        vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    private fun addCustomMarker(location: LatLng, drawableId: Int): Marker? {
+        val markerOptions = MarkerOptions()
+            .position(location)
+            .icon(vectorToBitmap(drawableId))
+        val marker = googleMap?.addMarker(markerOptions)
+        marker?.let {
+            AddListDataManager.addMarker(location, it)
+        }
+        return marker
+    }
+
+    fun removeItemAndMarker(position: Int) {
+        val location = AddListDataManager.addListData[position].placeLocation
+        AddListDataManager.removeMarker(location) // 마커 제거
+        AddListDataManager.addListData.removeAt(position)
+        addListAdapter?.notifyItemRemoved(position)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+        updateMarkers()
+    }
 
-        val seoulCityHall = LatLng(37.5663, 126.9779)
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(seoulCityHall, 15f));
+    private fun updateMarkers() {
+        googleMap?.let { map ->
+            map.clear() // 기존 마커 제거
+            val boundsBuilder = LatLngBounds.builder()
+            for (data in AddListDataManager.addListData) {
+                val marker = addCustomMarker(data.placeLocation, R.drawable.ic_main_marker_unclicked)
+                marker?.let {
+                    boundsBuilder.include(it.position)
+                }
+            }
+            if (AddListDataManager.addListData.isNotEmpty()) {
+                val bounds = boundsBuilder.build()
+                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+            }
+        } ?: run {
+            Log.e("MakingTourAddListActivity", "GoogleMap is not initialized yet.")
+        }
+    }
+
+    override fun onItemCountChanged(count: Int) {
+        if (count == 8) {
+            binding.clAddList.visibility = View.GONE
+            binding.clAddListImpoosible.visibility = View.VISIBLE
+        } else {
+            binding.clAddListImpoosible.visibility = View.GONE
+            binding.clAddList.visibility = View.VISIBLE
+        }
     }
 }

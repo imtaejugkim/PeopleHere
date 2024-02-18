@@ -24,7 +24,7 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>, p
     }
 
     inner class FirstItemViewHolder(val binding: ItemMainTourListCourse1Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tourListInfo: MainCourseData, tourListInfo2 : MainData) {
+        fun bind(tourListInfo2 : MainData) {
 //            binding.ivMainTourListUser.setImageResource(context, binding.ivMainTourListUser, tourListInfo)
 //            binding.tvMainTourListUser.text = tourListInfo.content
             setImage1(binding.root.context, binding.ivMainTourListUser, tourListInfo2)
@@ -55,8 +55,6 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>, p
 
     inner class OtherItemViewHolder(val binding: ItemMainTourListCourse2Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourListInfo: MainCourseData) {
-//            binding.ivMainTourListUserCourse.setImageResource(tourListInfo.id)
-//            binding.tvItemMainTourListRegion.text = tourListInfo.address
             setImage2(binding.root.context, binding.ivMainTourListUserCourse, tourListInfo)
             binding.tvItemMainTourListRegion.text = tourListInfo.placeName
         }
@@ -77,13 +75,16 @@ class MainCourseAdapter(private val mainCourseData: ArrayList<MainCourseData>, p
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = mainCourseData[position]
-        val item2 = mainData
         when (holder) {
-            is FirstItemViewHolder -> holder.bind(item, item2)
-            is OtherItemViewHolder -> holder.bind(item)
+            is FirstItemViewHolder -> {
+                holder.bind(mainData)
+            }
+            is OtherItemViewHolder -> {
+                val item = mainCourseData[position - 1]
+                holder.bind(item)
+            }
         }
     }
 
-    override fun getItemCount(): Int = mainCourseData.size
+    override fun getItemCount(): Int = mainCourseData.size + 1
 }

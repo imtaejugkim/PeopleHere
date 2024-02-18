@@ -19,12 +19,14 @@ import com.peopleHere.people_here.Data.LocationChooseData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.FragmentLocationChooseBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.peopleHere.people_here.MakingTour.AddListDataManager
 
 class LocationChooseFragment : BottomSheetDialogFragment() {
 
     private var imageUri: Uri? = null
     private var locationChooseAdapter: LocationChooseAdapter? = null
     var isClicked:Boolean=false
+    private var locationList : ArrayList<LocationChooseData> = arrayListOf()
 
 
     private val pickImageLauncher: ActivityResultLauncher<Intent> =
@@ -60,18 +62,17 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
 
     private fun usingAdapter() {
 
-        val locationlist = arrayListOf(
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-            LocationChooseData(R.drawable.img, "장소1", false),
-        )
-        locationChooseAdapter = LocationChooseAdapter(locationlist)
+        for(i in 0 until AddListDataManager.addListData.size){
+            locationList.add(LocationChooseData(AddListDataManager.addListData[i].placeImage,
+                AddListDataManager.addListData[i].placeName,
+                false))
+            Log.d("장소사진",AddListDataManager.addListData[i].placeImage)
+            Log.d("이름",AddListDataManager.addListData[i].placeName)
+        }
+
+        Log.d("locationList",locationList.toString())
+
+        locationChooseAdapter = LocationChooseAdapter(locationList, requireActivity())
 
         binding.rvChooseLocation.adapter = locationChooseAdapter
         binding.rvChooseLocation.layoutManager =

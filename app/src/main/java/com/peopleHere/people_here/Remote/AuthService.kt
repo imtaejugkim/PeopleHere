@@ -28,7 +28,7 @@ class AuthService(private val context: Context) {
     private lateinit var courseContentsView: CourseContentsView
     private lateinit var upcomingDateView: UpcomingDateView
     private lateinit var bringCourseView: BringCourseView
-    private lateinit var changeWishView: ChangeWishView
+    private  var changeWishView: ChangeWishView? = null
     private lateinit var requestEnjoyView: RequestEnjoyView
     private lateinit var joinConfirmView: JoinConfirmView
 
@@ -533,8 +533,8 @@ class AuthService(private val context: Context) {
                         Log.d("ChangeWish Response Body", resp.toString())
                         Log.d("ChangeWish Response Body result", resp?.result.toString())
                         when (resp!!.status) {
-                            200 -> changeWishView.ChangeWishSuccess()
-                            else -> changeWishView.ChangeWishFailure(resp.status, resp.message)
+                            200 -> changeWishView?.ChangeWishSuccess()
+                            else -> changeWishView?.ChangeWishFailure(resp.status, resp.message)
                         }
                     }
                 }

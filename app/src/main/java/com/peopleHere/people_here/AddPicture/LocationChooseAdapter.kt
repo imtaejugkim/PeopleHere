@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.AddPicture
 
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +9,12 @@ import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.LocationChooseData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ItemLocationChooseBinding
 
-class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
+class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>, val context: Context) :
     RecyclerView.Adapter<LocationChooseAdapter.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -34,6 +36,11 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
                 binding.cvOuter.setStrokeColor(gray3)
                 notifyDataSetChanged()
             }*/
+
+            Glide.with(context)
+                .load(locationlist.locationImage)
+                .into(binding.ivRegionImage)
+
             binding.ivRegionImage.setImageResource(R.drawable.img)//여기 서버에서 받아오는 이미지로 대체
             binding.tvRegion.text = locationlist.locationName//이름
             binding.cvOuter.setOnClickListener {

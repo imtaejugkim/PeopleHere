@@ -41,13 +41,13 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
 
 
     interface OnItemClickListener {
-        fun onItemClick(picturelist: PictureEntity)
+
+        fun onItemClick(size: Int)
     }
 
     inner class FirstViewHolder(private val binding: ItemAddPictureFirstBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(picturelist: PictureEntity) {
-
             Glide.with(binding.root)
                 .load(Uri.parse(picturelist.pictureUri)) // 이미지 경로를 로드
                 .into(binding.ivAddPicture) // ImageView에 이미지 표시
@@ -64,6 +64,7 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
 
     inner class SecondViewHolder(private val binding: ItemAddPictureBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         private var getPosition: Int? = null
         fun bind(picturelist: PictureEntity, position: Int) {
             Glide.with(binding.root)
@@ -76,6 +77,7 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
             } else {
                 binding.cvString.visibility = View.INVISIBLE
             } //벗어나면 다시 없애야함
+
             binding.ivBtn.setOnClickListener {
                 removeItem(position)
 
@@ -84,12 +86,14 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
                     withContext(Dispatchers.IO) {
                         // 비동기로 데이터베이스에서 삭제
                         pictureDB!!.getPictureDao().deletePicture(picturelist.pictureUri)
+                        itemClickListener.onItemClick(pictureDB.getPictureDao().getPicture().size)
                         Log.d("qwer_deleteCheck", "1234")
                     }
                 }
             }
         }
-    }
+
+        }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         itemClickListener = onItemClickListener
@@ -144,10 +148,12 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
 
 
     //드래그 앤 드롭 파트
+/*
     fun onItemMove(fromPosition: Int, toPosition: Int) {
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
                 Collections.swap(picturelist, i, i + 1)
+
             }
         } else {
             for (i in fromPosition downTo toPosition + 1) {
@@ -158,6 +164,38 @@ class AddPictureAdapter(var picturelist: ArrayList<PictureEntity>, context: Cont
         //order을 추가하고 이를 통해서 순서를 바꿔야함
         //다시 setData하게 해야하나ㅋㅋ
         notifyItemMoved(fromPosition, toPosition)
+    }
+*/
+
+    fun onItemMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(picturelist, i, i + 1)
+                updateOrder(i, i + 1) // 순서 업데이트
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(picturelist, i, i - 1)
+                updateOrder(i, i - 1) // 순서 업데이트
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    private fun updateOrder(fromPosition: Int, toPosition: Int) {
+        val fromItem = picturelist[fromPosition]
+        val toItem = picturelist[toPosition]
+
+        val fromOrder = fromItem.order
+        fromItem.order = toItem.order
+        toItem.order = fromOrder
+
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                pictureDB!!.getPictureDao().updatePictureOrders(fromItem, toItem)
+            }
+        }
+        notifyDataSetChanged()
     }
 
     fun removeItem(position: Int) {

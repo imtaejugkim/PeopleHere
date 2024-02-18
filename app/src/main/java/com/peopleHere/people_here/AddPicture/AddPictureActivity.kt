@@ -31,6 +31,8 @@ class AddPictureActivity : AppCompatActivity() {
     var pictureDB: PictureDB? = null//없으면 null 로
     var uriString: String? = null
     val picturelist = arrayListOf<PictureEntity>()
+    var itemsize=0
+    var nextButton:Boolean=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,37 +52,60 @@ class AddPictureActivity : AppCompatActivity() {
 
 
         lifecycleScope.launch {
-            //이제 productList에 넣어젔느데 왜?
-            //실습보고 다시
             withContext(Dispatchers.IO) {
-                //TODO:이것도 비동기안에
                 val receivedIntent = intent
                 if (receivedIntent != null) {
                     // ArrayList 크기만큼 반복
+                    //TODO:여기가 CustomAlbum에서 받아와 지는 경우를 말한다.
                     var i = 0
+
                     while (receivedIntent.hasExtra("uri_$i")) {
                         uriString = receivedIntent.getStringExtra("uri_$i").toString()
                         Log.d("test1", uriString!!)
-                        //entity에 넣어야지
                         pictureDB!!.getPictureDao()
-                            .addPicture(PictureEntity(uriString!!, "멘쇼 츠케멘", "jungan", 1))
+                            .addPicture(PictureEntity(uriString!!, "멘쇼 츠케멘", "jungan", 1, i))
                         i++
                     }
                     pictureDB!!.getPictureDao().deletePicture(resourceUri_1.toString())
                     pictureDB!!.getPictureDao().deletePicture(resourceUri_2.toString())
                     pictureDB!!.getPictureDao()
-                        .addPicture(PictureEntity(resourceUri_2.toString(), "멘쇼 츠케멘", "jungan", 0))
+                        .addPicture(
+                            PictureEntity(
+                                resourceUri_2.toString(),
+                                "멘쇼 츠케멘",
+                                "jungan",
+                                0,
+                                i
+                            )
+                        )
 
+                    //얘가 마지막 위치에 있어야 해서 그냥 지우고 계속 추가 하는중
                 }
                 //TODO:나중에 코스도 엮어서
                 var products = pictureDB!!.getPictureDao().getPicture()//products로 product 가져옴
-
-                if (products.isEmpty()) {//주황색 사진추가 근데 empty가 될 리가 없긴함ㅋㅋ아 location말고 Course도 해야하네
-                    pictureDB!!.getPictureDao()
-                        .addPicture(PictureEntity(resourceUri_1.toString(), "멘쇼 츠케멘", "jungan", 0))
+                Log.d("sizeCheck",products.size.toString())
+                if (products.size<2) {//TODO:왜 비었다 뜨죵??
+                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)
+                    nextButton=false
+                }else{
+                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
+                    nextButton=true
                 }
 
-                //생명주기는 문제가 아님
+                if (products.isEmpty()) {//앞에서 이미 회색 추가 해서 어림도 없다... 이 부분을 해결 어케하지??
+                    pictureDB!!.getPictureDao()
+                        .addPicture(
+                            PictureEntity(
+                                resourceUri_1.toString(),
+                                "멘쇼 츠케멘",
+                                "jungan",
+                                0,
+                                0
+                            )
+                        )
+
+                }
+
                 (binding.rvPictures.adapter as AddPictureAdapter).setData(products)//datasetting 선언 했으니 가져가야함 아마 엮어주는 역할?
 
 
@@ -98,29 +123,28 @@ class AddPictureActivity : AppCompatActivity() {
                 pictureDB!!.getPictureDao().getPicture()
             }
             /*withContext(Dispatchers.IO) {
-                picturelist.addAll(pictures.map { pictureEntity ->
-                    AddPictureData(
-                        imageUrl = pictureEntity.pictureUri,
-                        itemType = pictureEntity.itemType
-                    )
-                })
+                    picturelist.addAll(pictures.map { pictureEntity ->
+                        AddPictureData(
+                            imageUrl = pictureEntity.pictureUri,
+                            itemType = pictureEntity.itemType
+                        )
+                    })
 
-                if (picturelist.isEmpty()) {//비었을때 주황색 사진추가, 마지막엔 이거 지워야함
-                    picturelist.add(AddPictureData(resourceUri_1.toString(), 0))
-                }else{//아니면 마지막에 회색
-                    picturelist.add(AddPictureData(resourceUri_2.toString(), 0))
-                }
+                    if (picturelist.isEmpty()) {//비었을때 주황색 사진추가, 마지막엔 이거 지워야함
+                        picturelist.add(AddPictureData(resourceUri_1.toString(), 0))
+                    }else{//아니면 마지막에 회색
+                        picturelist.add(AddPictureData(resourceUri_2.toString(), 0))
+                    }
 
 
 
-                *//*
+                    *//*
                 for (pictureEntity in pictures) {
                     Log.d("DB_CONTENT_qwer1", "Picture URI: ${pictureEntity.pictureUri}, ItemType: ${pictureEntity.itemType}")
                 }*//*
                 //이걸 넣어야 가능하다
                 addPictureAdapter!!.notifyDataSetChanged()
                 //TODO:잘 되다가 개수가 저절로 줄어드는데 어쨰서죠??
-
             }*/
         }
         //DB에다가 추가 하는것 이건 그냥 써도 ㄱㅊ할듯
@@ -130,7 +154,6 @@ class AddPictureActivity : AppCompatActivity() {
     }
 
 
-
     private fun attachPictureAdapter() {
         addPictureAdapter = AddPictureAdapter(picturelist, this)
         binding.rvPictures.adapter = addPictureAdapter
@@ -138,15 +161,27 @@ class AddPictureActivity : AppCompatActivity() {
             GridLayoutManager(this, 2)
         addPictureAdapter!!.setOnItemClickListener(object :
             AddPictureAdapter.OnItemClickListener {
-            override fun onItemClick(picturelist: PictureEntity) {
-                TODO("Not yet implemented")
+            override fun onItemClick(size: Int) {
+                //개수 어케 받지 흠
+                if (size<2) {//TODO:왜 비었다 뜨죵??
+                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)
+                    nextButton=false
+                }else{
+                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
+                    nextButton=true
+                }
+            //여기서 개수 받아와서 해야할듯??
             }
         })
+
         binding.btnNext.setOnClickListener {
-            val intent = Intent(this, TitleActivity::class.java)
-            startActivity(intent)
+            if (nextButton) {//TODO:왜 비었다 뜨죵??
+                val intent = Intent(this, TitleActivity::class.java)
+                startActivity(intent)
+            }
             //finish()
         }
+
         addPictureAdapter!!.notifyItemInserted(picturelist.size)
 
         binding.btnAddPicture.setOnClickListener {
@@ -155,34 +190,10 @@ class AddPictureActivity : AppCompatActivity() {
             val intent = Intent(this, CustomAlbumActivity::class.java)
             intent.putExtra("key", "value")
         }
-        //DB에다가 추가 하는것 이건 그냥 써도 ㄱㅊ할듯
-        uriString?.let {
-            lifecycleScope.launch {
-                // 백그라운드에서 실행되어야 하는 코드
-                // UI 업데이트는 Main 문맥에서 실행
-                withContext(Dispatchers.IO) {
-                    pictureDB!!.getPictureDao().addPicture(PictureEntity(it, "건대 츠케멘", "Jungan", 1))
-                }
-            }
-        }
 
         setContentView(binding.root)
     }
 
-
-    override fun onStart() {//아마 fragment에서 dissmiss하면 여기로 와질듯?
-        super.onStart()
-
-
-        //실습보고 다시
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     private fun CreateTextView() {
         //실험삼아 하나만 해 봅시당

@@ -6,6 +6,8 @@ import android.util.Log
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.peopleHere.people_here.Login.LoginEmailNextActivity
+import com.peopleHere.people_here.Login.LoginPhoneNextActivity
+import com.peopleHere.people_here.Login.VerifyPhoneActivity
 import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.SignUp.SignUpActivity
 import retrofit2.Call
@@ -28,7 +30,7 @@ class AuthService(private val context: Context) {
     private lateinit var bringCourseView: BringCourseView
     private lateinit var changeWishView: ChangeWishView
     private lateinit var requestEnjoyView: RequestEnjoyView
-    private lateinit var joinConfirmView : JoinConfirmView
+    private lateinit var joinConfirmView: JoinConfirmView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -53,7 +55,7 @@ class AuthService(private val context: Context) {
                     response: Response<BaseResponse<SignInResponse>>
                 ) {
 
-                    Log.d("Response_signIn",response.toString())
+                    Log.d("Response_signIn", response.toString())
                     val resp = response.body()
                     if (resp != null) {
                         when (resp.status) {
@@ -65,7 +67,7 @@ class AuthService(private val context: Context) {
                                         "AuthService",
                                         "Nickname: ${resp.result.userId}, Token: ${resp.result.jwtToken.accessToken}"
                                     )
-                                    X_ACCESS_TOKEN=resp.result.jwtToken.accessToken
+                                    X_ACCESS_TOKEN = resp.result.jwtToken.accessToken
                                     //TODO:토큰 이제 바뀌게
                                     Log.d("Check_token", X_ACCESS_TOKEN)
                                     val intent = Intent(context, MainActivity::class.java)
@@ -90,6 +92,57 @@ class AuthService(private val context: Context) {
                 }
             })
     }
+
+    fun signinPhone(phoneNumber: String, pw: String) {
+        val request = SignInPhoneRequest(phoneNumber, pw)//email이랑 pw를 넘기겠지
+        authService.signinPhone(request)
+            .enqueue(object : Callback<BaseResponse<SignInPhoneResponse>> {
+                //익명이니 함수 구현 해줘야 함+enqueue 로 자동 비동기
+                override fun onResponse(
+                    call: Call<BaseResponse<SignInPhoneResponse>>,
+                    response: Response<BaseResponse<SignInPhoneResponse>>
+                ) {
+                    //TODO: 안 되니까 SignUP구현하고 다시 해보기
+                    Log.d("Response_signIn", response.toString())
+
+                    val resp = response.body()
+                    if (resp != null) {
+                        when (resp.status) {
+                            200 -> {
+                                val signInResponse = resp.result
+                                signInResponse?.let {
+                                    signInView.SignInSuccess()
+                                    Log.d(
+                                        "AuthService",
+                                        "Nickname: ${resp.result.userId}, Token: ${resp.result.jwtToken.accessToken}"
+                                    )
+                                    X_ACCESS_TOKEN = resp.result.jwtToken.accessToken
+                                    //TODO:토큰 이제 바뀌게
+                                    //TODO: 회원가입 할때도??
+
+                                    Log.d("Check_token", X_ACCESS_TOKEN)
+                                    val intent = Intent(context, MainActivity::class.java)
+                                    context.startActivity(intent)
+                                }
+                            }
+
+                            else -> signInView.SignInFailure()
+                        }
+                    } else {
+                        Log.e("AuthService", "Response body is null.")
+                        signInView.SignInFailure()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<SignInPhoneResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("SignIn failed", t.toString())//실패했을때 어떤 이윤지 쓰로어블하게
+                }
+            })
+    }
+
 
     fun setMainView(mainView: MainView) {
         this.mainView = mainView
@@ -199,13 +252,67 @@ class AuthService(private val context: Context) {
             })
     }
 
+    fun checkPhoneNumber(phoneNumber: String) {
+        authService.checkPhoneNumber(phoneNumber)
+            .enqueue(object : Callback<BaseResponse<CheckPhoneNumberResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<CheckPhoneNumberResponse>>,
+                    response: Response<BaseResponse<CheckPhoneNumberResponse>>
+                ) {
+                    val resp = response.body()
+
+                    resp?.let {
+                        when (it.status) {
+                            200 -> {
+                                // 성공적인 응답 처리
+                                val checkEmailResponse = it.result
+                                checkEmailResponse?.let { response ->
+                                    if (response.phoneNumberAvailable) {
+                                        //기존에 없던것
+                                        val intent =
+                                            Intent(context, VerifyPhoneActivity::class.java)
+                                        context.startActivity(intent)
+                                    } else {
+                                        val intent =
+                                            Intent(context, LoginPhoneNextActivity::class.java)
+                                        //intent.putExtra("email", binding.etEmail.text.toString())
+                                        context.startActivity(intent)
+                                    }
+                                    checkEmailCallback?.onEmailAvailable(response.phoneNumberAvailable)
+                                }
+                            }
+
+                            else -> {
+                                Log.d(
+                                    "checkEmail_fail",
+                                    "fail"
+                                )
+                            }
+                        }
+                    } ?: run {
+                        Log.e("checkEmail", "Response body is null")
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<CheckPhoneNumberResponse>>,
+                    t: Throwable
+                ) {
+                    // 네트워크 실패 처리
+                    Log.e("checkEmail", "Network request failed", t)
+                }
+            })
+    }
+
     fun signup(
         email: String,
         password: String,
         firstName: String,
         lastName: String,
         birth: String,
-        gender: String
+        gender: String,
+        marketingConsent: Boolean
     ) {
         val request = SignUpRequest(
             email,
@@ -213,7 +320,8 @@ class AuthService(private val context: Context) {
             firstName,
             lastName,
             birth,
-            gender
+            gender,
+            marketingConsent
         )//email이랑 pw를 넘기겠지
         authService.signup(request)
             .enqueue(object : Callback<BaseResponse<SignUpResponse>> {
@@ -247,6 +355,64 @@ class AuthService(private val context: Context) {
 
                 override fun onFailure(
                     call: Call<BaseResponse<SignUpResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("SignIn failed", t.toString())//실패했을때 어떤 이윤지 쓰로어블하게
+                }
+            })
+    }
+
+    fun signupPhone(
+        email: String,
+        phoneNumber: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+        birth: String,
+        gender: String,
+        marketingConsent: Boolean
+    ) {
+        val request = SignUpPhoneRequest(
+            email,
+            phoneNumber,
+            password,
+            firstName,
+            lastName,
+            birth,
+            gender,
+            marketingConsent
+        )//email이랑 pw를 넘기겠지
+        authService.signupPhone(request)
+            .enqueue(object : Callback<BaseResponse<SignUpPhoneResponse>> {
+                //익명이니 함수 구현 해줘야 함+enqueue 로 자동 비동기
+                override fun onResponse(
+                    call: Call<BaseResponse<SignUpPhoneResponse>>,
+                    response: Response<BaseResponse<SignUpPhoneResponse>>
+                ) {
+                    Log.d("response_e", email)
+                    Log.d("response_ph", phoneNumber)
+                    Log.d("response_p", password)
+                    Log.d("response_f", firstName)
+                    Log.d("response_l", lastName)
+                    Log.d("response_g", gender)
+                    Log.d("response_b", birth)
+                    Log.d("response_signup", response.toString())
+                    val resp = response.body() ?: run {
+                        Log.e("Signup response", "Response body is null")
+                        return
+                    }
+                    when (resp.status) {
+                        200 -> {
+                            val signUpResponse = resp.result
+                            signUpResponse?.let {
+                                Log.d("Response_success", resp.result.userId.toString())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<SignUpPhoneResponse>>,
                     t: Throwable
                 ) {
                     Log.d("SignIn failed", t.toString())//실패했을때 어떤 이윤지 쓰로어블하게
@@ -423,7 +589,7 @@ class AuthService(private val context: Context) {
 
     }
 
-    fun requestEnjoyInfo(tourDateId : Int) {
+    fun requestEnjoyInfo(tourDateId: Int) {
 //        mainView.MainLoading()
         authService.requestEnjoyInfo(tourDateId)
             .enqueue(object : Callback<BaseResponse<RequestEnjoyResponse>> {
@@ -453,7 +619,7 @@ class AuthService(private val context: Context) {
             })
     }
 
-    fun joinConfirmInfo(tourDateId : Int) {
+    fun joinConfirmInfo(tourDateId: Int) {
 //        mainView.MainLoading()
         authService.joinConfirmInfo(tourDateId)
             .enqueue(object : Callback<BaseResponse<JoinConfirmResponse>> {

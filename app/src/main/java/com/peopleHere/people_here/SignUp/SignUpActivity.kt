@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 
@@ -35,7 +36,13 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
     private val authService = AuthService(this)//여기로 넘김
     var sendingGender: String? = null
     var sendingbirth: String? = null
-
+    var next: Boolean = false
+    var phone: String = ""
+    lateinit var birthIn: String
+    val emailValidation =
+        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    lateinit var questionEmail: TextView
+    var checkEmailBoolean: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +60,7 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
 
 
         binding.etEmail.setText(ApplicationClass.mSharedPreferencesManager.getString("email", null))
+        questionEmail = binding.etEmail
         binding.tvAfterEmail.setText("이메일")
         questionPass = binding.etPassword
         ButtonOn()//비밀번호쪽
@@ -61,18 +69,52 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
         forFirstName()
         forLastName()
         observeFields()
+        CheckEmailText()
+        //ApplicationClass로 해서 받아오게
+        phone =
+            ApplicationClass.mSharedPreferencesManager.getString("phoneNumber", "")
+                .toString()// +82형태로 들어옴
+        ApplicationClass.mSharedPreferencesManager.edit().remove("phoneNumber").commit()
+        ApplicationClass.mSharedPreferencesManager.edit().remove("phoneNumber_verification")
+            .commit()
+        ApplicationClass.mSharedPreferencesManager.edit().remove("email").commit()
+
+
+
+
+
 
         binding.cvContinue.setOnClickListener {
             if (checkContinue) {
                 //TODO:예외 TOAST처리
-                authService.signup(
-                    binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString(),
-                    binding.etFirstName.text.toString(),
-                    binding.etLastName.text.toString(),
-                    "1940-01-01",
-                    sendingGender.toString(),
-                )
+
+                if (isclicked2 == 1) {
+                    next = true
+                }
+
+                Log.d("response_phone", phone)
+                if (phone == "") {
+                    authService.signup(
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString(),
+                        binding.etFirstName.text.toString(),
+                        binding.etLastName.text.toString(),
+                        birthIn,
+                        sendingGender.toString(),
+                        next
+                    )
+                } else {
+                    authService.signupPhone(
+                        binding.etEmail.text.toString(),
+                        phone.toString(),
+                        binding.etPassword.text.toString(),
+                        binding.etFirstName.text.toString(),
+                        binding.etLastName.text.toString(),
+                        birthIn.toString(),
+                        sendingGender.toString(),
+                        next
+                    )
+                }
                 val intent = Intent(this, AlarmOkActivity::class.java)
                 //TODO:서버에다가 회원가입 정보 다 넣기
                 startActivity(intent)
@@ -82,7 +124,7 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
     }
 
     private fun forNext() {
-        if (checkfirstname && checklastname && checkBirth && checkSex && checkPass1 && checkPass2 && isclicked1 == 1) {
+        if (checkfirstname && checklastname && checkBirth && checkSex && checkPass1 && checkPass2 && isclicked1 == 1 && checkEmailBoolean) {
             binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
             checkContinue = true
         } else {//클릭 불가능 하게도 설정하기
@@ -152,6 +194,8 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
 
 
             override fun afterTextChanged(editable: Editable) {
+
+
                 val orange5 = ContextCompat.getColor(this@SignUpActivity, R.color.Orange5)
                 val gray5_5 = ContextCompat.getColor(this@SignUpActivity, R.color.Gray5_5)
                 if (editable.isNotEmpty()) {
@@ -192,6 +236,12 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
         })
     }
 
+    fun checkEmail(): Boolean {
+        var email = questionEmail.text.toString().trim() //공백제거
+        val p = Pattern.matches(emailValidation, email) // 서로 패턴이 맞닝?
+        return p
+    }
+
     private fun forFirstName() {
         binding.etFirstName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
@@ -201,8 +251,10 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
                 i2: Int
             ) {
             }
+
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
             }
+
             override fun afterTextChanged(editable: Editable) {
                 checkfirstname = editable.isNotEmpty()
                 if (editable.isNotEmpty()) {
@@ -239,16 +291,64 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
         })
     }
 
+    private fun CheckEmailText() {
+        binding.etEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence,
+                i: Int,
+                i1: Int,
+                i2: Int
+            ) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                if (checkEmail()) {//얘가 true여야만 true
+                    checkEmailBoolean = true
+                    binding.ivWrong.setImageResource(0)
+                    val layoutParams = binding.ivWrong.layoutParams
+                    layoutParams.width = dpToPx(0) // dpToPx() 메서드는 dp 값을 픽셀로 변환하는 함수입니다.
+                    layoutParams.height = dpToPx(0)
+                    binding.tvWrong.setText("")
+                    binding.etEmail.setBackgroundResource(R.drawable.login_phone_et)
+                    forNext()
+                } else {
+                    val red3 = ContextCompat.getColor(this@SignUpActivity, R.color.Red3)
+                    checkEmailBoolean = false
+                    binding.ivWrong.setImageResource(R.drawable.exclamation_mark)
+                    val layoutParams = binding.ivWrong.layoutParams
+                    layoutParams.width = dpToPx(18) // dpToPx() 메서드는 dp 값을 픽셀로 변환하는 함수입니다.
+                    layoutParams.height = dpToPx(18)
+                    binding.tvWrong.setText("이메일이 올바르게 입력되지 않았습니다.")
+                    binding.tvWrong.setTextColor(red3)
+                    binding.etEmail.setBackgroundResource(R.drawable.reset_password)
+                    forNext()
+                }
+
+            }
+        })
+    }
     override fun callBackExample(year: Int, month: Int, day: Int) {
         val red3 = ContextCompat.getColor(binding.root.context, R.color.Red3)
 
         var userBirth = "$year/$month/$day"
+        if (month < 10 && day < 10) {
+            birthIn = "$year-0$month-0$day"
+        } else if (month < 10 && day >= 10) {
+            birthIn = "$year-0$month-$day"
+        } else if (month >= 10 && day < 10) {
+            birthIn = "$year-$month-0$day"
+        } else if (month >= 10 && day >= 10) {
+            birthIn = "$year-$month-$day"
+        }
         binding.tvBirth.text = userBirth
         val colorGray8 = ContextCompat.getColor(this, R.color.Gray8)
         binding.tvBirth.setTextColor(colorGray8)
         binding.tvAfterBirth.text = "생년월일(YYYY/MM/DD)"
         //2006보다 크면 안됩니다아아아아아ㅏ
-        sendingbirth="$year-$month-$day"
+        sendingbirth = "$year-$month-$day"
         if (year > 2005) {
             checkBirth = false
             binding.cvBirth.strokeWidth =
@@ -263,16 +363,17 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
         }
     }
 
-
     override fun selected(sex: String) {
         binding.tvSex.text = sex
         sendingGender = when (sex) {
             "남성" -> {
                 "MALE"
             }
+
             "여성" -> {
                 "FEMALE"
             }
+
             else -> {
                 "OTHER"
             }
@@ -289,6 +390,7 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
         binding.etPassword.addTextChangedListener { updateFields() }
         // 다른 필드에 대한 TextWatcher도 추가할 수 있습니다.
     }
+
     private fun updateFields() {
         checkfirstname = binding.etFirstName.text.isNotEmpty()
         checklastname = binding.etLastName.text.isNotEmpty()
@@ -298,9 +400,14 @@ class SignUpActivity : AppCompatActivity(), ForCommunicate {
         checkPass2 = isPasswordValid()
         forNext()
     }
+
     fun dpToPx(dp: Int): Int {
         val density = Resources.getSystem().displayMetrics.density
         return (dp * density).toInt()
     }
+
+
+
+
 
 }

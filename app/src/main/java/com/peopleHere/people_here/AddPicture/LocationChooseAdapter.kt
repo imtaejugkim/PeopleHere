@@ -17,13 +17,15 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
     private lateinit var itemClickListener: OnItemClickListener
 
     private var selectedItemPosition: Int = 0
+    var checkSelected:Boolean=false
 
     interface OnItemClickListener {
-        fun onItemClick(locationlist: LocationChooseData)
+        fun onItemClick(locationlist: LocationChooseData,checkSelected:Boolean)
     }
 
     inner class ViewHolder(val binding: ItemLocationChooseBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(locationlist: LocationChooseData, position: Int) {
             val gray3 = ContextCompat.getColor(binding.root.context, R.color.Gray3)
             val orange3 = ContextCompat.getColor(binding.root.context, R.color.Orange3)
@@ -35,7 +37,7 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
             binding.ivRegionImage.setImageResource(R.drawable.img)//여기 서버에서 받아오는 이미지로 대체
             binding.tvRegion.text = locationlist.locationName//이름
             binding.cvOuter.setOnClickListener {
-                itemClickListener.onItemClick(locationlist)//하나의 객체 눌리게
+
                 //하나만 눌리게 하려면 다른것 false로 하고  notifychanged 하면 될 듯??
 
                 //만약 다시 눌린 경우->이게 안되네 흠
@@ -43,6 +45,7 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
 
                 if (locationlist.selected) {//true->false
                     locationlist.selected = false
+                    checkSelected=false
                     Log.d("soccer", locationlist.selected.toString())
                     binding.btnRadio.setImageResource(R.drawable.radio_check_no)//ok로 바꿈
                     binding.cvOuter.setStrokeColor(gray3)
@@ -53,9 +56,14 @@ class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>) :
                     //이전꺼 false 이번꺼 true 되게
                     ChangeSelected()
                     locationlist.selected = true
+                    checkSelected=true
                     selectedItemPosition = position
                     //position 업데이트
                 }
+                Log.d("isCliecked_ada",checkSelected.toString())
+
+                itemClickListener.onItemClick(locationlist,checkSelected)//하나의 객체 눌리게
+
             }//왜 같은 것을 눌렀을 때 흠 이건 어케 해결하지
 
             if (locationlist.selected) {

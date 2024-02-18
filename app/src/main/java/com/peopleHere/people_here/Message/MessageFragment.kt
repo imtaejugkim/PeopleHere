@@ -1,21 +1,21 @@
-package com.peopleHere.people_here.WishList
+package com.peopleHere.people_here.Message
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.peopleHere.people_here.databinding.FragmentWishBinding
+import com.peopleHere.people_here.databinding.FragmentMessageBinding
 
-class WishFragment : Fragment() {
+class MessageFragment : Fragment() {
 
-    private lateinit var binding : FragmentWishBinding
+    private lateinit var binding : FragmentMessageBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
 
     ): View? {
-        binding = FragmentWishBinding.inflate(layoutInflater)
+        binding = FragmentMessageBinding.inflate(layoutInflater)
         return binding.root
     }
 }

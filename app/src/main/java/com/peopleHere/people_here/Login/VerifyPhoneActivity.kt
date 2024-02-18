@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.peopleHere.people_here.ApplicationClass
 import java.util.concurrent.TimeUnit
 
 class VerifyPhoneActivity : AppCompatActivity() {
@@ -30,7 +31,9 @@ class VerifyPhoneActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val receivedIntent = intent
 
-        var phoneNumber = receivedIntent.getStringExtra("phone_number") // 정보 추출
+        var phoneNumberVerification = ApplicationClass.mSharedPreferencesManager.getString("phoneNumber_verification",null)//+82향태
+        var phoneNumber =  ApplicationClass.mSharedPreferencesManager.getString("phoneNumber",null)// +82형태로 들어옴
+
         ButtonOn()
 
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -53,24 +56,19 @@ class VerifyPhoneActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(this@VerifyPhoneActivity, "ㅇㅋ", Toast.LENGTH_SHORT).show()
 
-                /*val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(verificationId,
-                    binding.etNumber.text.toString()
-                )//사용자 입력값을 그럼 어떻게 받아야 할지??
 
-                Log.d("usercode_num", verificationId.toString())
-                Log.d("usercode_num2", credential.smsCode.toString())
-*/
                 this@VerifyPhoneActivity.verificationId = verificationId
-
+                Log.d("verify", verificationId)
                 //버튼 클릭하면 밑에 함수 호출되게
                 //여기로 와지긴하는데 왜
             }
 
         }
+    //TODO:만약 폰 인증 없으면 이렇게 하기
         //번호는 잘 와지는데 흠
-        if (phoneNumber != null) {
+        if (phoneNumberVerification != null) {
             val options = PhoneAuthOptions.newBuilder(auth)//firebase인증
-                .setPhoneNumber(phoneNumber.toString())       // 전화번호 설정
+                .setPhoneNumber(phoneNumberVerification.toString())       // 전화번호 설정
                 .setTimeout(60L, TimeUnit.SECONDS) // 타임아웃 설정
                 .setActivity(this@VerifyPhoneActivity)       // 현재 액티비티 설정
                 .setCallbacks(callbacks)           // 인증 콜백 설정
@@ -83,6 +81,13 @@ class VerifyPhoneActivity : AppCompatActivity() {
                     verificationId,
                     binding.etNumber.text.toString()
                 ) //인자값을 뭘 줘야하지 그럼 흠
+                if (credential.smsCode.toString() == binding.etNumber.toString()) {
+                    Log.d("response_phoneNumber_check",phoneNumber.toString())
+                    //TODO: 여기에 phoneNUMBER을 넘겨줘야 하는데 그냥 같은거 하나 더 만들어?????어케?그냥 받자 시발 에바다
+                    val intent = Intent(this, SignUpActivity::class.java)
+                    intent.putExtra("phone",phoneNumber)
+                    startActivity(intent)
+                }
                 signInWithPhoneAuthCredential(credential)//여기부터 다시
             }
         }
@@ -94,13 +99,16 @@ class VerifyPhoneActivity : AppCompatActivity() {
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    //인증성공
-                    //회원가입 페이지로 넘기기
 
+                Log.d("verifyPhone", task.toString())
+
+                if (task.isSuccessful) {
                     val intent = Intent(this, SignUpActivity::class.java)
                     startActivity(intent)
+                    Log.d("verifyPhone_Success", task.toString())
+
                 } else {
+                    Log.d("verifyPhone_fail", task.toString())
                     //인증실패
                 }
             }

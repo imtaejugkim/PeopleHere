@@ -20,4 +20,9 @@ interface PictureDao {
     fun getPicture():List<PictureEntity>//LiveData 껴야 하는지?
     @Update
     fun update(picture: PictureEntity)
+    @Update
+    suspend fun updatePictureOrders(vararg pictures: PictureEntity)
+    @Query("SELECT * FROM PictureEntitytable ORDER BY 'order' ASC")
+    suspend fun getAllPicturesOrdered(): List<PictureEntity>
+
 }

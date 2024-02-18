@@ -234,10 +234,20 @@
 
     <!--toast_category-->
     <string name="toast_category_string">\최대 3개까지 선택할 수 있어요 </string>
+    <!--fragment_profile 이름 정리 -->
+    <string name="fragment_profile_my_profile">\나의 프로필</string>
+    <string name="fragment_profile_come">\다가오는 만남</string>
+    <string name="fragment_profile_past">\지난 만남</string>
+
     <!--fragment_profile_first 이름 정리 -->
     <string name="fragment_profile_first_login1">\사람들과 만남을 계획하려면</string>
     <string name="fragment_profile_first_login2">로그인하세요</string>
     <string name="fragment_profile_first_signup">로그인 또는 회원가입</string>
+    <string name="fragment_profile_first_profile">프로필</string>
+    <!--fragment_message 이름 정리 -->
+    <string name="fragment_message_message">\메세지</string>
+    <string name="fragment_message_explain1">\메시지를 보려면 로그인하세요</string>
+    <string name="fragment_message_explain2">\로그인하면 여기에 사람들이 보낸 메시지가 표시돼요.</string>
 
 
     <!--activity_login_phone-->
@@ -278,6 +288,9 @@
 
     <string name="activity_login_email_forgot">비밀번호를 잊으셨나요?</string>
     <string name="activity_login_email_reset">\<u>비밀번호 재설정</u></string>
+    <!--activity_login_phone_next-->
+
+    <string name="activity_login_phone_next_login">\전화번호로 로그인</string>
 
     <!--activity_signup-->
     <string name="activity_signup_finishing">회원가입 완료하기</string>

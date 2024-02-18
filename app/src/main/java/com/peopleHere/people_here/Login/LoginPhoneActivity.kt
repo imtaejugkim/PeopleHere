@@ -1,13 +1,18 @@
 package com.peopleHere.people_here.Login
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.peopleHere.people_here.databinding.ActivityLoginPhoneBinding
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,6 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.peopleHere.people_here.ApplicationClass
+import com.peopleHere.people_here.Remote.AuthService
 
 
 class LoginPhoneActivity : AppCompatActivity() {
@@ -27,15 +34,26 @@ class LoginPhoneActivity : AppCompatActivity() {
     private var checkContinue:Boolean=false
     lateinit var phoneNumberWithoutHyphen:String
     lateinit var phoneNumber:String
+    private val authService = AuthService(this)//여기로 넘김
     var verificationId =""
+    lateinit var phoneNumberWithHyphen:String
     private val sms: String? = null
+    private val MY_PERMISSIONS_REQUEST_SEND_SMS = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginPhoneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-
+// SMS 권한 확인
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+            != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 없는 경우 권한 요청
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.SEND_SMS),
+                MY_PERMISSIONS_REQUEST_SEND_SMS)
+        }
 
 
         //자동 하이푼 로직
@@ -56,10 +74,18 @@ class LoginPhoneActivity : AppCompatActivity() {
                 // 예시로 다음 activity를 시작하는 코드를 작성합니다.
                 phoneNumberWithoutHyphen = phoneNumberWithoutHyphen.substring(1) // 맨 앞의 "0" 제거
                 phoneNumber= "+82$phoneNumberWithoutHyphen"
+                //여기서 있는지 없는지 보기
+                Log.d("PhoneNumber_with",phoneNumberWithHyphen)
+                ApplicationClass.mSharedPreferencesManager.edit().putString("phoneNumber",phoneNumberWithHyphen).commit()//얘는 인증 위한거
+                ApplicationClass.mSharedPreferencesManager.edit().putString("phoneNumber_verification",phoneNumber).commit()//얘는확인
+                authService.checkPhoneNumber(phoneNumberWithHyphen)
+
+/*
 
                 val intent = Intent(this, VerifyPhoneActivity::class.java)
                 intent.putExtra("phone_number",phoneNumber)//다음에서 체크하기 위해
                 startActivity(intent)
+*/
 /*
                 Log.d("userphone",phoneNumber)
                 val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -183,7 +209,7 @@ class LoginPhoneActivity : AppCompatActivity() {
             override fun afterTextChanged(editable: Editable) {
 
                 if (editable.length == 13) {//한글자 이상이면 검정색
-                    val phoneNumberWithHyphen = editable.toString() // 하이푼이 포함된 전화번호 문자열
+                    phoneNumberWithHyphen = editable.toString() // 하이푼이 포함된 전화번호 문자열
                     phoneNumberWithoutHyphen = phoneNumberWithHyphen.replace("-", "") // 하이푼 제거
                     binding.cvContinue.setBackgroundResource(com.peopleHere.people_here.R.drawable.making_tour_button_next)
                     checkContinue=true
@@ -194,6 +220,21 @@ class LoginPhoneActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_SEND_SMS -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // 사용자가 권한을 허용한 경우
+                    Toast.makeText(applicationContext, "권한이 허용되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    // 사용자가 권한을 거부한 경우
+                    Toast.makeText(applicationContext, "권한이 거부되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+        }
     }
 
 }

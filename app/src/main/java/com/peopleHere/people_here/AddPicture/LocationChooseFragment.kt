@@ -1,10 +1,13 @@
 package com.peopleHere.people_here.AddPicture
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,23 +24,20 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
 
     private var imageUri: Uri? = null
     private var locationChooseAdapter: LocationChooseAdapter? = null
-    private val requestPermissionLauncher: ActivityResultLauncher<String> =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-            }
-        }
+    var isClicked:Boolean=false
+
 
     private val pickImageLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {//이미지가 선택된 경우이다
                 val data: Intent? = result.data//받아온 데이터를 저장함
-
                 data?.data?.let {
                     imageUri = it
                     //shraed로 data저장 해놓기
 
-                    ApplicationClass.mSharedPreferencesManager.edit().putString("image",imageUri.toString()).apply()
-                    val c=ApplicationClass.mSharedPreferencesManager.getString("image",null)
+                    ApplicationClass.mSharedPreferencesManager.edit()
+                        .putString("image", imageUri.toString()).apply()
+                    val c = ApplicationClass.mSharedPreferencesManager.getString("image", null)
                     dismiss()
 
                     //activity에 데이터 넘겨주고 startActivity 혹은 dismiss?
@@ -51,26 +51,25 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         binding = FragmentLocationChooseBinding.inflate(layoutInflater)
+
+
         usingAdapter()
         return binding.root
-
     }
 
     private fun usingAdapter() {
 
         val locationlist = arrayListOf(
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
-            LocationChooseData(R.drawable.img, "장소1",false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
+            LocationChooseData(R.drawable.img, "장소1", false),
         )
         locationChooseAdapter = LocationChooseAdapter(locationlist)
 
@@ -79,39 +78,37 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         locationChooseAdapter!!.setOnItemClickListener(object :
             LocationChooseAdapter.OnItemClickListener {
-            override fun onItemClick(locationlist: LocationChooseData) {
-                binding.btnChoose.setBackgroundResource(R.drawable.making_tour_button_next)
+            override fun onItemClick(locationlist: LocationChooseData,checkSelected:Boolean) {
 
-                // val bottomsheet= CostFragment()
-                //bottomsheet.show(supportFragmentManager, bottomsheet.tag)
-                //여기 프래그먼트 적용
-                //bottomdialog 나오게
+            isClicked=checkSelected
+            if(isClicked){
+                binding.btnChoose.setBackgroundResource(R.drawable.making_tour_button_next)
+            }else{
+                binding.btnChoose.setBackgroundResource(R.drawable.making_tour_button_close)
+
+            }
+                Log.d("isCliecked_fragment",isClicked.toString())
             }
         })
 
 
         binding.btnChoose.setOnClickListener {
-            //여기서 이제 갤러리 접근이요
-            //권한 요청 팝업이 안 뜬다..?그냥 거부됐다만 나옴
-            val bottomsheet= SelectPictureFragment()
-            bottomsheet.show(childFragmentManager, bottomsheet.tag)
+
+            if(isClicked){
+                val bottomsheet = SelectPictureFragment()
+                bottomsheet.show(childFragmentManager, bottomsheet.tag)
+
+
+            }
 
 
 
-
-            // val selectPictureDialog = SelectPictureDialog(requireContext(),requireActivity())
-
-            //한 번 그냥 이것도 fragment로 해보기..ㅠㅠ
-            //selectPictureDialog.getWindow()!!.setGravity(Gravity.BOTTOM);
-            //selectPictureDialog.s
-        // how()
-
-            //또 다이어로그에선 생명주기떄매 안되네 ㅋㅋ
         }
 
 
     }
 
+/*
     private fun openGallery() {
         val gallery = Intent(
             Intent.ACTION_PICK,
@@ -119,5 +116,6 @@ class LocationChooseFragment : BottomSheetDialogFragment() {
         )//내부 저장소에 가서 이미지를 불러오는 코드
         pickImageLauncher.launch(gallery)//이미지세팅
     }
+*/
 
 }

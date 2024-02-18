@@ -133,7 +133,7 @@ data class JoinConfirmResponse(
     @SerializedName("code") val code : Int,
     @SerializedName("status") val status : Int,
     @SerializedName("message") val message : String,
-    @SerializedName("timestamp") val timestamp :String
+    @SerializedName("result") val result :String
 )
 
 data class Data(

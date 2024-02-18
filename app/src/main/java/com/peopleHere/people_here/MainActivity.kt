@@ -6,12 +6,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.peopleHere.people_here.Main.MainFragment
-import com.peopleHere.people_here.MakingTour.MakingTourAddListActivity
-import com.peopleHere.people_here.MyTour.MakingCourseFragment
-import com.peopleHere.people_here.Profile.ProfileFirstFragment
-import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
+import com.peopleHere.people_here.MyTour.MakingCourseActivity
 import com.peopleHere.people_here.Profile.DayTripManageActivity
-import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.TitleCategory.MakingTourFragment
 import com.peopleHere.people_here.WishList.WishFragment
 import com.peopleHere.people_here.databinding.ActivityMainBinding
@@ -41,14 +37,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-//                R.id.menu_making_course -> {//코스 만들기 고쳤다아
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_frm, MakingCourseFragment()).commit()
-//                    return@setOnItemSelectedListener true
-//                }
-
                 R.id.menu_making_course -> {//코스 만들기 고쳤다아
-                    val intent = Intent(this, MakingTourAddListActivity::class.java)
+                    val intent = Intent(this, MakingCourseActivity::class.java)
                     startActivity(intent)
                     return@setOnItemSelectedListener true
                 }

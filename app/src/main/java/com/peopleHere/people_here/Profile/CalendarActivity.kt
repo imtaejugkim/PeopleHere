@@ -23,7 +23,9 @@ import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCalendarBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class CalendarActivity : AppCompatActivity() , UpcomingDateView{
     lateinit var binding : ActivityCalendarBinding
@@ -91,11 +93,27 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         }
 
         monthAdapter = MonthAdapter(calendarList, upcomingData, this@CalendarActivity, object : DateAdapter.OnDateClickListener {
-            override fun onDateClick(date: String, month: Int, year: Int, time: String?) {
-                if (time != null) {
-                    // 시간 정보가 있으면 bottomSheet의 내용 업데이트
-                    updateBottomSheetContent(date, month, year, time)
+            override fun onDateClick(date: String, month: Int, year: Int, status: String?, time: String?) {
+                if (status == "AVAILABLE") {
+                    // 탭을 "참여 가능으로 설정"으로 변경
+                    val tabIndex = tabList.indexOf("참여 가능으로 설정")
+                    binding.tlEnterDate.getTabAt(tabIndex)?.select()
+
+                    // 시간 설정
+                    val displayTime = if (time != null) {
+                        // 시간 포맷 변환 로직 추가
+                        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                        val outputFormat = SimpleDateFormat("a hh:mm", Locale.getDefault())
+                        val date = inputFormat.parse(time)
+                        date?.let {
+                            outputFormat.format(it)
+                        } ?: "시간협의"
+                    } else {
+                        "여행자의 시간에 맞출 수 있어요"
+                    }
+                    binding.tvExistTime.text = displayTime
                 }
+                // BottomSheet를 보여주는 로직
                 showCalendarDialog(date, month, year, time)
             }
         })
@@ -147,9 +165,16 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
     private fun showBottomSheet(date: String, month: Int, year: Int, time: String?) {
         updateBottomSheetContent(date, month, year, time)
+        binding.tlEnterDate.clearOnTabSelectedListeners()
 
         binding.tlEnterDate.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                if (tab.position == 0) {
+                    updateTabs("참여 차단으로 변경", "참여 가능")
+                } else {
+
+                    updateTabs("참여 차단", "참여 가능으로 설정")
+                }
                 setTabColor(tab, true)
             }
 
@@ -171,11 +196,22 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
     }
 
+    private fun updateTabs(firstTabTitle: String, secondTabTitle: String) {
+        binding.tlEnterDate.removeAllTabs() // 기존 탭 제거
+
+        val firstTab = binding.tlEnterDate.newTab().setText(firstTabTitle)
+        val secondTab = binding.tlEnterDate.newTab().setText(secondTabTitle)
+        binding.tlEnterDate.addTab(firstTab)
+        binding.tlEnterDate.addTab(secondTab)
+    }
+
+
     private fun setTabColor(tab: TabLayout.Tab?, isSelected: Boolean) {
         binding.tvExistTime.text = tabList[tab!!.position]
         val tabView = (binding.tlEnterDate.getChildAt(0) as ViewGroup).getChildAt(tab.position) as View
 
         tab.customView?.let { view ->
+
             val textView = view as TextView
             if (isSelected) {
                 tabView.background = ResourcesCompat.getDrawable(resources, R.drawable.rectangle_line_orange3_12, null)

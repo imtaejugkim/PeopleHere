@@ -120,7 +120,7 @@
         app:cardCornerRadius="12dp">
 
         <ImageView
-            android:id="@+id/iv_main_tour_list_user"
+            android:id="@+id/iv_tour_first"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
@@ -226,8 +226,10 @@
             app:cardCornerRadius="100dp">
 
             <ImageView
+                android:id="@+id/iv_tour_leader"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="fitXY"
                 android:src="@drawable/img_example_user"/>
 
         </androidx.cardview.widget.CardView>

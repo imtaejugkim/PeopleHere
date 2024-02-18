@@ -55,7 +55,7 @@ interface RetrofitInterface {
 
     @POST("api/tour-dates/{tourDateId}/join")
     fun joinConfirmInfo(@Path("tourDateId") tourDateId : Int)
-            : Call<BaseResponse<JoinConfirmResponse>>
+            : Call<BaseResponse<String>>
 
 
 }

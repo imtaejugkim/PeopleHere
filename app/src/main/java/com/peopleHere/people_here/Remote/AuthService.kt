@@ -130,8 +130,8 @@ class AuthService(private val context: Context) {
 //                Log.d("response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-//                    Log.d("Main Response Body", resp.toString())
-//                    Log.d("Main Response Body result", resp?.result.toString())
+                    Log.d("Main Response Body", resp.toString())
+                    Log.d("Main Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> mainView.MainSuccess(resp.result.content)
                             else -> mainView.MainFailure(resp.status, resp.message)
@@ -431,11 +431,11 @@ class AuthService(private val context: Context) {
                     call: Call<BaseResponse<RequestEnjoyResponse>>,
                     response: Response<BaseResponse<RequestEnjoyResponse>>
                 ) {
-                    Log.d("RequestEnjoy response", response.toString())
+//                    Log.d("RequestEnjoy response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                        Log.d("RequestEnjoy Response Body", resp.toString())
-                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+//                        Log.d("RequestEnjoy Response Body", resp.toString())
+//                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> requestEnjoyView.RequestEnjoySuccess(resp.result)
                             else -> requestEnjoyView.RequestEnjoyFailure(resp.status, resp.message)
@@ -456,28 +456,28 @@ class AuthService(private val context: Context) {
     fun joinConfirmInfo(tourDateId : Int) {
 //        mainView.MainLoading()
         authService.joinConfirmInfo(tourDateId)
-            .enqueue(object : Callback<BaseResponse<JoinConfirmResponse>> {
+            .enqueue(object : Callback<BaseResponse<String>> {
                 override fun onResponse(
-                    call: Call<BaseResponse<JoinConfirmResponse>>,
-                    response: Response<BaseResponse<JoinConfirmResponse>>
+                    call: Call<BaseResponse<String>>,
+                    response: Response<BaseResponse<String>>
                 ) {
-                    Log.d("RequestEnjoy response", response.toString())
+//                    Log.d("joinConfirm response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                        Log.d("RequestEnjoy Response Body", resp.toString())
-                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+//                        Log.d("joinConfirm Response Body", resp.toString())
+//                        Log.d("joinConfirm Response Body result", resp?.result.toString())
                         when (resp!!.status) {
-                            200 -> joinConfirmView.JoinConfirmSuccess(resp.result)
+                            200 -> joinConfirmView.JoinConfirmSuccess()
                             else -> joinConfirmView.JoinConfirmFialure(resp.status, resp.message)
                         }
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<BaseResponse<JoinConfirmResponse>>,
+                    call: Call<BaseResponse<String>>,
                     t: Throwable
                 ) {
-                    Log.d("Upcoming Failed", t.toString())
+                    Log.d("joinConfirm Failed", t.toString())
                 }
 
             })

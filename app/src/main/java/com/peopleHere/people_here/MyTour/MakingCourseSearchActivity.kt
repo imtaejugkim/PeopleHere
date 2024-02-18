@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.MyTour
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,18 +10,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.peopleHere.people_here.Data.MainSearchData
+import com.peopleHere.people_here.Data.MakingCourseSearchData
 import com.peopleHere.people_here.Main.MainSearchRecentAdapter
+import com.peopleHere.people_here.Main.MakingCourseSearchAdapter
+import com.peopleHere.people_here.MakingTour.MakingTourAddListActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityMainSearchBinding
 
-class MakingCourseSearchActivity : AppCompatActivity() {
+class MakingCourseSearchActivity : AppCompatActivity() , MakingCourseSearchAdapter.OnPlaceClickListener{
     lateinit var binding: ActivityMainSearchBinding
-    private var mainSearchData: ArrayList<MainSearchData> = arrayListOf()
+    private var makingSearchData: ArrayList<MakingCourseSearchData> = arrayListOf()
     private var mainSearchRecentAdapter: MainSearchRecentAdapter? = null
+    private var makingSearchAdapter : MakingCourseSearchAdapter ?= null
     private lateinit var placesClient: PlacesClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,13 +49,13 @@ class MakingCourseSearchActivity : AppCompatActivity() {
         binding.etMainSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 binding.clMainSearchRecent.visibility = View.VISIBLE
-                binding.rvMainSearchOnSearching.visibility = View.GONE
+                binding.clMainSearchOnSearching.visibility = View.GONE
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.clMainSearchRecent.visibility = View.GONE
-                binding.rvMainSearchOnSearching.visibility = View.VISIBLE
+                binding.clMainSearchOnSearching.visibility = View.VISIBLE
                 fetchPlaceSuggestions(s.toString())
             }
 
@@ -68,16 +75,17 @@ class MakingCourseSearchActivity : AppCompatActivity() {
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
             val suggestions = response.autocompletePredictions.map { prediction ->
-                MainSearchData(
-                    R.drawable.img_example_place, prediction.getPrimaryText(null).toString(),
-                    prediction.getSecondaryText(null).toString()
+                MakingCourseSearchData(
+                    prediction.getPrimaryText(null).toString(),
+                    prediction.getSecondaryText(null).toString(),
+                    prediction.placeId
                 )
             }
 
-            mainSearchRecentAdapter?.updateData(ArrayList(suggestions))
+            makingSearchAdapter?.updateData(ArrayList(suggestions))
         }.addOnFailureListener { exception ->
             Log.e("MainSearchActivity", "Place not found: ${exception.message}")
-            // place 못찾을 때 오류
+            // place 못찾을 때 오류 처리
         }
     }
 
@@ -87,12 +95,43 @@ class MakingCourseSearchActivity : AppCompatActivity() {
 
 
     private fun initRecyclerView() {
-        mainSearchRecentAdapter = MainSearchRecentAdapter(mainSearchData)
+        mainSearchRecentAdapter = MainSearchRecentAdapter(makingSearchData)
         binding.rvMainSearchRecent.adapter = mainSearchRecentAdapter
         binding.rvMainSearchRecent.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL, false
         )
+
+        makingSearchAdapter = MakingCourseSearchAdapter(makingSearchData, this)
+        binding.rvMainSearchOnSearching.adapter = makingSearchAdapter
+        binding.rvMainSearchOnSearching.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.VERTICAL, false
+        )
+    }
+
+    override fun onPlaceClick(data: MakingCourseSearchData) {
+        val placeFields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+        val request = FetchPlaceRequest.newInstance(data.placeId, placeFields)
+
+        placesClient.fetchPlace(request).addOnSuccessListener { response ->
+            val place = response.place
+            val intent = Intent(this@MakingCourseSearchActivity, MakingCourseCheckActivity::class.java).apply {
+                putExtra("placeId", data.placeId)
+                putExtra("placeName", data.searchRegion)
+                putExtra("placeAddress", data.searchPlace)
+                putExtra("placeLatitude", place.latLng?.latitude)
+                putExtra("placeLongitude", place.latLng?.longitude)
+                Log.d("placeId",data.placeId)
+                Log.d("placeName",data.searchRegion)
+                Log.d("placeAddress",data.searchPlace)
+                Log.d("placeLatitude",place.latLng?.latitude.toString())
+                Log.d("placeLongitude",place.latLng?.longitude.toString())
+            }
+            startActivity(intent)
+        }.addOnFailureListener { exception ->
+            Log.d("오류",exception.toString())
+        }
     }
 }
 

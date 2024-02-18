@@ -221,7 +221,12 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         // 코스 후기
         initReview(courseData)
+//        initMapView(courseData)
     }
+
+//    private fun initMapView(courseData: CourseContentsResponse) {
+//        TODO("Not yet implemented")
+//    }
 
     private fun initReview(courseData: CourseContentsResponse) {
         binding.tvReviewName.text = courseData.userName

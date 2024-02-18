@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.TourLeaderData
@@ -106,13 +107,16 @@ class RequestEnjoyActivity : AppCompatActivity() , RequestEnjoyView , JoinConfir
             "${hours}시간"
         }
 
-        Glide.with(this)
-            .load(requestData.places.map { it.placeImages[0] })
-            .into(binding.ivMainTourListUser)
+        val firstPlaceImage = requestData.places.firstOrNull()?.placeImages?.firstOrNull()
+        firstPlaceImage?.let { imageUrl ->
+            Glide.with(this)
+                .load(imageUrl)
+                .into(binding.ivTourFirst)
+        }
 
         Glide.with(this)
             .load(leaderData.userImageUrl)
-            .into(binding.ivMainTourListUser)
+            .into(binding.ivTourLeader)
 
         if (requestData.places.size > 1) {
             val addCount = requestData.places.size - 1
@@ -162,24 +166,20 @@ class RequestEnjoyActivity : AppCompatActivity() , RequestEnjoyView , JoinConfir
         TODO("Not yet implemented")
     }
 
-    override fun JoinConfirmSuccess(content: JoinConfirmResponse) {
-        Log.d("성공했냐", content.message)
-        initActivity(true)
+    override fun JoinConfirmSuccess() {
+        Log.d("성공했냐1","성공했냐1")
+        runOnUiThread {
+            Log.d("성공했냐2","성공했냐2")
+            val intent = Intent(this@RequestEnjoyActivity, SuccessRequestActivity::class.java)
+            intent.putExtra("tourDatesId", tourDatesId)
+            startActivity(intent)
+        }
     }
 
     override fun JoinConfirmFialure(status: Int, message: String) {
-        Log.d("요청에러1",status.toString())
-        Log.d("요청에러2",message)
+        Log.d("통신오류1",status.toString())
+        Log.d("통신오류2",message)
 
-        initActivity(false)
     }
 
-    private fun initActivity(success: Boolean) {
-        if(success){
-            val intent = Intent(this, SuccessRequestActivity::class.java)
-            startActivity(intent)
-        }else{
-            return
-        }
-    }
 }

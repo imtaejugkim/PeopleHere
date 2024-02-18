@@ -2,6 +2,7 @@ package com.peopleHere.people_here.MakingTour
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.peopleHere.people_here.AddPicture.AddPictureActivity
 import com.peopleHere.people_here.R
@@ -47,10 +48,13 @@ class MakingTourTimeActivity : AppCompatActivity() {
 
         binding.btnMakingTourTimeNext.setOnClickListener {
             val hourIndex = binding.npHourPicker.value
-            val hour = hourValue[hourIndex]
+            val hour = hourValue[hourIndex].toInt()
             val minuteIndex = binding.npMinutePicker.value
-            val minute = minuteValue[minuteIndex]
+            val minute = minuteValue[minuteIndex].toInt()
 
+            val intent = Intent(this, AddPictureActivity::class.java)
+            intent.putExtra("time",hour * 60 + minute)
+            startActivity(intent)
         }
     }
 }

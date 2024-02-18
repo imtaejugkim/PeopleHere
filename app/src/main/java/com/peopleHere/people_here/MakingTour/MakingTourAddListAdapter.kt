@@ -66,7 +66,7 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
                 .into(binding.ivMakingTourAddListPlace)
 
             binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
-            binding.tvMakingTourListPlaceNumber.text = adapterPosition.toString()
+            binding.tvMakingTourListPlaceNumber.text = (adapterPosition+1).toString()
 
             when (adapterPosition) {
                 0 -> {
@@ -112,7 +112,9 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             setContentView(binding.root)
 
             binding.btnDeletePlace.setOnClickListener {
-                adapter.removeItem(position)
+                if (context is MakingTourAddListActivity) {
+                    context.removeItemAndMarker(position)
+                }
                 dismiss()
             }
 

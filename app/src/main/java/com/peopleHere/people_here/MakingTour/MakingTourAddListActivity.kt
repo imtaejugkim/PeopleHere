@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -49,9 +50,8 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
     private var isEditMode: Boolean = false
     private var sequenceDialog: Dialog? = null
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
-    private var marker : Marker ?= null
-    var markerIcon = R.drawable.ic_main_marker_unclicked
     private var location: LatLng? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,6 +206,7 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         val newItem = MakingTourAddListData(placeImage, placeName, placeAddress, location)
         AddListDataManager.addListData.add(newItem)
         addListAdapter?.notifyDataSetChanged()
+        Log.d("싱글턴 데이터",AddListDataManager.addListData.toString())
         updateMarkers()
     }
 
@@ -228,7 +229,18 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         val markerOptions = MarkerOptions()
             .position(location)
             .icon(vectorToBitmap(drawableId))
-        return googleMap?.addMarker(markerOptions)
+        val marker = googleMap?.addMarker(markerOptions)
+        marker?.let {
+            AddListDataManager.addMarker(location, it)
+        }
+        return marker
+    }
+
+    fun removeItemAndMarker(position: Int) {
+        val location = AddListDataManager.addListData[position].placeLocation
+        AddListDataManager.removeMarker(location) // 마커 제거
+        AddListDataManager.addListData.removeAt(position)
+        addListAdapter?.notifyItemRemoved(position)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -254,8 +266,6 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
             Log.e("MakingTourAddListActivity", "GoogleMap is not initialized yet.")
         }
     }
-
-
 
     override fun onItemCountChanged(count: Int) {
         if (count == 8) {

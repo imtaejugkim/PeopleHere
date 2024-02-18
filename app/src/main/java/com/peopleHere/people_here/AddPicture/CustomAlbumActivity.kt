@@ -1,13 +1,16 @@
 package com.peopleHere.people_here.AddPicture
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import com.peopleHere.people_here.databinding.ActivityCustomAlbumBinding
 import com.peopleHere.people_here.Data.CustomAlbumData
@@ -16,6 +19,8 @@ class
 CustomAlbumActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCustomAlbumBinding
     private var customAlbumAdapter: CustomAlbumAdapter? = null
+
+
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {

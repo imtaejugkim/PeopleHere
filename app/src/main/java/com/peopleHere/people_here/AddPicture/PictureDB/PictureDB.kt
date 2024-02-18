@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [PictureEntity::class], version = 6)
+@Database(entities = [PictureEntity::class], version = 7)
 
 //singletone
 abstract class PictureDB : RoomDatabase() {

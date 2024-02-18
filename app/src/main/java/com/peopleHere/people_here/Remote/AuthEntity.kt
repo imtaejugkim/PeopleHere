@@ -38,6 +38,17 @@ data class SignInResponse(//닉네임과 토큰 얘네 Shared에 저장되게 �
     @SerializedName("userId")val userId:String,
     @SerializedName("jwtToken")val jwtToken:jwtToken,
 )
+data class SignInPhoneRequest(//로그인에 보낼거
+    @SerializedName("phoneNumber")val phoneNumber:String,
+    @SerializedName("password")val password:String,
+    //아이디 비번만 받게
+    //SerializedName이란:HTTP 통신 요청 들어갈때 저 문자열 안에 key값으로 매핑 들어감
+)
+
+data class SignInPhoneResponse(//닉네임과 토큰 얘네 Shared에 저장되게 하기 putString으로
+    @SerializedName("userId")val userId:String,
+    @SerializedName("jwtToken")val jwtToken:jwtToken,
+)
 
 data class jwtToken(
     @SerializedName("accessToken") val accessToken: String,
@@ -51,15 +62,36 @@ data class SignUpRequest(
     @SerializedName("lastName")val lastName:String,
     @SerializedName("birth")val birth:String,
     @SerializedName("gender")val gender:String,
+    @SerializedName("marketingConsent")val marketingConsent:Boolean,
 )
+
 data class SignUpResponse(
     @SerializedName("userId")val userId:Int,
 )
 
+data class SignUpPhoneRequest(
+    @SerializedName("email")val email:String,
+    @SerializedName("phoneNumber")val phoneNumber:String,
+    @SerializedName("password")val password:String,
+    @SerializedName("firstName")val firstName:String,
+    @SerializedName("lastName")val lastName:String,
+    @SerializedName("birth")val birth:String,
+    @SerializedName("gender")val gender:String,
+    @SerializedName("marketingConsent")val marketingConsent:Boolean,
+)
+
+data class SignUpPhoneResponse(
+    @SerializedName("userId")val userId:Int,
+)
 data class CheckEmailResponse(
     @SerializedName("message")val message:String,
     @SerializedName("emailAvailable")val emailAvailable:Boolean,
 )
+data class CheckPhoneNumberResponse(
+    @SerializedName("message")val message:String,
+    @SerializedName("phoneNumberAvailable")val phoneNumberAvailable:Boolean,
+)
+
 
 data class CourseContentsResponse (
     @SerializedName("tourId") val tourId: Int,

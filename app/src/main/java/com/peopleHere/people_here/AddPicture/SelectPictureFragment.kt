@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -23,6 +24,20 @@ class SelectPictureFragment() :  BottomSheetDialogFragment() {
 
     private var imageUri: Uri? = null
 
+
+    private val galleryPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.setDataAndType(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    "image/*"
+                )
+            } else {
+
+            }
+
+        }
     private lateinit var binding: FragmentSelectPictureBinding
     private val requestPermissionLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -57,6 +72,11 @@ class SelectPictureFragment() :  BottomSheetDialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding= FragmentSelectPictureBinding.inflate(layoutInflater)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            galleryPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+        else
+            galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
 
         binding.clFirst.setOnClickListener{
             //갤러리 호출

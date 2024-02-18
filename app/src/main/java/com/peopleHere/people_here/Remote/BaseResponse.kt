@@ -2,6 +2,7 @@ package com.peopleHere.people_here.Remote
 import com.google.gson.annotations.SerializedName
 
 data class BaseResponse <T>(
+    @SerializedName("success") val success : Boolean,
     @SerializedName("code") val code : Int,
     @SerializedName("status") val status : Int,
     @SerializedName("message") val message : String,

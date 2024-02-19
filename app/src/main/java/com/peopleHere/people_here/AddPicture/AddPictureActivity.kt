@@ -43,6 +43,7 @@ class AddPictureActivity : AppCompatActivity() {
     var addLocationlist : ArrayList<AddPicturLocationData> = arrayListOf()
     var itemsize = 0
     var nextButton: Boolean = false
+    var time = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,8 @@ class AddPictureActivity : AppCompatActivity() {
                 AddListDataManager.addListData[i].placeImage)
             )
         }
+
+        time = intent.getIntExtra("time",0)
 
         addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist, this)
         binding.rvLocation.adapter=addLocationPictureAdapter
@@ -112,6 +115,10 @@ class AddPictureActivity : AppCompatActivity() {
                     nextButton = false
                 } else {
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
+                    binding.btnNext.setOnClickListener {
+                        intent.putExtra("time",time)
+                        startActivity(intent)
+                    }
                     nextButton = true
                 }
 
@@ -180,6 +187,7 @@ class AddPictureActivity : AppCompatActivity() {
         binding.btnNext.setOnClickListener {
             if (nextButton) {//TODO:왜 비었다 뜨죵??
                 val intent = Intent(this, TitleActivity::class.java)
+                intent.putExtra("time",time)
                 startActivity(intent)
             }
             //finish()

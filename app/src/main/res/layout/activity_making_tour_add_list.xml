@@ -54,7 +54,7 @@
         android:id="@+id/tv_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/making_tour_progress_1"
+        android:text="@string/making_tour_progress_2"
         android:textColor="@color/Orange6"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/guide_end"

@@ -64,6 +64,11 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         val placeAddress = intent.getStringExtra("placeAddress")
         val placeLatitude = intent.getDoubleExtra("placeLatitude", 0.0)
         val placeLongitude = intent.getDoubleExtra("placeLongitude", 0.0)
+        Log.d("placeImage",placeImage.toString())
+        Log.d("placeName",placeName.toString())
+        Log.d("placeAddress",placeAddress.toString())
+        Log.d("placeLatitude",placeLatitude.toString())
+        Log.d("placeLongitude",placeLongitude.toString())
 
         location = LatLng(placeLatitude,placeLongitude)
 
@@ -77,24 +82,29 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
 
         setContentView(binding.root)
 
-        activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                // 받은 데이터로 리스트 업데이트
-                val newPlaceImage = data?.getStringExtra("placeImage")
-                val newPlaceName = data?.getStringExtra("placeName")
-                val newPlaceAddress = data?.getStringExtra("placeAddress")
-                val newPlaceLatitude = data?.getDoubleExtra("placeLatitude", 0.0) ?: 0.0
-                val newPlaceLongitude = data?.getDoubleExtra("placeLongitude", 0.0) ?: 0.0
-
-                if (newPlaceName != null && newPlaceAddress != null) {
-                    val newLocation = LatLng(newPlaceLatitude, newPlaceLongitude)
-                    updateRecyclerView(newPlaceImage.toString(), newPlaceName, newPlaceAddress, newLocation)
-                }
-            }
-        }
+//        activityResultLauncher = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) { result ->
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                val data: Intent? = result.data
+//                // 받은 데이터로 리스트 업데이트
+//                val newPlaceImage = data?.getStringExtra("placeImage")
+//                val newPlaceName = data?.getStringExtra("placeName")
+//                val newPlaceAddress = data?.getStringExtra("placeAddress")
+//                val newPlaceLatitude = data?.getDoubleExtra("placeLatitude", 0.0) ?: 0.0
+//                val newPlaceLongitude = data?.getDoubleExtra("placeLongitude", 0.0) ?: 0.0
+//                Log.d("placeImage",placeImage.toString())
+//                Log.d("placeName",placeName.toString())
+//                Log.d("placeAddress",placeAddress.toString())
+//                Log.d("placeLatitude",placeLatitude.toString())
+//                Log.d("placeLongitude",placeLongitude.toString())
+//
+//                if (newPlaceName != null && newPlaceAddress != null) {
+//                    val newLocation = LatLng(newPlaceLatitude, newPlaceLongitude)
+//                    updateRecyclerView(newPlaceImage.toString(), newPlaceName, newPlaceAddress, newLocation)
+//                }
+//            }
+//        }
 
         initRecyclerView()
         setupItemTouchHelper()
@@ -109,7 +119,8 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
 
         binding.clAddList.setOnClickListener {
             val intent = Intent(this, MakingCourseSearchActivity::class.java)
-            activityResultLauncher.launch(intent)
+//            activityResultLauncher.launch(intent)
+            startActivity(intent)
         }
 
         binding.btnAddListNext.setOnClickListener {
@@ -275,7 +286,7 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
     }
 
     override fun onItemCountChanged(count: Int) {
-        if (count == 8) {
+        if (count >= 4) {
             binding.clAddList.visibility = View.GONE
             binding.clAddListImpoosible.visibility = View.VISIBLE
         } else {

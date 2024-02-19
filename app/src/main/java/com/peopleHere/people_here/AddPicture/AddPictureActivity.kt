@@ -47,6 +47,7 @@ class AddPictureActivity : AppCompatActivity() {
     var itemsize = 0
     var nextButton: Boolean = false
     var sendPictureNum = 0
+    var time = 0
 
     private val TAG = this.javaClass.simpleName
 
@@ -95,15 +96,17 @@ class AddPictureActivity : AppCompatActivity() {
         //장소 이름 끝
 
         }
-
-
         var getlocation = intent?.getStringExtra("location")
         if (getlocation == null) {
             getlocation = "None"
         }
 
+        time = intent.getIntExtra("time",0)
 
-
+        addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist, this, getlocation)
+        binding.rvLocation.adapter=addLocationPictureAdapter
+        binding.rvLocation.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         setupItemTouchHelper()
 
@@ -174,7 +177,17 @@ class AddPictureActivity : AppCompatActivity() {
                           }*/
 
 
-
+                if (products.size < 2) {//TODO:왜 비었다 뜨죵??
+                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)
+                    nextButton = false
+                } else {
+                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
+                    binding.btnNext.setOnClickListener {
+                        intent.putExtra("time",time)
+                        startActivity(intent)
+                    }
+                    nextButton = true
+                }
                 if (products.isEmpty()) {//앞에서 이미 회색 추가 해서 어림도 없다... 이 부분을 해결 어케하지??
                     pictureDB!!.getPictureDao()
                         .addPicture(
@@ -289,6 +302,7 @@ class AddPictureActivity : AppCompatActivity() {
         binding.btnNext.setOnClickListener {
             if (nextButton) {//TODO:왜 비었다 뜨죵??
                 val intent = Intent(this, TitleActivity::class.java)
+                intent.putExtra("time",time)
                 startActivity(intent)
             }
             //finish()

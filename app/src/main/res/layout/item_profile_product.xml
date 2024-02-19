@@ -45,8 +45,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile_img"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.17"
+            app:layout_constraintDimensionRatio="1:1"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/profile_olivia"
@@ -82,19 +84,21 @@
             android:id="@+id/cv_when"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.42"
+            app:cardElevation="0dp"
+            app:layout_constraintWidth_percent="0.351"
             app:layout_constraintDimensionRatio="99:34"
             app:cardCornerRadius="26dp"
             app:cardBackgroundColor="@color/Orange5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/iv_profile_img">
             <TextView
+                android:id="@+id/tv_when"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="오늘 만나요!"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/Gray1"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/pretendard_bold"
                 android:layout_gravity="center"/>
         </androidx.cardview.widget.CardView>
 

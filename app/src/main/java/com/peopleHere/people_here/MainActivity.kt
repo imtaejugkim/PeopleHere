@@ -15,6 +15,7 @@ import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.MyTour.MakingCourseActivity
 import com.peopleHere.people_here.TitleCategory.MakingTourFragment
 import com.peopleHere.people_here.Message.MessageFragment
+import com.peopleHere.people_here.Message.MessageLoggedFragment
 import com.peopleHere.people_here.databinding.ActivityMainBinding
 
 
@@ -22,13 +23,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("token_check",X_ACCESS_TOKEN)
+        Log.d("token_check", X_ACCESS_TOKEN)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var checktoken = ApplicationClass.mSharedPreferencesManager.getString("token", "null")
 
-        var alarmAvailable=intent.getStringExtra("ok")
-        if(alarmAvailable=="alarm"){
+        Log.d("checktoken",checktoken.toString())
+        var alarmAvailable = intent.getStringExtra("ok")
+        if (alarmAvailable == "alarm") {
             val toastLayout = LayoutInflater.from(binding.root.context)
                 .inflate(
                     R.layout.toast_alarm,
@@ -48,7 +51,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_wish -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, MakingTourFragment())
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, MakingTourFragment())
                         .commit()
                     return@setOnItemSelectedListener true
                 }
@@ -61,35 +65,35 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_message -> {//
-
-                    if(X_ACCESS_TOKEN=="Authorization"){
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frm, MessageFragment()).commit()
-                        return@setOnItemSelectedListener true
-                    }else{
+                    if (checktoken == "null") {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, MessageFragment()).commit()
                         return@setOnItemSelectedListener true
 
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.main_frm, MessageLoggedFragment()).commit()
+                        return@setOnItemSelectedListener true
                     }
                 }
 
 
-/*
-                R.id.menu_profile -> {//코스 만들기 고쳤다아
-                    val intent = Intent(this, DayTripManageActivity::class.java)
-                    startActivity(intent)
-                    return@setOnItemSelectedListener true
-                }
-*/
+                /*
+                                R.id.menu_profile -> {//코스 만들기 고쳤다아
+                                    val intent = Intent(this, DayTripManageActivity::class.java)
+                                    startActivity(intent)
+                                    return@setOnItemSelectedListener true
+                                }
+                */
+
 
                 R.id.menu_profile -> {
-                    if(X_ACCESS_TOKEN=="Authorization"){
+                    if (checktoken == "null") {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, ProfileFirstFragment()).commit()
                         return@setOnItemSelectedListener true
 
-                    }else{
+                    } else {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, ProfileFragment()).commit()
                         return@setOnItemSelectedListener true
@@ -104,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.navigation.selectedItemId = R.id.menu_home
     }
+
     fun Int.dpToPx(): Int {
         val scale = Resources.getSystem().displayMetrics.density
         return (this * scale).toInt()

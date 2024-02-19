@@ -13,11 +13,10 @@ class XAccessTokenInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
         val jwtToken : String? = getJwt()
-
+        Log.d("tokenCHECK",jwtToken.toString())
         jwtToken?.let {
             builder.addHeader(X_ACCESS_TOKEN, "Bearer $jwtToken")
         }
-
 
         return chain.proceed(builder.build())
     }

@@ -236,6 +236,8 @@
     <string name="toast_category_string">\최대 3개까지 선택할 수 있어요 </string>
     <!--fragment_profile 이름 정리 -->
     <string name="fragment_profile_my_profile">\나의 프로필</string>
+    <string name="fragment_profile_my_daytrip">\나의 데이트립</string>
+
     <string name="fragment_profile_come">\다가오는 만남</string>
     <string name="fragment_profile_past">\지난 만남</string>
 

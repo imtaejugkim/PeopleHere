@@ -16,13 +16,10 @@ data class TimeData(
     @SerializedName("minute") val minute: Int,
     @SerializedName("second") val second: Int,
     @SerializedName("nano") val nano: Int,
-
     )
 
 data class ParticipantsData(
-
     @SerializedName("userId") val userId: Int,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImageUrl") val userImageUrl: String
-
 )

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profile_img"
@@ -21,20 +21,46 @@
         android:text="이름넣기"
         android:textSize="14sp"
         android:textColor="@color/Gray7"
-        android:fontFamily="@font/pretendard_regular"
+        android:fontFamily="@font/pretendard_bold"
         android:layout_marginStart="14dp"
         app:layout_constraintStart_toEndOf="@id/iv_profile_img"
         app:layout_constraintTop_toTopOf="@id/iv_profile_img"/>
-
     <TextView
-        android:id="@+id/tv_job"
+        android:id="@+id/tv_upcoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="여행자"
+        android:text="다가오는만나아아ㅏㅁ"
         android:textSize="12sp"
-        android:textColor="@color/Gray6"
+        android:layout_marginStart="6dp"
+        android:textColor="@color/Orange6"
         android:fontFamily="@font/pretendard_regular"
+        app:layout_constraintStart_toEndOf="@id/tv_name"
+        app:layout_constraintTop_toTopOf="@id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대충메세ㅈ지냉ㅇㄴ히넣으면되임이ㅏ"
+        android:textSize="14sp"
+        android:textColor="@color/Gray8"
+        android:fontFamily="@font/pretendard_bold"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintTop_toBottomOf="@id/tv_name"/>
-
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일정 · 오늘 오후 7:00"
+        android:textSize="14sp"
+        android:textColor="@color/Gray5.5"
+        android:fontFamily="@font/pretendard_regular"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_text"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/Gray1.5"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

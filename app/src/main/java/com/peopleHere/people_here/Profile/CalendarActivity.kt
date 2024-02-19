@@ -1,34 +1,49 @@
 package com.peopleHere.people_here.Profile
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import com.peopleHere.people_here.Data.CalendarData
+import com.peopleHere.people_here.Data.ScheduleParticipants
 import com.peopleHere.people_here.Local.getJwt
+import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AddTourDateView
 import com.peopleHere.people_here.Remote.AuthService
+import com.peopleHere.people_here.Remote.BlockTourDateView
 import com.peopleHere.people_here.Remote.TourTimeData
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCalendarBinding
+import com.peopleHere.people_here.databinding.DialogMakingTourAddListSequenceBinding
+import com.peopleHere.people_here.databinding.DialogShowParticipantBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateView{
+class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateView, BlockTourDateView{
     lateinit var binding : ActivityCalendarBinding
     private var calendarList : ArrayList<CalendarData> = arrayListOf()
     private var monthAdapter : MonthAdapter ?= null
@@ -42,6 +57,12 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
     private var lastClickedTime : TourTimeData?= null
     private val tabList = arrayListOf("참여 차단", "참여 가능으로 설정")
     private val tabStates = booleanArrayOf(true, true)
+    private var stringTourDateId : String ?= null
+    private var intTourDateId : Int = 0
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var userDialog: Dialog? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
@@ -95,33 +116,50 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
         }
 
         monthAdapter = MonthAdapter(calendarList, upcomingData, this@CalendarActivity, object : DateAdapter.OnDateClickListener {
-            override fun onDateClick(date: String, month: Int, year: Int, status: String?, time: String?) {
+            override fun onDateClick(date: String, month: Int, year: Int, status: String?, time: String?, tourDateId: String?) {
                 lastClickedDate = "$year-${(month).toString().padStart(2, '0')}-${date.padStart(2, '0')}"
 
-                updateTabStatus(status, time)
+                stringTourDateId = tourDateId
+                Log.d("tourDateId1",stringTourDateId.toString())
 
-                if (status == "AVAILABLE") {
+                if(stringTourDateId != null){
+                    intTourDateId = stringTourDateId!!.toInt()
+                    Log.d("tourDateId1",intTourDateId.toString())
+                }
+
+                val selectedDateResponse = upcomingData.find { it.date == lastClickedDate }
+                val firstParticipant = selectedDateResponse?.participants?.firstOrNull()
+
+                updateTabStatus(status, time, intTourDateId, date, year, month)
+
+
+                if(status == "AVAILABLE" && firstParticipant != null){
+                    val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                    val outputFormat = SimpleDateFormat("a hh:mm", Locale.getDefault())
+                    val formatTime = inputFormat.parse(time)
+                    showConfirmDialog(firstParticipant,date,month,year, formatTime?.let { outputFormat.format(it) } ?: "변환 오류")
+                }
+                else if (status == "AVAILABLE") {
                     binding.tlEnterDate.getTabAt(1)?.select()
-
                     // 시간 설정
                     val displayTime = if (time != null) {
-                        // 시간 포맷 변환 로직 추가
                         val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
                         val outputFormat = SimpleDateFormat("a hh:mm", Locale.getDefault())
                         val date = inputFormat.parse(time)
                         date?.let {
                             outputFormat.format(it)
-                        } ?: "시간협의"
+                        } ?: "시간 요청 오류"
                     } else {
-                        "여행자의 시간에 맞출 수 있어요"
+                        "시간 협의"
                     }
                     binding.tvExistTime.text = displayTime
-                } else {
+                    showCalendarDialog(date, month, year, time)
+                } else if ( status == null) {
                     binding.tlEnterDate.getTabAt(0)?.select()
-                    binding.tvExistTime.text = "여행자의 시간에 맞출 수 있어요"
+                    binding.tvExistTime.text = "여행자의\n시간에 맞출 수 있어요"
+                    showCalendarDialog(date, month, year, time)
                 }
-                // BottomSheet를 보여주는 로직
-                showCalendarDialog(date, month, year, time)
+
             }
         })
 
@@ -131,20 +169,77 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
 
     }
 
-    private fun updateTabStatus(status: String?, time: String?) {
+    private fun showConfirmDialog(firstParticipant: ScheduleParticipants?,date: String,month: Int,year: Int,time: String?) {
+        val dlgBinding = DialogShowParticipantBinding.inflate(layoutInflater)
+        val dialogBuilder = AlertDialog.Builder(this)
+        userDialog = dialogBuilder.setView(dlgBinding.root).show()
+
+        val density = resources.displayMetrics.density
+        val widthPx = (272 * density).toInt()
+        val heightPx = (400 * density).toInt()
+
+        userDialog?.window?.setLayout(widthPx, heightPx)
+        userDialog?.window?.setGravity(Gravity.CENTER)
+        userDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dlgBinding.tvUserName.text = firstParticipant?.name
+        dlgBinding.tvDate.text = "$year" + "년 " + (month).toString().padStart(2, '0') + "월 "+ "${date.padStart(2, '0')}" + "일 " + time
+        Glide.with(this)
+            .load(firstParticipant?.imageUrl)
+            .into(dlgBinding.ivUserImage)
+
+        dlgBinding.btnMove.setOnClickListener {
+            val intent = Intent(this, ProfileFragment::class.java)
+            intent.putExtra("userId",firstParticipant?.id)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun updateTabStatus(status: String?, time: String?, tourDateId : Int, date: String, year: Int, month: Int) {
         Log.d("status",status.toString())
         Log.d("time",time.toString())
+        Log.d("tourDateId1",tourDateId.toString())
+        binding.btnSettingTime.isEnabled = false
+        val drawableLeftFalse = R.drawable.ic_block_enjoy_false
+        val drawableLeftTrue = R.drawable.ic_block_enjoy_true
+
 
         binding.tlEnterDate.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
                     0 -> {
-                        initAddTourManager(tourId, lastClickedDate!!, null)
+                        if(tourDateId!=0) {
+                            initBlockTourManager(tourDateId, status!!)
+                            binding.tvExistTime.setTextColor(ContextCompat.getColor(this@CalendarActivity,R.color.Gray4))
+                            binding.btnSettingTime.setTextColor(ContextCompat.getColor(this@CalendarActivity, R.color.Gray4))
+                            binding.btnSettingTime.setCompoundDrawablesWithIntrinsicBounds(
+                                ContextCompat.getDrawable(this@CalendarActivity, drawableLeftFalse), null, null, null)
+                            binding.btnSettingTime.isEnabled = false
+                            binding.btnSettingTime.setBackgroundResource(R.color.Gray1_5)
+                        }else{
+                            Log.d("아직 활성화 안된거","아직 활성화 안된거")
+                        }
                     }
                     1 -> {
                         val timeData = lastClickedTime
                         initAddTourManager(tourId, lastClickedDate!!, timeData)
+                        binding.tvExistTime.setTextColor(ContextCompat.getColor(this@CalendarActivity,R.color.Gray8))
+                        binding.btnSettingTime.setTextColor(ContextCompat.getColor(this@CalendarActivity, R.color.Gray6))
+                        binding.btnSettingTime.setBackgroundResource(R.color.Gray2)
+                        binding.btnSettingTime.setCompoundDrawablesWithIntrinsicBounds(
+                            ContextCompat.getDrawable(this@CalendarActivity, drawableLeftTrue), null, null, null)
+                        binding.btnSettingTime.isEnabled = true
                     }
+                }
+
+                binding.btnSettingTime.setOnClickListener {
+                    val intent = Intent(this@CalendarActivity, SetTimeActivity::class.java)
+                    intent.putExtra("year", year)
+                    intent.putExtra("month", month)
+                    intent.putExtra("date", date)
+                    intent.putExtra("tourId", tourId)
+                    startActivity(intent)
                 }
                 updateTabTexts(tab.position)
                 setTabColor(tab,true)
@@ -204,7 +299,6 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
 
     private fun showCalendarDialog(date: String, month: Int, year: Int, time: String?) {
         showBottomSheet(date, month, year, time)
-
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
@@ -223,8 +317,7 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
     }
 
     private fun setTabColor(tab: TabLayout.Tab?, isSelected: Boolean) {
-        binding.tvExistTime.text = tabList[tab!!.position]
-        val tabView = (binding.tlEnterDate.getChildAt(0) as ViewGroup).getChildAt(tab.position) as View
+        val tabView = (binding.tlEnterDate.getChildAt(0) as ViewGroup).getChildAt(tab!!.position) as View
 
         tab.customView?.let { view ->
 
@@ -235,7 +328,6 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
             } else {
                 textView.setTextColor(ContextCompat.getColor(this, R.color.Gray5))
                 tabView.background = null
-                binding.tvExistTime.setTextColor(ContextCompat.getColor(this, R.color.Gray5))
             }
         }
     }
@@ -270,7 +362,7 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
     override fun AddTourDateLoading() {}
 
     override fun AddTourDateSuccess() {
-        Log.d("통신성공!","통신성공")
+        initDataManager(tourId)
     }
 
     override fun AddTourDateFailure(status: Int, message: String) {}
@@ -286,6 +378,32 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateVie
         }else{
             Log.d("token 오류","token 오류")
         }
+    }
+
+    private fun initBlockTourManager(tourDateId: Int, status: String) {
+        val token = getJwt()
+        Log.d("token",token)
+        if(token.isNotEmpty()){
+            val authService = AuthService(this)
+            authService.setBlockTourDateView(this)
+            Log.d("tourDateId",tourDateId.toString())
+            authService.blockTourInfo(tourDateId, status)
+        }else{
+            Log.d("token 오류","token 오류")
+        }
+    }
+
+    override fun BlockTourDateLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun BlockTourDateSuccess() {
+        Log.d("블락 성공", "블락 성공")
+        initDataManager(tourId)
+    }
+
+    override fun BlockTourDateFailure(status: Int, message: String) {
+        Log.d("블락 오류",message.toString())
     }
 
 }

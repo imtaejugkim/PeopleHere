@@ -4,8 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.peopleHere.people_here.Data.CalendarData
 import com.peopleHere.people_here.Main.MainAdapter
 import com.peopleHere.people_here.R
@@ -35,7 +40,13 @@ class ActiveTripAdapter(val context : Context, val dayTripData : ArrayList<Bring
                     binding.ivTripImage.setImageResource(R.drawable.img_example2)
                 }
 
-                binding.tvMainTourListTime.text = item.time
+                val hours = item.time.toInt() / 60
+                val minutes = item.time.toInt() % 60
+                binding.tvMainTourListTime.text = if (minutes > 0) {
+                    "${hours}시간 ${minutes}분"
+                } else {
+                    "${hours}시간"
+                }
 
                 if (item.places.size > 1) {
                     val addCount = item.places.size - 1
@@ -49,6 +60,19 @@ class ActiveTripAdapter(val context : Context, val dayTripData : ArrayList<Bring
                 binding.btnShowDate.setOnClickListener {
                     itemClickListener.onItemClick(item)
                 }
+
+
+                val categoryTripAdapter = CategoryTripAdapter(item.categoryNames)
+
+                val layoutManager = FlexboxLayoutManager(binding.root.context).apply {
+                    flexDirection = FlexDirection.ROW
+                    justifyContent = JustifyContent.FLEX_START
+                    flexWrap = FlexWrap.WRAP
+                }
+
+                binding.rvCategory.layoutManager = layoutManager
+                binding.rvCategory.adapter = categoryTripAdapter
+
             }
         }
 

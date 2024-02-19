@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CalendarData
+import com.peopleHere.people_here.Data.ParticipantsData
+import com.peopleHere.people_here.Data.ScheduleParticipants
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.databinding.ItemCalendarDateBinding
@@ -27,7 +29,7 @@ class DateAdapter(
 //    private var previousSelectedStatus = false // 이전에 선택된 아이템의 상태
 
     interface OnDateClickListener {
-        fun onDateClick(date: String, month: Int, year: Int, status: String?, time: String?)
+        fun onDateClick(date: String, month: Int, year: Int, status: String?, time: String?, tourDateId: String?)
     }
 
     inner class ViewHolder(val binding: ItemCalendarDateBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -39,7 +41,7 @@ class DateAdapter(
             if (item != "") {
                 val formattedDate = String.format("%04d-%02d-%02d", year, month, item.toInt())
 
-                val dateData = upcomingData.find{ it.date == formattedDate }
+                val tourDateId = upcomingData.find{ it.date == formattedDate }?.tourDateId
                 val dateStatus = upcomingData.find { it.date == formattedDate }?.status
                 val dateTime = upcomingData.find { it.date == formattedDate }?.time
                 val participantData =
@@ -101,7 +103,12 @@ class DateAdapter(
                             selectedPosition = position // 새 아이템 선택
                         }
                         notifyDataSetChanged()
-                        dateClickListener.onDateClick(item, month, year, dateStatus, dateTime)
+
+                        if (tourDateId != null) {
+                            dateClickListener.onDateClick(item, month, year, dateStatus, dateTime, tourDateId)
+                        }else{
+                            dateClickListener.onDateClick(item, month, year, dateStatus, dateTime, null)
+                        }
                     }
                 }
             } else {

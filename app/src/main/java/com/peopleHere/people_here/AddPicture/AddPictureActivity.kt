@@ -20,6 +20,11 @@ import com.peopleHere.people_here.AddPicture.PictureDB.PictureDB
 import com.peopleHere.people_here.AddPicture.PictureDB.PictureEntity
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.Data.AddPicturLocationData
+
+import com.peopleHere.people_here.Data.AddPictureData
+import com.peopleHere.people_here.Data.LocationChooseData
+import com.peopleHere.people_here.MainActivity
+
 import com.peopleHere.people_here.MakingTour.AddListDataManager
 import com.peopleHere.people_here.TitleCategory.TitleActivity
 import com.peopleHere.people_here.databinding.ActivityAddPictureBinding
@@ -210,6 +215,12 @@ class AddPictureActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
 

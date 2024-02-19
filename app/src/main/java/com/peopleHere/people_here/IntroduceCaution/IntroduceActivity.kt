@@ -6,10 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.Data.PlaceData
 import com.peopleHere.people_here.Data.PlacesImageData
+
+import com.peopleHere.people_here.MainActivity
+
 import com.peopleHere.people_here.MakingTour.MakingTourCourseFinishActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
@@ -75,6 +79,12 @@ class IntroduceActivity : AppCompatActivity() {
                 ApplicationClass.pcategoryNames!!,
                 ApplicationClass.pplaces!!
             )
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)//화면전환
+            startActivity(intent)
+            finish()
         }
 
 

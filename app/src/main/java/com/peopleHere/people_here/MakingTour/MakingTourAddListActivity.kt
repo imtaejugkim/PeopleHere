@@ -39,7 +39,11 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+
 import com.peopleHere.people_here.ApplicationClass
+
+import com.peopleHere.people_here.MainActivity
+
 import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
 
 class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, MakingTourAddListAdapter.OnItemCountChangedListener{
@@ -64,6 +68,11 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         val placeAddress = intent.getStringExtra("placeAddress")
         val placeLatitude = intent.getDoubleExtra("placeLatitude", 0.0)
         val placeLongitude = intent.getDoubleExtra("placeLongitude", 0.0)
+        Log.d("placeImage",placeImage.toString())
+        Log.d("placeName",placeName.toString())
+        Log.d("placeAddress",placeAddress.toString())
+        Log.d("placeLatitude",placeLatitude.toString())
+        Log.d("placeLongitude",placeLongitude.toString())
 
         location = LatLng(placeLatitude,placeLongitude)
         ApplicationClass.platLng?.add(location!!)
@@ -78,6 +87,7 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         mapFragment.getMapAsync(this)
 
         setContentView(binding.root)
+
 
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -101,6 +111,7 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
             }
         }
 
+
         initRecyclerView()
         setupItemTouchHelper()
 
@@ -114,12 +125,19 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
 
         binding.clAddList.setOnClickListener {
             val intent = Intent(this, MakingCourseSearchActivity::class.java)
-            activityResultLauncher.launch(intent)
+//            activityResultLauncher.launch(intent)
+            startActivity(intent)
         }
 
         binding.btnAddListNext.setOnClickListener {
             val intent = Intent(this@MakingTourAddListActivity, MakingTourTimeActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -277,7 +295,7 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
     }
 
     override fun onItemCountChanged(count: Int) {
-        if (count == 8) {
+        if (count >= 4) {
             binding.clAddList.visibility = View.GONE
             binding.clAddListImpoosible.visibility = View.VISIBLE
         } else {

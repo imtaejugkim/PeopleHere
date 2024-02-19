@@ -114,7 +114,7 @@ data class SimpleProfileResponse(
     @SerializedName("userImageUrl") val userImageUrl: String,
 )
 data class UpcomingDateResponse (
-    @SerializedName("tourDateId") val id : Int,
+    @SerializedName("tourDateId") val tourDateId : String,
     @SerializedName("date") val date : String,
     @SerializedName("time") val time : String?,
     @SerializedName("status") val status : String,
@@ -203,6 +203,19 @@ data class BringUserResponse(
     @SerializedName("status") val status : String,
     @SerializedName("languages") val languages : List<String>,
     @SerializedName("questions") val questions : Map<String,String>
+)
+
+data class RecentSearchRequest(
+    @SerializedName("placeName") val placeName: String,
+    @SerializedName("placeAddress") val placeAddress : String,
+    @SerializedName("paceId") var placeId : Int
+
+)
+
+data class RecentSearchResponse(
+    @SerializedName("placeKey") var placeId : String,
+    @SerializedName("placeName") var placeName: String,
+    @SerializedName("placeAddress") var placeAddress : String,
 )
 
 data class Data(

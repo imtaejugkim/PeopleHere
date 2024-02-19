@@ -23,6 +23,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPhotoRequest
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.MakingTour.MakingTourAddListActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityMakingCourseCheckBinding
@@ -94,6 +95,12 @@ class MakingCourseCheckActivity : AppCompatActivity() , OnMapReadyCallback{
 
         binding.btnReSelect.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         binding.btnCorrect.setOnClickListener {

@@ -28,7 +28,7 @@ import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCourseContentsBinding
 import java.lang.Integer.min
 
-class CourseContentsActivity : AppCompatActivity() , CourseContentsView, UpcomingDateView, BringUserView {
+class CourseContentsActivity : AppCompatActivity() , CourseContentsView, UpcomingDateView{
     private lateinit var binding: ActivityCourseContentsBinding
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
@@ -310,7 +310,6 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         initCourseInfo(courseData!!)
         initUpcomingDataManager(key)
-        initUserDataManager(courseData!!.userId)
         tourTime = content.time
     }
     override fun CourseContentsFailure(status: Int, message: String) {
@@ -352,23 +351,6 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         val authService = AuthService(this)
         authService.setUpcomingDateView(this)
         authService.upcomingDateInfo(tourId)
-    }
-
-    private fun initUserDataManager(userId: Int) {
-        val authService = AuthService(this)
-        authService.setUpcomingDateView(this)
-        authService.bringUserInfo(userId)
-    }
-
-    override fun BringUserViewLoading() {}
-
-    override fun BringUserViewSuccess(content: BringUserResponse) {
-        bringUserData = content
-        Log.d("bringUserData",content.toString())
-    }
-
-    override fun BringUserViewFailure(status: Int, message: String) {
-        Log.d("bringUserData오류", message)
     }
 
 }

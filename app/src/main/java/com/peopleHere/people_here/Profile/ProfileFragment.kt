@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.Profile
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +40,11 @@ class ProfileFragment : Fragment(), ProfileView {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recyclerViewPast.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding.cvMyDaytrip.setOnClickListener {
+            val intent = Intent(requireActivity(), DayTripManageActivity::class.java)
+            startActivity(intent)
+        }
 
 
         return binding.root

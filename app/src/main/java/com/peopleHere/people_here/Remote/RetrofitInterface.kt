@@ -39,7 +39,7 @@ interface RetrofitInterface {
     @GET("api/users/{id}/tours")
     fun bringCourseInfo(@Path("id") id : Int, @Query("option") option : String)
             : Call<BaseResponse<ArrayList<BringCourseResponse>>>
-    @GET("/api/users/tour-dates")
+    @GET("api/users/tour-dates")
     fun ProfileInfo()
             : Call<BaseResponse<ProfileData>>
 
@@ -85,5 +85,13 @@ interface RetrofitInterface {
     fun joinConfirmInfo(@Path("tourDateId") tourDateId : Int)
             : Call<BaseResponse<String>>
 
+    @POST("api/tour-dates/{tourId}/dates")
+    fun addTourDateInfo(
+        @Body request : AddTourDateRequest,
+        @Path("tourId") tourId : Int)
+            : Call<BaseResponse<String>>
 
+    @GET("api/users/{id}")
+    fun bringUserInfo(@Path("id") userId : Int)
+            : Call<BaseResponse<BringUserResponse>>
 }

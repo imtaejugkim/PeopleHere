@@ -2,8 +2,6 @@ package com.peopleHere.people_here.Remote
 
 import android.content.Context
 import android.content.Intent
-import android.os.Message
-import android.provider.ContactsContract.Profile
 import android.util.Log
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
@@ -15,7 +13,6 @@ import com.peopleHere.people_here.Login.LoginEmailNextActivity
 import com.peopleHere.people_here.Login.LoginPhoneNextActivity
 import com.peopleHere.people_here.Login.VerifyPhoneActivity
 import com.peopleHere.people_here.MainActivity
-import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.SignUp.SignUpActivity
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -38,12 +35,13 @@ class AuthService(private val context: Context)  {
     private lateinit var courseContentsView: CourseContentsView
     private lateinit var upcomingDateView: UpcomingDateView
     private lateinit var bringCourseView: BringCourseView
-    private  var changeWishView: ChangeWishView? = null
+    private var changeWishView: ChangeWishView?= null
     private lateinit var requestEnjoyView: RequestEnjoyView
     private lateinit var joinConfirmView: JoinConfirmView
     private lateinit var profileView: ProfileView
     private lateinit var messageView: MessageView
-
+    private lateinit var addTourDateView: AddTourDateView
+    private lateinit var bringUserView: BringUserView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -57,6 +55,8 @@ class AuthService(private val context: Context)  {
     fun setSignInView(signInView: SignInView) {//아직 초기화가 안됐음 따라서 activity에서 해주기
         this.signInView = signInView//signupVIew 사용 하기 위해
     }
+
+
 
     fun signin(id: String, pw: String) {
         val request = SignInRequest(id, pw)//email이랑 pw를 넘기겠지
@@ -162,9 +162,6 @@ class AuthService(private val context: Context)  {
         this.mainView = mainView
     }
 
-    fun ProfileView(profileView: ProfileView) {
-        this.profileView = profileView
-    }
     fun MessageView(messageView: MessageView) {
         this.messageView = messageView
     }
@@ -193,9 +190,21 @@ class AuthService(private val context: Context)  {
         this.joinConfirmView = joinConfirmView
     }
 
+    fun ProfileView(profileView: ProfileView) {
+        this.profileView = profileView
+    }
+
+    fun setAddTourDateView(addTourDateView: AddTourDateView) {
+        this.addTourDateView = addTourDateView
+    }
+
+    fun sertBringUserView(bringUserView: BringUserView) {
+        this.bringUserView = bringUserView
+    }
+
     fun mainInfo() {
 //        mainView.MainLoading()
-        authService.mainInfo(0, 10, listOf("createdAt,asc"))
+        authService.mainInfo(0, 10, listOf("createdAt,desc"))
             .enqueue(object : Callback<BaseResponse<MainResponse>> {
                 override fun onResponse(
                     call: Call<BaseResponse<MainResponse>>,
@@ -204,8 +213,8 @@ class AuthService(private val context: Context)  {
 //                Log.d("response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                    Log.d("Main Response Body", resp.toString())
-                    Log.d("Main Response Body result", resp?.result.toString())
+//                    Log.d("Main Response Body", resp.toString())
+//                    Log.d("Main Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> mainView.MainSuccess(resp.result.content)
                             else -> mainView.MainFailure(resp.status, resp.message)
@@ -634,7 +643,6 @@ class AuthService(private val context: Context)  {
             })
     }
 
-
     fun changePassword(password: String) {
         authService.changePassword(password)
             .enqueue(object : Callback<ChangePasswordResponse> {
@@ -719,8 +727,8 @@ class AuthService(private val context: Context)  {
 //                        Log.d("joinConfirm Response Body", resp.toString())
 //                        Log.d("joinConfirm Response Body result", resp?.result.toString())
                         when (resp!!.status) {
-                            200 -> joinConfirmView.JoinConfirmSuccess()
-                            else -> joinConfirmView.JoinConfirmFialure(resp.status, resp.message)
+                            200 -> joinConfirmView?.JoinConfirmSuccess()
+                            else -> joinConfirmView?.JoinConfirmFialure(resp.status, resp.message)
                         }
                     }
                 }
@@ -729,7 +737,103 @@ class AuthService(private val context: Context)  {
                     call: Call<BaseResponse<String>>,
                     t: Throwable
                 ) {
-                    Log.d("joinConfirm Failed", t.toString())
+//                    Log.d("joinConfirm Failed", t.toString())
+                }
+
+            })
+    }
+
+
+    fun chatUpdate(id: Int, option: String) {
+        authService.ProfileInfo()
+            .enqueue(object : Callback<BaseResponse<ProfileData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ProfileData>>,
+                    response: Response<BaseResponse<ProfileData>>
+                ) {
+                    Log.d("BringCourse response", response.toString())
+
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("BringCourse Response Body", resp.toString())
+                        Log.d("BringCourse Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> profileView.ProfileSuccess(resp.result)//여기로 프로필 데이터받음
+                            else -> profileView.MainFailure(
+                                resp.status,
+                                resp.message
+                            )
+                        }
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ProfileData>>,
+                    t: Throwable
+                ) {
+                    Log.d("Upcoming Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun addTourDateInfo(tourId: Int, date: String, time: TourTimeData?) {
+//        mainView.MainLoading()
+        val request = AddTourDateRequest(date,time)
+        authService.addTourDateInfo(request, tourId)
+            .enqueue(object : Callback<BaseResponse<String>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<String>>,
+                    response: Response<BaseResponse<String>>
+                ) {
+//                    Log.d("addTourDate response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("addTourDate Response Body", resp.toString())
+//                        Log.d("addTourDate Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> addTourDateView.AddTourDateSuccess()
+                            else -> addTourDateView.AddTourDateFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<String>>,
+                    t: Throwable
+                ) {
+//                    Log.d("addTourDate Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun bringUserInfo(userId: Int) {
+//        mainView.MainLoading()
+        authService.bringUserInfo(userId)
+            .enqueue(object : Callback<BaseResponse<BringUserResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<BringUserResponse>>,
+                    response: Response<BaseResponse<BringUserResponse>>
+                ) {
+//                    Log.d("bringUser response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("bringUser Response Body", resp.toString())
+//                        Log.d("bringUser Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> bringUserView.BringUserViewSuccess(resp.result)
+                            else -> bringUserView.BringUserViewFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<BringUserResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("bringUser Failed", t.toString())
                 }
 
             })

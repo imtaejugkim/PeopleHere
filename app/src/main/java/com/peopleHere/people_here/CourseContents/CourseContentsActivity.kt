@@ -19,6 +19,8 @@ import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.Main.MainCategoryAdapter
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
+import com.peopleHere.people_here.Remote.BringUserResponse
+import com.peopleHere.people_here.Remote.BringUserView
 import com.peopleHere.people_here.Remote.CourseContentsResponse
 import com.peopleHere.people_here.Remote.CourseContentsView
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
@@ -26,7 +28,7 @@ import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCourseContentsBinding
 import java.lang.Integer.min
 
-class CourseContentsActivity : AppCompatActivity() , CourseContentsView, UpcomingDateView {
+class CourseContentsActivity : AppCompatActivity() , CourseContentsView, UpcomingDateView, BringUserView {
     private lateinit var binding: ActivityCourseContentsBinding
     private val imgList = mutableListOf<String>()
     private var questionData : ArrayList<CourseQuestionData> = arrayListOf()
@@ -39,6 +41,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     private var courseData : CourseContentsResponse ?= null
     private var upcomingData : ArrayList<UpcomingDateResponse> ?= null
     private var tourTime : Int = 0
+    private var bringUserData : BringUserResponse ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -287,7 +290,8 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
     private fun initComingDate(
         courseData: CourseContentsResponse,
-        upcomingData: ArrayList<UpcomingDateResponse>
+        upcomingData: ArrayList<UpcomingDateResponse>,
+//        bringUserResponse: BringUserResponse
     ) {
         comingDateAdapter = CourseComingDateAdapter(courseData, upcomingData)
         binding.rvComingDate.adapter = comingDateAdapter
@@ -306,9 +310,9 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         initCourseInfo(courseData!!)
         initUpcomingDataManager(key)
+        initUserDataManager(courseData!!.userId)
         tourTime = content.time
     }
-
     override fun CourseContentsFailure(status: Int, message: String) {
         Log.d("코스컨텐츠에러1",status.toString())
         Log.d("코스컨텐츠에러2",message)
@@ -349,4 +353,22 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         authService.setUpcomingDateView(this)
         authService.upcomingDateInfo(tourId)
     }
+
+    private fun initUserDataManager(userId: Int) {
+        val authService = AuthService(this)
+        authService.setUpcomingDateView(this)
+        authService.bringUserInfo(userId)
+    }
+
+    override fun BringUserViewLoading() {}
+
+    override fun BringUserViewSuccess(content: BringUserResponse) {
+        bringUserData = content
+        Log.d("bringUserData",content.toString())
+    }
+
+    override fun BringUserViewFailure(status: Int, message: String) {
+        Log.d("bringUserData오류", message)
+    }
+
 }

@@ -54,6 +54,7 @@
         android:text="@string/making_tour_progress_1"
         android:textColor="@color/Orange6"
         android:textSize="14sp"
+        android:fontFamily="@font/pretendard_medium"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         app:layout_constraintTop_toTopOf="@+id/cv_my_tour_time_exit"/>
 
@@ -61,6 +62,7 @@
         android:id="@+id/tv_my_tour_time_headline"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:fontFamily="@font/suite_bold"
         android:textSize="20sp"
         android:textColor="@color/Gray8"
         android:text="@string/making_tour_add_list_headline"
@@ -76,6 +78,7 @@
         android:textColor="@color/Gray5"
         android:text="@string/making_tour_add_list_subtitle"
         android:layout_marginTop="6dp"
+        android:fontFamily="@font/pretendard_medium"
         app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_headline"
         app:layout_constraintStart_toStartOf="@id/guide_start"/>
 
@@ -100,20 +103,35 @@
         />
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <LinearLayout
         android:id="@+id/btn_add_place"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/making_tour_add_list_dialog_delete"
-        android:textSize="16sp"
-        android:textColor="@color/Red3"
-        android:text="@string/making_tour_add_list_place_plus"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
         app:layout_constraintStart_toStartOf="@id/guide_start"
         app:layout_constraintTop_toBottomOf="@id/view_course_img"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        />
+        app:layout_constraintEnd_toEndOf="@id/guide_end">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_making_tour_plus"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Orange5"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:textSize="16sp"
+            android:text="@string/making_tour_add_list_place_plus"/>
+
+    </LinearLayout>
 
 
 

@@ -2,17 +2,23 @@ package com.peopleHere.people_here.Remote
 
 import android.content.Context
 import android.content.Intent
+import android.os.Message
 import android.provider.ContactsContract.Profile
 import android.util.Log
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
+import com.peopleHere.people_here.Data.ChatData
 import com.peopleHere.people_here.Data.ProfileData
+import com.peopleHere.people_here.Local.getJwt
+import com.peopleHere.people_here.Local.saveJwt
 import com.peopleHere.people_here.Login.LoginEmailNextActivity
 import com.peopleHere.people_here.Login.LoginPhoneNextActivity
 import com.peopleHere.people_here.Login.VerifyPhoneActivity
 import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.SignUp.SignUpActivity
+import okhttp3.Interceptor
+import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,9 +28,10 @@ interface CheckEmailCallback {
     fun onEmailAvailable(isAvailable: Boolean)
 }
 
-class AuthService(private val context: Context) {
+class AuthService(private val context: Context)  {
 
     private val authService = ApplicationClass.retrofit.create(RetrofitInterface::class.java)
+
     private lateinit var mainView: MainView
 
     private var checkEmailCallback: CheckEmailCallback? = null
@@ -35,6 +42,8 @@ class AuthService(private val context: Context) {
     private lateinit var requestEnjoyView: RequestEnjoyView
     private lateinit var joinConfirmView: JoinConfirmView
     private lateinit var profileView: ProfileView
+    private lateinit var messageView: MessageView
+
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -58,7 +67,6 @@ class AuthService(private val context: Context) {
                     call: Call<BaseResponse<SignInResponse>>,
                     response: Response<BaseResponse<SignInResponse>>
                 ) {
-
                     Log.d("Response_signIn", response.toString())
                     val resp = response.body()
                     if (resp != null) {
@@ -71,9 +79,12 @@ class AuthService(private val context: Context) {
                                         "AuthService",
                                         "Nickname: ${resp.result.userId}, Token: ${resp.result.jwtToken.accessToken}"
                                     )
-                                    X_ACCESS_TOKEN = resp.result.jwtToken.accessToken
-                                    //TODO:토큰 이제 바뀌게
-                                    Log.d("Check_token", X_ACCESS_TOKEN)
+                                    saveJwt(resp.result.jwtToken.accessToken)
+
+
+
+
+
                                     val intent = Intent(context, MainActivity::class.java)
                                     //intent.putExtra("email", binding.etEmail.text.toString())
                                     context.startActivity(intent)
@@ -120,7 +131,6 @@ class AuthService(private val context: Context) {
                                         "AuthService",
                                         "Nickname: ${resp.result.userId}, Token: ${resp.result.jwtToken.accessToken}"
                                     )
-                                    X_ACCESS_TOKEN = resp.result.jwtToken.accessToken
                                     //TODO:토큰 이제 바뀌게
                                     //TODO: 회원가입 할때도??
 
@@ -154,6 +164,9 @@ class AuthService(private val context: Context) {
 
     fun ProfileView(profileView: ProfileView) {
         this.profileView = profileView
+    }
+    fun MessageView(messageView: MessageView) {
+        this.messageView = messageView
     }
 
     fun setCourseContentsView(courseContentsView: CourseContentsView) {
@@ -564,44 +577,9 @@ class AuthService(private val context: Context) {
                     call: Call<BaseResponse<ProfileData>>,
                     response: Response<BaseResponse<ProfileData>>
                 ) {
-                    Log.d("BringCourse response", response.toString())
+                    Log.d("profile response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                        Log.d("BringCourse Response Body", resp.toString())
-                        Log.d("BringCourse Response Body result", resp?.result.toString())
-                        when (resp!!.status) {
-                            200 -> profileView.ProfileSuccess(resp.result)//여기로 프로필 데이터받음
-                            else -> profileView.MainFailure(
-                                resp.status,
-                                resp.message
-                            )
-                        }
-
-                    }
-                }
-
-                override fun onFailure(
-                    call: Call<BaseResponse<ProfileData>>,
-                    t: Throwable
-                ) {
-                    Log.d("Upcoming Failed", t.toString())
-                }
-
-            })
-    }/*
-    fun chatUpdate(id: Int, option: String) {
-        authService.ProfileInfo()
-            .enqueue(object : Callback<BaseResponse<ProfileData>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<ProfileData>>,
-                    response: Response<BaseResponse<ProfileData>>
-                ) {
-                    Log.d("BringCourse response", response.toString())
-
-                    if (response.isSuccessful) {
-                        val resp = response.body()
-                        Log.d("BringCourse Response Body", resp.toString())
-                        Log.d("BringCourse Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> profileView.ProfileSuccess(resp.result)//여기로 프로필 데이터받음
                             else -> profileView.MainFailure(
@@ -622,7 +600,41 @@ class AuthService(private val context: Context) {
 
             })
     }
-*/
+    fun chatUpdate(tourId: Int) {
+        authService.ChatUpdate(tourId)
+            .enqueue(object : Callback<BaseResponse<ArrayList<ChatData>>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ArrayList<ChatData>>>,
+                    response: Response<BaseResponse<ArrayList<ChatData>>>
+                ) {
+                    Log.d("tellmewhy response", response.toString())
+
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("BringCourse Response Body", resp.toString())
+                        Log.d("BringCourse Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> messageView.MessageSuccess(resp.result)//여기로 프로필 데이터받음
+                            else -> messageView.MessageFailure(
+                                resp.status,
+                                resp.message
+                            )
+                        }
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ArrayList<ChatData>>>,
+                    t: Throwable
+                ) {
+                    Log.d("Upcoming Failed", t.toString())
+                }
+
+            })
+    }
+
+
     fun changePassword(password: String) {
         authService.changePassword(password)
             .enqueue(object : Callback<ChangePasswordResponse> {

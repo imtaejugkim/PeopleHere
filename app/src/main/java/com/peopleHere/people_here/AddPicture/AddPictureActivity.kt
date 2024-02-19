@@ -10,13 +10,17 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.play.integrity.internal.ad
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.AddPicture.PictureDB.PictureDB
 import com.peopleHere.people_here.AddPicture.PictureDB.PictureEntity
+import com.peopleHere.people_here.Data.AddPicturLocationData
 import com.peopleHere.people_here.Data.AddPictureData
 import com.peopleHere.people_here.TitleCategory.TitleActivity
 import com.peopleHere.people_here.databinding.ActivityAddPictureBinding
@@ -28,17 +32,25 @@ import kotlinx.coroutines.withContext
 class AddPictureActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddPictureBinding
     private var addPictureAdapter: AddPictureAdapter? = null
+    private var addLocationPictureAdapter: AddPictureLocationAdapter? = null
+
     var pictureDB: PictureDB? = null//없으면 null 로
     var uriString: String? = null
     val picturelist = arrayListOf<PictureEntity>()
-    var itemsize=0
-    var nextButton:Boolean=false
+    var addLocationlist = ArrayList<AddPicturLocationData>()
+    var itemsize = 0
+    var nextButton: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAddPictureBinding.inflate(layoutInflater)
-        CreateTextView()//text는 딱 oncreate 처음 한 번에만 보이면 된다
+
+        addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist)
+        binding.rvLocation.adapter=addLocationPictureAdapter
+        binding.rvLocation.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
         setupItemTouchHelper()
 
         val resourceUri_1 = Uri.parse("android.resource://$packageName/${R.drawable.photoaddition}")
@@ -83,13 +95,13 @@ class AddPictureActivity : AppCompatActivity() {
                 }
                 //TODO:나중에 코스도 엮어서
                 var products = pictureDB!!.getPictureDao().getPicture()//products로 product 가져옴
-                Log.d("sizeCheck",products.size.toString())
-                if (products.size<2) {//TODO:왜 비었다 뜨죵??
+                Log.d("sizeCheck", products.size.toString())
+                if (products.size < 2) {//TODO:왜 비었다 뜨죵??
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)
-                    nextButton=false
-                }else{
+                    nextButton = false
+                } else {
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
-                    nextButton=true
+                    nextButton = true
                 }
 
                 if (products.isEmpty()) {//앞에서 이미 회색 추가 해서 어림도 없다... 이 부분을 해결 어케하지??
@@ -112,41 +124,14 @@ class AddPictureActivity : AppCompatActivity() {
         }
         attachPictureAdapter()
 
-        //실습보고 다시
-
         //얘는 RV notify해줘야 리사이클러뷰가 적용해서 할 듯 !!
         lifecycleScope.launch {
             // 백그라운드에서 실행되어야 하는 코드
             var pictures = withContext(Dispatchers.IO) {
                 pictureDB!!.getPictureDao().getPicture()
             }
-            /*withContext(Dispatchers.IO) {
-                    picturelist.addAll(pictures.map { pictureEntity ->
-                        AddPictureData(
-                            imageUrl = pictureEntity.pictureUri,
-                            itemType = pictureEntity.itemType
-                        )
-                    })
-
-                    if (picturelist.isEmpty()) {//비었을때 주황색 사진추가, 마지막엔 이거 지워야함
-                        picturelist.add(AddPictureData(resourceUri_1.toString(), 0))
-                    }else{//아니면 마지막에 회색
-                        picturelist.add(AddPictureData(resourceUri_2.toString(), 0))
-                    }
-
-
-
-                    *//*
-                for (pictureEntity in pictures) {
-                    Log.d("DB_CONTENT_qwer1", "Picture URI: ${pictureEntity.pictureUri}, ItemType: ${pictureEntity.itemType}")
-                }*//*
-                //이걸 넣어야 가능하다
-                addPictureAdapter!!.notifyDataSetChanged()
-                //TODO:잘 되다가 개수가 저절로 줄어드는데 어쨰서죠??
-            }*/
         }
-        //DB에다가 추가 하는것 이건 그냥 써도 ㄱㅊ할듯
-        //TODO:너 왜 안되냐?
+
 
         setContentView(binding.root)
     }
@@ -154,6 +139,9 @@ class AddPictureActivity : AppCompatActivity() {
 
     private fun attachPictureAdapter() {
         addPictureAdapter = AddPictureAdapter(picturelist, this)
+
+
+
         binding.rvPictures.adapter = addPictureAdapter
         binding.rvPictures.layoutManager =
             GridLayoutManager(this, 2)
@@ -161,14 +149,14 @@ class AddPictureActivity : AppCompatActivity() {
             AddPictureAdapter.OnItemClickListener {
             override fun onItemClick(size: Int) {
                 //개수 어케 받지 흠
-                if (size<2) {//TODO:왜 비었다 뜨죵??
+                if (size < 2) {//TODO:왜 비었다 뜨죵??
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)
-                    nextButton=false
-                }else{
+                    nextButton = false
+                } else {
                     binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
-                    nextButton=true
+                    nextButton = true
                 }
-            //여기서 개수 받아와서 해야할듯??
+                //여기서 개수 받아와서 해야할듯??
             }
         })
 
@@ -192,58 +180,6 @@ class AddPictureActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-
-    private fun CreateTextView() {
-        //실험삼아 하나만 해 봅시당
-        //arrayof로 해서 배열 만들고, 받아 오는대로 여기에 텍스트 추가해서 하면 될 듯?
-        //마찬가지로 image하는데 이거 사진추가가 계속 위치가 바뀌는거 어떻게하는지 ㅋㅋ
-
-        //결국, RoomDB로 받아서 거기에 imgaelist 추가추가 해서 불러오게 해야할 듯 지금은 서버 연동 전 이니까 shared로 해볼까
-
-        val tv2 = TextView(this)
-        tv2.setText("건대 화양식당")
-        //for문으로 position에 따라 위치 수정해주면 될 듯 하다
-        tv2.textSize = 14f
-        val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-        )
-
-        tv2.setTextColor(Color.parseColor("#9FA4A9"))
-
-        binding.layoutLocation.addView(tv2)
-
-    }
-
-    private fun CreateImageView() {
-        //TODO:arrayof로 해서 배열 만들고, 받아 오는대로 여기에 텍스트 추가해서 하면 될 듯?
-        //마찬가지로 image하는데 이거 사진추가가 계속 위치가 바뀌는거 어떻게하는지 ㅋㅋ
-        //여기서 image의 uri를 받아와서 iv로 감싸게 해서 텍스트처럼 추가하기
-
-        val img1 = ImageView(this)
-        //val imgString = ApplicationClass.mSharedPreferencesManager.getString("image", null)
-        //val imgUri = Uri.parse(imgString)
-        //Log.d("imgtest", imgUri.toString())
-        //img1.setImageURI(imgUri)//이미지 띄웠으니 크기
-        //나중에 roomdb로 바꿔서 하기
-
-
-        val layoutParams = GridLayout.LayoutParams().apply {
-            width = resources.getDimensionPixelSize(R.dimen.image_width)
-            height = resources.getDimensionPixelSize(R.dimen.image_width) // 필요에 따라 높이도 설정
-            // 그리드에서의 위치 설정 (rowSpec, colSpec)
-            //추가되는거 무조건 0,0에다가
-
-            //자동으로 밀리는게 아니라 겹쳐지네..?
-            //근데 반복문 써서 위치 옮기면 터질텐디
-
-            rowSpec = GridLayout.spec(0)
-            columnSpec = GridLayout.spec(0)
-        }
-
-//        binding.layoutAddPic.addView(img1, layoutParams)
-
-    }
 
     private fun setupItemTouchHelper() {
         val itemTouchHelperCallback = object : ItemTouchHelper.Callback() {

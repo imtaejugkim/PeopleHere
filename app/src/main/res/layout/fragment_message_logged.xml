@@ -25,5 +25,6 @@
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_headline"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_headline"
+        tools:listitem="@layout/item_message"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

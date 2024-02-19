@@ -128,35 +128,13 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tv_location1"
-                            android:layout_width="0dp"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_location"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="멘쇼 츠케멘 건대점"
-                            android:ellipsize="end"
-                            android:textColor="@color/Gray5"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/pretendard_regular"
-                            app:layout_constraintStart_toStartOf="@id/tv_minimum"
-                            app:layout_constraintTop_toBottomOf="@id/tv_minimum" />
+                            tools:listitem="@layout/item_addpicture_location_name"
+                            app:layout_constraintTop_toBottomOf="@id/tv_minimum"/>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="2dp"
-                            android:src="@drawable/checked_no"
-                            app:layout_constraintStart_toEndOf="@id/tv_location1"
-                            app:layout_constraintTop_toTopOf="@id/tv_location1" />
-
-                        <LinearLayout
-                            android:id="@+id/layout_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintStart_toStartOf="@id/tv_location1"
-                            app:layout_constraintTop_toBottomOf="@id/tv_location1" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
             <androidx.recyclerview.widget.RecyclerView

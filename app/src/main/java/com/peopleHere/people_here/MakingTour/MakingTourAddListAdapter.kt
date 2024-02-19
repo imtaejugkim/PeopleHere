@@ -1,35 +1,36 @@
 package com.peopleHere.people_here.MakingTour
 
+import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.Data.MakingTourAddListData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.DialogMakingTourAddListBinding
 import com.peopleHere.people_here.databinding.ItemMakingTourAddListPlace1Binding
-import com.peopleHere.people_here.databinding.ItemMakingTourAddListPlace2Binding
-import com.peopleHere.people_here.databinding.ItemMakingTourAddListPlace3Binding
 import java.util.Collections
 
-class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddListData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MakingTourAddListAdapter(
+    private val addListData: ArrayList<MakingTourAddListData>,
+    val context: Context,
+    private val itemCountChangedListener: OnItemCountChangedListener? = null
+) : RecyclerView.Adapter<MakingTourAddListAdapter.ViewHolder>() {
 
-    private var isEditMode : Boolean = false
+    private var isEditMode: Boolean = false
     private var selectedPosition: Int = RecyclerView.NO_POSITION
 
-    companion object {
-        const val TYPE_FIRST = 0
-        const val TYPE_SECOND = 1
-        const val TYPE_LAST = 2
+    interface OnItemCountChangedListener {
+        fun onItemCountChanged(count: Int)
     }
 
     fun setEditMode(editMode: Boolean) {
@@ -48,6 +49,8 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             }
         }
         notifyItemMoved(fromPosition, toPosition)
+
+
     }
 
     fun removeItem(position: Int) {
@@ -55,153 +58,86 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
         notifyItemRemoved(position)
     }
 
-
     fun selectItem(position: Int) {
         val previousPosition = selectedPosition
         selectedPosition = position
-
-        // 이전에 선택된 아이템 업데이트
-        if (previousPosition != RecyclerView.NO_POSITION) {
-            notifyItemChanged(previousPosition)
-        }
-        // 현재 선택된 아이템 업데이트
+        notifyItemChanged(previousPosition)
         notifyItemChanged(selectedPosition)
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return addListData[position].itemType
-    }
+    inner class ViewHolder(private val binding: ItemMakingTourAddListPlace1Binding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(placeInfo: MakingTourAddListData, isSelected: Boolean, isEditMode: Boolean) {
+            Glide.with(context)
+                .load(placeInfo.placeImage)
+                .into(binding.ivMakingTourAddListPlace)
+
+            ApplicationClass.pplaceAddress?.add(placeInfo.placeAddress)
+            Log.d("APP_pplaceAddress",ApplicationClass.pplaceAddress.toString())
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            TYPE_FIRST -> {
-                val binding = ItemMakingTourAddListPlace1Binding.inflate(LayoutInflater.from(parent.context), parent, false)
-                FirstViewHolder(binding)
+            binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
+            binding.tvMakingTourListPlaceNumber.text = (adapterPosition + 1).toString()
+
+            when (adapterPosition) {
+                0 -> {
+                    binding.tvMakingTourAddListPlaceFirst.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    binding.tvMakingTourAddListPlaceFirst.visibility = View.GONE
+                }
             }
-            TYPE_SECOND -> {
-                val binding = ItemMakingTourAddListPlace2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
-                SecondViewHolder(binding)
+
+            itemView.setOnClickListener {
+                selectItem(adapterPosition)
             }
-            TYPE_LAST -> {
-                val binding = ItemMakingTourAddListPlace3Binding.inflate(LayoutInflater.from(parent.context), parent, false)
-                LastViewHolder(binding)
+
+            val iconRes =
+                if (isEditMode) R.drawable.making_tour_add_list_hamburger else R.drawable.ic_trash
+            binding.ivMakingTourAddListPlaceDots.setImageResource(iconRes)
+            if (!isEditMode) {
+                binding.ivMakingTourAddListPlaceDots.setOnClickListener {
+                    val dialog =
+                        ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
+                    dialog.show()
+                }
+            } else {
+                binding.ivMakingTourAddListPlaceDots.setOnClickListener(null)
             }
-            else -> throw IllegalArgumentException("이외의 viewType")
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = addListData[position]
-        when (holder) {
-            is FirstViewHolder -> holder.bind(item, position == selectedPosition, isEditMode)
-            is SecondViewHolder -> holder.bind(item, position == selectedPosition, isEditMode)
-            is LastViewHolder -> holder.bind(item)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemMakingTourAddListPlace1Binding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(addListData[position], position == selectedPosition, isEditMode)
     }
 
     override fun getItemCount(): Int = addListData.size
 
-    fun changeBackgroundAndPlaceNumber(context: Context, layout1: ConstraintLayout, layout2: ConstraintLayout, textView: TextView, isSelected: Boolean) {
-        textView.isSingleLine = !isSelected
+    class ShowDialog(
+        context: Context,
+        private val adapter: MakingTourAddListAdapter,
+        private val position: Int
+    ) : Dialog(context) {
+        lateinit var binding: DialogMakingTourAddListBinding
 
-        val layoutBackground = if (isSelected)
-            ContextCompat.getDrawable(context, R.drawable.making_tour_add_list_place_info_selected)
-        else
-            ContextCompat.getDrawable(context, R.drawable.making_tour_add_list_place_info)
-
-        val placeNumberColor = if (isSelected)
-            ContextCompat.getDrawable(context, R.drawable.making_tour_add_list_circle_selected)
-        else
-            ContextCompat.getDrawable(context, R.drawable.making_tour_add_list_circle)
-
-        layout1.background = layoutBackground
-        layout2.background = placeNumberColor
-    }
-
-
-
-
-
-    inner class FirstViewHolder(private val binding: ItemMakingTourAddListPlace1Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(placeInfo: MakingTourAddListData, isSelected : Boolean, isEditMode : Boolean) {
-            binding.ivMakingTourAddListPlace.setImageResource(placeInfo.placeImage)
-            binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
-            binding.tvMakingTourListPlaceNumber.text = placeInfo.placeNumber.toString()
-            changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, binding.tvMakingTourAddListPlaceName, isSelected)
-
-            itemView.setOnClickListener {
-                selectItem(adapterPosition)
-            }
-
-            if (!isEditMode) {
-                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.ic_trash)  // dots
-                binding.ivMakingTourAddListPlaceDots.setOnClickListener {
-                    val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
-                    dialog.show()
-                }
-            } else {
-                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.making_tour_add_list_hamburger)  // dots
-                binding.ivMakingTourAddListPlaceDots.setOnClickListener(null)
-            }
-
-        }
-    }
-
-    inner class SecondViewHolder(private val binding: ItemMakingTourAddListPlace2Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(placeInfo: MakingTourAddListData, isSelected: Boolean, isEditMode : Boolean) {
-            binding.ivMakingTourAddListPlace.setImageResource(placeInfo.placeImage)
-            binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
-            binding.tvMakingTourListPlaceNumber.text = placeInfo.placeNumber.toString()
-
-            changeBackgroundAndPlaceNumber(itemView.context, binding.clMakingTourPlaceInfo, binding.clMakingTourPlaceNumber, binding.tvMakingTourAddListPlaceName, isSelected)
-
-            itemView.setOnClickListener {
-                selectItem(adapterPosition)
-            }
-
-            if (!isEditMode) {
-                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.ic_trash)  // dots
-                binding.ivMakingTourAddListPlaceDots.setOnClickListener {
-                    val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
-                    dialog.show()
-                }
-            } else {
-                binding.ivMakingTourAddListPlaceDots.setImageResource(R.drawable.making_tour_add_list_hamburger) // 햄버거 드래그
-                binding.ivMakingTourAddListPlaceDots.setOnClickListener(null)
-            }
-        }
-    }
-
-    inner class LastViewHolder(private val binding: ItemMakingTourAddListPlace3Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(placeInfo: MakingTourAddListData) {
-
-            val countItem = addListData.count {
-                it.itemType == TYPE_FIRST || it.itemType == TYPE_SECOND }
-
-            if (countItem >= 8) {
-                binding.clMakingTourAddListNothing.isVisible = true
-                binding.clMakingTourAddListPlacePlus.isGone = true
-            }else{
-                binding.clMakingTourAddListNothing.isGone= true
-                binding.clMakingTourAddListPlacePlus.isVisible = true
-            }
-
-            binding.clMakingTourAddListPlacePlus.setOnClickListener {
-                val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
-                dialog.show()
-            }
-        }
-    }
-
-    class ShowDialog(context: Context, private val adapter: MakingTourAddListAdapter, private val position: Int) : Dialog(context) {
-        lateinit var binding : DialogMakingTourAddListBinding
         init {
             binding = DialogMakingTourAddListBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
             binding.btnDeletePlace.setOnClickListener {
-                adapter.removeItem(position)
+                if (context is MakingTourAddListActivity) {
+                    context.removeItemAndMarker(position)
+                }
                 dismiss()
             }
 
@@ -211,8 +147,6 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             //다이얼로그 버튼처럼 커스텁
             setDialog()
         }
-
-
 
         private fun setDialog() {
             val window = window

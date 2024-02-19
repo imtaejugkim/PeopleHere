@@ -21,15 +21,19 @@ CustomAlbumActivity : AppCompatActivity() {
     private var customAlbumAdapter: CustomAlbumAdapter? = null
 
 
-
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomAlbumBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+
+        var location = intent.getStringExtra("location")
+        var pictureNum = intent.getStringExtra("pictureNum")
+
         val imageList = loadImages()
-        customAlbumAdapter = CustomAlbumAdapter(this,imageList)
+        customAlbumAdapter = CustomAlbumAdapter(this, imageList,pictureNum!!.toInt())
         binding.rvPhoto.adapter = customAlbumAdapter
         binding.rvPhoto.layoutManager =
             GridLayoutManager(this, 3)
@@ -39,18 +43,33 @@ CustomAlbumActivity : AppCompatActivity() {
                 //눌리면 이제 AddpicActivity에 사진 추가가 되게
                 //TODO: RoomDB로 보내야 사용이 가능 할 듯
             }
+
+            override fun onPictureNum(picturum: Int) {
+                binding.tvLocationSelect.text = "${location} (${picturum}/5)"
+
+            }
         })
+
+
+        //TODO:콜백으로 개수 추가 조지기
+        binding.tvLocationSelect.text = "${location} (${pictureNum}/5)"
+
 
         binding.tvAdd.setOnClickListener {
             //intent로 넘기기
+            //여기서 장소 이름과 사진 개수도 넘기기
             val intent = Intent(this, AddPictureActivity::class.java)
             for (i in 0 until customAlbumAdapter!!.uriList.size) {//null~5일듯
                 // 각 아이템에 대한 처리
                 val uri = customAlbumAdapter!!.uriList[i]
-                Log.d("qwer",uri)
+                Log.d("qwer", uri)
                 intent.putExtra("uri_$i", uri)
                 //이렇게 하면 uri_1~5까지 string 형태로 받음
-                }
+            }
+            intent.putExtra("location",location)
+            intent.putExtra("pictureNum",pictureNum)
+
+
             startActivity(intent)
             finish()
 

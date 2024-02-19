@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.peopleHere.people_here.Data.MainSearchData
+import com.peopleHere.people_here.Data.MakingCourseSearchData
 import com.peopleHere.people_here.databinding.ItemMainSearchBinding
 
-class MainSearchRecentAdapter(var mainSearchData : ArrayList<MainSearchData>) : RecyclerView.Adapter<MainSearchRecentAdapter.ViewHolder>() {
+class MainSearchRecentAdapter(var mainSearchData : ArrayList<MakingCourseSearchData>) : RecyclerView.Adapter<MainSearchRecentAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding : ItemMainSearchBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(searchRecentInfo : MainSearchData) {
-            binding.ivMainSearchRecent.setImageResource(searchRecentInfo.searchImage)
+        fun bind(searchRecentInfo : MakingCourseSearchData) {
             binding.tvMainSearchRecentRegion.text = searchRecentInfo.searchRegion
             binding.tvMainSearchRecentPlace.text = searchRecentInfo.searchPlace
         }
@@ -30,7 +30,7 @@ class MainSearchRecentAdapter(var mainSearchData : ArrayList<MainSearchData>) : 
 
     override fun getItemCount(): Int = mainSearchData.size
 
-    fun updateData(newData: ArrayList<MainSearchData>) {
+    fun updateData(newData: ArrayList<MakingCourseSearchData>) {
         mainSearchData = newData
         notifyDataSetChanged()
     }

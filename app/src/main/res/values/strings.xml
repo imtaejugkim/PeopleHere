@@ -9,14 +9,12 @@
     <string name="menu_profile">프로필</string>
 
     <!--making_tour process 정리 -->
-    <string name="making_tour_progress_1">1/8</string>
-    <string name="making_tour_progress_2">2/8</string>
-    <string name="making_tour_progress_3">3/8</string>
-    <string name="making_tour_progress_4">4/8</string>
-    <string name="making_tour_progress_5">5/8</string>
-    <string name="making_tour_progress_6">6/8</string>
-    <string name="making_tour_progress_7">7/8</string>
-    <string name="making_tour_progress_8">8/8</string>
+    <string name="making_tour_progress_1">1/6</string>
+    <string name="making_tour_progress_2">2/6</string>
+    <string name="making_tour_progress_3">3/6</string>
+    <string name="making_tour_progress_4">4/6</string>
+    <string name="making_tour_progress_5">5/6</string>
+    <string name="making_tour_progress_6">6/6</string>
 
     <!--making_tour 투어 유형 이름 정리 -->
     <string name="making_tour_exit">저장 후 나가기</string>
@@ -53,8 +51,8 @@
 
 
     <!--making_tour 장소 추가 목록 이름 정리 -->
-    <string name="making_tour_add_list_headline">투어 코스를 계획하세요</string>
-    <string name="making_tour_add_list_subtitle">장소를 추가하고 나만의 코스를 만들어요</string>
+    <string name="making_tour_add_list_headline">코스를 계획하세요</string>
+    <string name="making_tour_add_list_subtitle">여행자와 함께 방문할 장소를 추가하세요</string>
     <string name="making_tour_add_list_edit_sequence">순서 편집</string>
     <string name="making_tour_add_list_finish_sequence">순서 저장</string>
     <string name="making_tour_add_list_place_first">여행자와 처음 만나는 장소</string>

@@ -1,6 +1,7 @@
 package com.peopleHere.people_here.AddPicture.PictureDB
 
 import android.content.Context
+import android.os.Build.VERSION_CODES.N
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -15,7 +16,7 @@ abstract class PictureDB : RoomDatabase() {
     companion object {
         //스태틱 이라고 생각(항상 있는 것)
         var instance: PictureDB? = null//instance를 사용하는 것
-        fun getInstance(context: Context): PictureDB {//getInstance를 통해서 DB를 쓸 수 있는 것이군!!!
+        fun getInstance(context: Context,next:Boolean): PictureDB {//getInstance를 통해서 DB를 쓸 수 있는 것이군!!!
             if (instance == null) {//null인 경우!
                 instance = Room.databaseBuilder(//db 만들어 주는 함수
                     context,//context가져옴 이렇게만 쓰려면 다른곳에서 requireContext해서 하나는 다르게
@@ -24,7 +25,13 @@ abstract class PictureDB : RoomDatabase() {
                 ).fallbackToDestructiveMigration()//버전 바꾸면 이전꺼 삭제
                     .build()
             }
+            if(next){
+                val currentVersion = instance?.openHelper?.writableDatabase?.version ?: 0
+                val newVersion = currentVersion + 1
+                instance?.openHelper?.writableDatabase?.execSQL("PRAGMA user_version = $newVersion")
+            }
             return instance!!//그냥 기존거 받아옴
         }
+
     }
 }

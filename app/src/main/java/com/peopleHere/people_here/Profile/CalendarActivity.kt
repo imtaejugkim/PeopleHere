@@ -1,6 +1,5 @@
 package com.peopleHere.people_here.Profile
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -19,13 +18,17 @@ import com.google.android.material.tabs.TabLayout
 import com.peopleHere.people_here.Data.CalendarData
 import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.R
+import com.peopleHere.people_here.Remote.AddTourDateView
 import com.peopleHere.people_here.Remote.AuthService
+import com.peopleHere.people_here.Remote.TourTimeData
 import com.peopleHere.people_here.Remote.UpcomingDateResponse
 import com.peopleHere.people_here.Remote.UpcomingDateView
 import com.peopleHere.people_here.databinding.ActivityCalendarBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
-class CalendarActivity : AppCompatActivity() , UpcomingDateView{
+class CalendarActivity : AppCompatActivity() , UpcomingDateView , AddTourDateView{
     lateinit var binding : ActivityCalendarBinding
     private var calendarList : ArrayList<CalendarData> = arrayListOf()
     private var monthAdapter : MonthAdapter ?= null
@@ -36,7 +39,9 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
     private var upcomingData : ArrayList<UpcomingDateResponse> = arrayListOf()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var lastClickedDate: String? = null
+    private var lastClickedTime : TourTimeData?= null
     private val tabList = arrayListOf("참여 차단", "참여 가능으로 설정")
+    private val tabStates = booleanArrayOf(true, true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalendarBinding.inflate(layoutInflater)
@@ -72,7 +77,6 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         }
 
     }
-
     private fun initRecyclerView(upcomingData : ArrayList<UpcomingDateResponse>) {
         val cal = Calendar.getInstance()
         val currentYear = cal.get(Calendar.YEAR)
@@ -91,11 +95,32 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         }
 
         monthAdapter = MonthAdapter(calendarList, upcomingData, this@CalendarActivity, object : DateAdapter.OnDateClickListener {
-            override fun onDateClick(date: String, month: Int, year: Int, time: String?) {
-                if (time != null) {
-                    // 시간 정보가 있으면 bottomSheet의 내용 업데이트
-                    updateBottomSheetContent(date, month, year, time)
+            override fun onDateClick(date: String, month: Int, year: Int, status: String?, time: String?) {
+                lastClickedDate = "$year-${(month).toString().padStart(2, '0')}-${date.padStart(2, '0')}"
+
+                updateTabStatus(status, time)
+
+                if (status == "AVAILABLE") {
+                    binding.tlEnterDate.getTabAt(1)?.select()
+
+                    // 시간 설정
+                    val displayTime = if (time != null) {
+                        // 시간 포맷 변환 로직 추가
+                        val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                        val outputFormat = SimpleDateFormat("a hh:mm", Locale.getDefault())
+                        val date = inputFormat.parse(time)
+                        date?.let {
+                            outputFormat.format(it)
+                        } ?: "시간협의"
+                    } else {
+                        "여행자의 시간에 맞출 수 있어요"
+                    }
+                    binding.tvExistTime.text = displayTime
+                } else {
+                    binding.tlEnterDate.getTabAt(0)?.select()
+                    binding.tvExistTime.text = "여행자의 시간에 맞출 수 있어요"
                 }
+                // BottomSheet를 보여주는 로직
                 showCalendarDialog(date, month, year, time)
             }
         })
@@ -106,24 +131,63 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
     }
 
+    private fun updateTabStatus(status: String?, time: String?) {
+        Log.d("status",status.toString())
+        Log.d("time",time.toString())
+
+        binding.tlEnterDate.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        initAddTourManager(tourId, lastClickedDate!!, null)
+                    }
+                    1 -> {
+                        val timeData = lastClickedTime
+                        initAddTourManager(tourId, lastClickedDate!!, timeData)
+                    }
+                }
+                updateTabTexts(tab.position)
+                setTabColor(tab,true)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                setTabColor(tab,false)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
+    private fun updateTabTexts(selectedTabIndex: Int) {
+        for (i in 0 until binding.tlEnterDate.tabCount) {
+
+            val tab0 = binding.tlEnterDate.getTabAt(0)
+            val tab1 = binding.tlEnterDate.getTabAt(1)
+            val textView1 = tab0?.customView as? TextView
+            val textView2 = tab1?.customView as? TextView
+
+            if (selectedTabIndex == 0) {
+                textView1?.text = "참여 차단"
+                textView2?.text = "참여 가능으로 설정"
+            } else {
+                textView1?.text = "참여 차단으로 변경"
+                textView2?.text = "참여 가능"
+            }
+        }
+    }
+
 
     private fun calculateDays(year: Int, month: Int) : ArrayList<String> {
         val dayList = ArrayList<String>()
         val cal = Calendar.getInstance()
 
-        // 설정된 년도와 월로 캘린더 설정, 1일로 설정
         cal.set(year, month - 1, 1)
-
-        // 1 = 일요일, 2 = 월요일
         val startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-
         for (i in 1 until startDayOfWeek) {
             dayList.add("") // 공백으로 채움
         }
 
-        // 해당 월의 마지막 날짜
         val lastDay = cal.getActualMaximum(Calendar.DATE)
-
         for (i in 1..lastDay) {
             dayList.add(i.toString())
         }
@@ -146,21 +210,8 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
 
 
     private fun showBottomSheet(date: String, month: Int, year: Int, time: String?) {
-        updateBottomSheetContent(date, month, year, time)
-
-        binding.tlEnterDate.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                setTabColor(tab, true)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                setTabColor(tab, false)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-        })
+        binding.tvDialogMonth.text = month.toString()
+        binding.tvDialogDay.text = date
 
         val displayMetrics = resources.displayMetrics
         val screenHeight = displayMetrics.heightPixels
@@ -176,6 +227,7 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         val tabView = (binding.tlEnterDate.getChildAt(0) as ViewGroup).getChildAt(tab.position) as View
 
         tab.customView?.let { view ->
+
             val textView = view as TextView
             if (isSelected) {
                 tabView.background = ResourcesCompat.getDrawable(resources, R.drawable.rectangle_line_orange3_12, null)
@@ -188,20 +240,7 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
         }
     }
 
-    private fun updateBottomSheetContent(date: String, month: Int, year: Int, time: String?) {
-        binding.tvDialogMonth.text = month.toString()
-        binding.tvDialogDay.text = date
-        if (time != null) {
-            binding.tvExistTime.text = time // 예시로, time 형식에 맞게 변환 필요할 수 있음
-        } else {
-            // 기본 텍스트 설정 또는 다른 처리
-            binding.tvExistTime.text = "No Time Set"
-        }
-    }
-
-    override fun UpcomingDateLoading() {
-        TODO("Not yet implemented")
-    }
+    override fun UpcomingDateLoading() {}
 
     override fun UpcomingDateSuccess(content: ArrayList<UpcomingDateResponse>) {
         upcomingData = content
@@ -223,6 +262,27 @@ class CalendarActivity : AppCompatActivity() , UpcomingDateView{
             authService.setUpcomingDateView(this)
             Log.d("tourId",tourId.toString())
             authService.upcomingDateInfo(tourId)
+        }else{
+            Log.d("token 오류","token 오류")
+        }
+    }
+
+    override fun AddTourDateLoading() {}
+
+    override fun AddTourDateSuccess() {
+        Log.d("통신성공!","통신성공")
+    }
+
+    override fun AddTourDateFailure(status: Int, message: String) {}
+
+    private fun initAddTourManager(tourId: Int, date: String, time: TourTimeData?) {
+        val token = getJwt()
+        Log.d("token",token)
+        if(token.isNotEmpty()){
+            val authService = AuthService(this)
+            authService.setAddTourDateView(this)
+            Log.d("tourId",tourId.toString())
+            authService.addTourDateInfo(tourId, date, time)
         }else{
             Log.d("token 오류","token 오류")
         }

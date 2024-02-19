@@ -96,7 +96,7 @@ data class CheckPhoneNumberResponse(
 data class CourseContentsResponse (
     @SerializedName("tourId") val tourId: Int,
     @SerializedName("tourName") val tourName: String,
-    @SerializedName("userId") val userId: String,
+    @SerializedName("userId") val userId: Int,
     @SerializedName("userName") val userName: String,
     @SerializedName("userImageUrl") val userImageUrl: String,
     @SerializedName("tourTime") val time: Int,
@@ -108,7 +108,11 @@ data class CourseContentsResponse (
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("updatedAt") val updatedAt: String
 )
-
+data class SimpleProfileResponse(
+    @SerializedName("userId") val userId: Int,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userImageUrl") val userImageUrl: String,
+)
 data class UpcomingDateResponse (
     @SerializedName("tourDateId") val id : Int,
     @SerializedName("date") val date : String,
@@ -165,7 +169,40 @@ data class JoinConfirmResponse(
     @SerializedName("code") val code : Int,
     @SerializedName("status") val status : Int,
     @SerializedName("message") val message : String,
-    @SerializedName("timestamp") val timestamp :String
+    @SerializedName("result") val result :String
+)
+
+data class AddTourDateRequest(
+    @SerializedName("date") val date: String,
+    @SerializedName("time") val time : TourTimeData?
+)
+
+data class TourTimeData(
+    @SerializedName("hour") val hour : Int,
+    @SerializedName("minute") val minute : Int,
+    @SerializedName("second") val second : Int,
+    @SerializedName("nano") val nano : Int
+)
+
+data class BringUserResponse(
+    @SerializedName("userId") val userId : Int,
+    @SerializedName("userName") val userName : String,
+    @SerializedName("userImageUrl") val userImageUrl : String,
+    @SerializedName("id") val id : Int,
+    @SerializedName("email") val email : String,
+    @SerializedName("firstname") val firstname : String,
+    @SerializedName("imageUrl") val imageUrl : String,
+    @SerializedName("content") val content : String,
+    @SerializedName("address") val address : String,
+    @SerializedName("birth") val birth : List<Int>,
+    @SerializedName("job") val job : String,
+    @SerializedName("almaMater") val almaMater : String,
+    @SerializedName("hobby") val hobby : String,
+    @SerializedName("pet") val pet : String,
+    @SerializedName("favourite") val favourite : String,
+    @SerializedName("status") val status : String,
+    @SerializedName("languages") val languages : List<String>,
+    @SerializedName("questions") val questions : Map<String,String>
 )
 
 data class Data(

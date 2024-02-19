@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.databinding.ItemTourContentsImageBinding
 
-class CourseContentsImageAdapter(val context : Context, val imgList : MutableList<String>) : RecyclerView.Adapter<CourseContentsImageAdapter.ViewHolder>() {
+class FullImageAdapter(val context : Context, val imgList : MutableList<String>) : RecyclerView.Adapter<FullImageAdapter.ViewHolder>() {
     inner class ViewHolder(val binding : ItemTourContentsImageBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(imgUrl : String){
             Glide.with(context)
                 .load(imgUrl)
-                .centerCrop()
+                .fitCenter()
                 .into(binding.itemIv)
 
         }

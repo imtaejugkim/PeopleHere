@@ -77,7 +77,7 @@
         android:textColor="@color/Gray8"
         android:textSize="14sp"
         android:gravity="top"
-        android:maxLength="500"
+        android:maxLength="30"
         app:layout_constraintDimensionRatio="328:44"
         app:layout_constraintWidth_percent="0.91"
         android:background="@drawable/cost_input_back_button"

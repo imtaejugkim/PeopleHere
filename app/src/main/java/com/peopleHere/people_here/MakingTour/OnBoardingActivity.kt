@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.peopleHere.people_here.CourseContents.CourseContentsImageAdapter
 import com.peopleHere.people_here.Data.OnBoardingData
+import com.peopleHere.people_here.Login.LoginEmailActivity
+import com.peopleHere.people_here.MyTour.MakingCourseActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityOnBoardingBinding
 
@@ -34,8 +36,8 @@ class OnBoardingActivity : AppCompatActivity(){
         }
 
         binding.btnNext.setOnClickListener {
-            val intent = Intent()
-
+            val intent = Intent(this, LoginEmailActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -50,6 +52,7 @@ class OnBoardingActivity : AppCompatActivity(){
             )
         )
     }
+
     private fun initViewPager() {
         binding.vpOnBoarding.adapter = OnBoardingAdapter(onBoardingData)
         binding.vpOnBoarding.orientation = ViewPager2.ORIENTATION_HORIZONTAL

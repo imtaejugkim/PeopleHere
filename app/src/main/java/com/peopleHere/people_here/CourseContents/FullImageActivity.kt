@@ -17,7 +17,7 @@ class FullImageActivity : AppCompatActivity() {
 
         imgList = intent.getStringArrayListExtra("imgList") ?: arrayListOf()
 
-        val adapter = CourseContentsImageAdapter(this, imgList)
+        val adapter = FullImageAdapter(this, imgList)
         binding.fullscreenViewPager.adapter = adapter
 
         val startPosition = intent.getIntExtra("position", 0)

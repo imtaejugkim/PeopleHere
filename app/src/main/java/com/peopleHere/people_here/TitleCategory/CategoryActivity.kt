@@ -10,7 +10,9 @@ import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityCategoryBinding
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
+import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.Data.CategoryData
+import com.peopleHere.people_here.Remote.AuthService
 
 
 class CategoryActivity : AppCompatActivity() {
@@ -19,6 +21,7 @@ class CategoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCategoryBinding
     private var categorylist: ArrayList<CategoryData> = arrayListOf()
     private var categoryadapter: CategoryAdapter? = null
+    private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,10 @@ class CategoryActivity : AppCompatActivity() {
         //TODO: 눌렀을 때 색상 바뀌게(체크박스 사용하자)
         initDummyData()
         IbCheckReset()
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+        authService = AuthService(this)
 
         categoryadapter = CategoryAdapter(categorylist, isclicked)
         binding.rvCategory.adapter = categoryadapter
@@ -57,6 +64,8 @@ class CategoryActivity : AppCompatActivity() {
         if (isclicked == 1 || clickedItemNum > 0) { //isClicked는 어케함ㅋㅋ
             binding.btnNext.setBackgroundResource(R.drawable.add_list_next_button)
             binding.btnNext.setOnClickListener {
+
+                authService.simpleProfileInfo()
                 val intent = Intent(this, IntroduceActivity::class.java)//화면전환
                 startActivity(intent)
             }
@@ -82,6 +91,9 @@ class CategoryActivity : AppCompatActivity() {
                 }
                 categoryadapter?.CountItem = 0
                 categoryadapter?.notifyDataSetChanged()
+
+                ApplicationClass.pcategoryNames?.clear()
+                Log.d("APP_pactegory",ApplicationClass.pcategoryNames.toString())
             } else {
                 binding.ibCheck.setImageResource(R.drawable.inactive_18)
                 isclicked = 0//클릭다시하면 1로 변경

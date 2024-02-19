@@ -56,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:textSize="20sp"
+        android:fontFamily="@font/suite_bold"
         android:textColor="@color/Gray8"
         android:text="@string/making_tour_add_list_headline"
         android:layout_marginTop="18dp"
@@ -66,6 +67,7 @@
         android:id="@+id/tv_making_tour_time_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_bold"
         android:textSize="12sp"
         android:textColor="@color/Gray5"
         android:text="@string/making_tour_add_list_subtitle"
@@ -78,6 +80,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/pretendard_regular"
         android:text="@string/making_tour_add_list_edit_sequence"
         android:background="@drawable/making_tour_add_list_edit_sequence"
         android:textSize="12sp"
@@ -111,16 +114,87 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         app:layout_constraintTop_toBottomOf="@id/tv_making_tour_time_subtitle"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_making_tour_add_list_place"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
+        android:nestedScrollingEnabled="false"
         app:layout_constraintStart_toStartOf="@id/guide_start"
         app:layout_constraintEnd_toEndOf="@+id/guide_end"
         app:layout_constraintTop_toBottomOf="@id/map"
-        app:layout_constraintBottom_toTopOf="@id/cl_making_tour_bottom_bar"
-        tools:listitem="@layout/item_making_tour_add_list_place1"/>
+        app:layout_constraintBottom_toTopOf="@id/cl_making_tour_bottom_bar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_making_tour_add_list_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:nestedScrollingEnabled="false"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_add_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_making_tour_add_list_place"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_making_tour_add_list_place_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_making_tour_add_list_place_plus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_making_tour_plus"/>
+
+                <TextView
+                    android:id="@+id/tv_making_tour_add_list_place_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/making_tour_add_list_place_plus"
+                    android:textSize="14sp"
+                    android:textColor="@color/Orange5"
+                    app:layout_constraintStart_toEndOf="@id/iv_making_tour_add_list_place_plus"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_add_list_impoosible"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rv_making_tour_add_list_place">
+
+                <TextView
+                    android:id="@+id/tv_making_tour_add_list_nothing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/making_tour_add_list_nothing"
+                    android:textSize="14sp"
+                    android:textColor="@color/Gray5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_making_tour_bottom_bar"

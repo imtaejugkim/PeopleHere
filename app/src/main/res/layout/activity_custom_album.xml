@@ -60,11 +60,12 @@
 
         <ImageView
             android:id="@+id/iv_location"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginStart="102dp"
             android:layout_marginTop="17dp"
             android:src="@drawable/location"
+            app:layout_constraintEnd_toStartOf="@id/tv_location_select"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_top_app_bar" />
 
@@ -72,13 +73,14 @@
             android:id="@+id/tv_location_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="13dp"
             android:text="장소 이름 받아오기(0/0)"
             android:textColor="@color/Gray8"
             android:textSize="14sp"
             android:fontFamily="@font/pretendard_regular"
             app:layout_constraintStart_toEndOf="@+id/iv_location"
+
             app:layout_constraintTop_toBottomOf="@id/cl_top_app_bar" />
 
         <androidx.recyclerview.widget.RecyclerView

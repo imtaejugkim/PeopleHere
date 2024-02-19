@@ -2,23 +2,20 @@ package com.peopleHere.people_here.Remote
 
 import android.content.Context
 import android.content.Intent
-import android.os.Message
-import android.provider.ContactsContract.Profile
 import android.util.Log
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.peopleHere.people_here.Data.ChatData
+import com.peopleHere.people_here.Data.PlaceData
+import com.peopleHere.people_here.Data.PostData
+import com.peopleHere.people_here.Data.PostResponseData
 import com.peopleHere.people_here.Data.ProfileData
-import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.Local.saveJwt
 import com.peopleHere.people_here.Login.LoginEmailNextActivity
 import com.peopleHere.people_here.Login.LoginPhoneNextActivity
 import com.peopleHere.people_here.Login.VerifyPhoneActivity
 import com.peopleHere.people_here.MainActivity
-import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.SignUp.SignUpActivity
-import okhttp3.Interceptor
-import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +25,7 @@ interface CheckEmailCallback {
     fun onEmailAvailable(isAvailable: Boolean)
 }
 
-class AuthService(private val context: Context)  {
+class AuthService(private val context: Context) {
 
     private val authService = ApplicationClass.retrofit.create(RetrofitInterface::class.java)
 
@@ -38,12 +35,13 @@ class AuthService(private val context: Context)  {
     private lateinit var courseContentsView: CourseContentsView
     private lateinit var upcomingDateView: UpcomingDateView
     private lateinit var bringCourseView: BringCourseView
-    private lateinit var changeWishView: ChangeWishView
+    private var changeWishView: ChangeWishView? = null
     private lateinit var requestEnjoyView: RequestEnjoyView
     private lateinit var joinConfirmView: JoinConfirmView
     private lateinit var profileView: ProfileView
     private lateinit var messageView: MessageView
-
+    private lateinit var addTourDateView: AddTourDateView
+    private lateinit var bringUserView: BringUserView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -57,6 +55,7 @@ class AuthService(private val context: Context)  {
     fun setSignInView(signInView: SignInView) {//아직 초기화가 안됐음 따라서 activity에서 해주기
         this.signInView = signInView//signupVIew 사용 하기 위해
     }
+
 
     fun signin(id: String, pw: String) {
         val request = SignInRequest(id, pw)//email이랑 pw를 넘기겠지
@@ -80,9 +79,6 @@ class AuthService(private val context: Context)  {
                                         "Nickname: ${resp.result.userId}, Token: ${resp.result.jwtToken.accessToken}"
                                     )
                                     saveJwt(resp.result.jwtToken.accessToken)
-
-
-
 
 
                                     val intent = Intent(context, MainActivity::class.java)
@@ -162,9 +158,6 @@ class AuthService(private val context: Context)  {
         this.mainView = mainView
     }
 
-    fun ProfileView(profileView: ProfileView) {
-        this.profileView = profileView
-    }
     fun MessageView(messageView: MessageView) {
         this.messageView = messageView
     }
@@ -193,9 +186,21 @@ class AuthService(private val context: Context)  {
         this.joinConfirmView = joinConfirmView
     }
 
+    fun ProfileView(profileView: ProfileView) {
+        this.profileView = profileView
+    }
+
+    fun setAddTourDateView(addTourDateView: AddTourDateView) {
+        this.addTourDateView = addTourDateView
+    }
+
+    fun sertBringUserView(bringUserView: BringUserView) {
+        this.bringUserView = bringUserView
+    }
+
     fun mainInfo() {
 //        mainView.MainLoading()
-        authService.mainInfo(0, 10, listOf("createdAt,asc"))
+        authService.mainInfo(0, 10, listOf("createdAt,desc"))
             .enqueue(object : Callback<BaseResponse<MainResponse>> {
                 override fun onResponse(
                     call: Call<BaseResponse<MainResponse>>,
@@ -272,6 +277,7 @@ class AuthService(private val context: Context)  {
                 }
             })
     }
+
 
     fun checkPhoneNumber(phoneNumber: String) {
         authService.checkPhoneNumber(phoneNumber)
@@ -474,6 +480,40 @@ class AuthService(private val context: Context)  {
             })
     }
 
+    fun simpleProfileInfo() {
+        authService.simpleProfile()
+            .enqueue(object : Callback<BaseResponse<SimpleProfileResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<SimpleProfileResponse>>,
+                    response: Response<BaseResponse<SimpleProfileResponse>>
+                ) {
+                    Log.d("simpleProfile", response.toString())
+
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        when (resp!!.status) {
+
+                            200 -> {
+                                ApplicationClass.puserId = resp.result.userId//유저 아이디 확보 완료
+                                Log.d("APP_user_id",ApplicationClass.puserId.toString())
+                            }
+
+
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<SimpleProfileResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("CourseContents Failed", t.toString())
+                }
+
+            })
+    }
+
+
     fun upcomingDateInfo(tourId: Int) {
 //        mainView.MainLoading()
         authService.upcomingDateInfo(tourId)
@@ -554,8 +594,8 @@ class AuthService(private val context: Context)  {
                         Log.d("ChangeWish Response Body", resp.toString())
                         Log.d("ChangeWish Response Body result", resp?.result.toString())
                         when (resp!!.status) {
-                            200 -> changeWishView.ChangeWishSuccess()
-                            else -> changeWishView.ChangeWishFailure(resp.status, resp.message)
+                            200 -> changeWishView?.ChangeWishSuccess()
+                            else -> changeWishView?.ChangeWishFailure(resp.status, resp.message)
                         }
                     }
                 }
@@ -600,6 +640,7 @@ class AuthService(private val context: Context)  {
 
             })
     }
+
     fun chatUpdate(tourId: Int) {
         authService.ChatUpdate(tourId)
             .enqueue(object : Callback<BaseResponse<ArrayList<ChatData>>> {
@@ -633,7 +674,6 @@ class AuthService(private val context: Context)  {
 
             })
     }
-
 
     fun changePassword(password: String) {
         authService.changePassword(password)
@@ -683,11 +723,11 @@ class AuthService(private val context: Context)  {
                     call: Call<BaseResponse<RequestEnjoyResponse>>,
                     response: Response<BaseResponse<RequestEnjoyResponse>>
                 ) {
-                    Log.d("RequestEnjoy response", response.toString())
+//                    Log.d("RequestEnjoy response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                        Log.d("RequestEnjoy Response Body", resp.toString())
-                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+//                        Log.d("RequestEnjoy Response Body", resp.toString())
+//                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> requestEnjoyView.RequestEnjoySuccess(resp.result)
                             else -> requestEnjoyView.RequestEnjoyFailure(resp.status, resp.message)
@@ -708,25 +748,60 @@ class AuthService(private val context: Context)  {
     fun joinConfirmInfo(tourDateId: Int) {
 //        mainView.MainLoading()
         authService.joinConfirmInfo(tourDateId)
-            .enqueue(object : Callback<BaseResponse<JoinConfirmResponse>> {
+            .enqueue(object : Callback<BaseResponse<String>> {
                 override fun onResponse(
-                    call: Call<BaseResponse<JoinConfirmResponse>>,
-                    response: Response<BaseResponse<JoinConfirmResponse>>
+                    call: Call<BaseResponse<String>>,
+                    response: Response<BaseResponse<String>>
                 ) {
-                    Log.d("RequestEnjoy response", response.toString())
+//                    Log.d("joinConfirm response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                        Log.d("RequestEnjoy Response Body", resp.toString())
-                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+//                        Log.d("joinConfirm Response Body", resp.toString())
+//                        Log.d("joinConfirm Response Body result", resp?.result.toString())
                         when (resp!!.status) {
-                            200 -> joinConfirmView.JoinConfirmSuccess(resp.result)
-                            else -> joinConfirmView.JoinConfirmFialure(resp.status, resp.message)
+                            200 -> joinConfirmView?.JoinConfirmSuccess()
+                            else -> joinConfirmView?.JoinConfirmFialure(resp.status, resp.message)
                         }
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<BaseResponse<JoinConfirmResponse>>,
+                    call: Call<BaseResponse<String>>,
+                    t: Throwable
+                ) {
+//                    Log.d("joinConfirm Failed", t.toString())
+                }
+
+            })
+    }
+
+
+    fun chatUpdate(id: Int, option: String) {
+        authService.ProfileInfo()
+            .enqueue(object : Callback<BaseResponse<ProfileData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ProfileData>>,
+                    response: Response<BaseResponse<ProfileData>>
+                ) {
+                    Log.d("BringCourse response", response.toString())
+
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("BringCourse Response Body", resp.toString())
+                        Log.d("BringCourse Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> profileView.ProfileSuccess(resp.result)//여기로 프로필 데이터받음
+                            else -> profileView.MainFailure(
+                                resp.status,
+                                resp.message
+                            )
+                        }
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ProfileData>>,
                     t: Throwable
                 ) {
                     Log.d("Upcoming Failed", t.toString())
@@ -735,5 +810,108 @@ class AuthService(private val context: Context)  {
             })
     }
 
+    fun addTourDateInfo(tourId: Int, date: String, time: TourTimeData?) {
+//        mainView.MainLoading()
+        val request = AddTourDateRequest(date, time)
+        authService.addTourDateInfo(request, tourId)
+            .enqueue(object : Callback<BaseResponse<String>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<String>>,
+                    response: Response<BaseResponse<String>>
+                ) {
+//                    Log.d("addTourDate response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("addTourDate Response Body", resp.toString())
+//                        Log.d("addTourDate Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> addTourDateView.AddTourDateSuccess()
+                            else -> addTourDateView.AddTourDateFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<String>>,
+                    t: Throwable
+                ) {
+//                    Log.d("addTourDate Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun bringUserInfo(userId: Int) {
+//        mainView.MainLoading()
+        authService.bringUserInfo(userId)
+            .enqueue(object : Callback<BaseResponse<BringUserResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<BringUserResponse>>,
+                    response: Response<BaseResponse<BringUserResponse>>
+                ) {
+//                    Log.d("bringUser response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("bringUser Response Body", resp.toString())
+//                        Log.d("bringUser Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> bringUserView.BringUserViewSuccess(resp.result)
+                            else -> bringUserView.BringUserViewFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<BringUserResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("bringUser Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun postNewTourLast(
+        userId: Int,
+        tourName: String,
+        tourTime: Int,
+        tourContent: String,
+        categoryNames: MutableList<String>,
+        places: MutableList<PlaceData>
+    ) {
+        val postData = PostData(userId, tourName, tourTime, tourContent, categoryNames, places)
+
+        authService.postNewTour(postData)
+            .enqueue(object : Callback<BaseResponse<PostResponseData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<PostResponseData>>,
+                    response: Response<BaseResponse<PostResponseData>>
+                ) {
+                    Log.d("postNewTourLast response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("bringUser Response Body", resp.toString())
+//                        Log.d("bringUser Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> {
+
+                            }
+
+                            else -> {
+
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<PostResponseData>>,
+                    t: Throwable
+                ) {
+                    Log.d("bringUser Failed", t.toString())
+                }
+
+            })
+    }
 
 }

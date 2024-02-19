@@ -10,66 +10,89 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.peopleHere.people_here.AddPicture.PictureDB.PictureDB
 import com.peopleHere.people_here.Data.LocationChooseData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ItemLocationChooseBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LocationChooseAdapter(val locationlist: ArrayList<LocationChooseData>, val context: Context) :
     RecyclerView.Adapter<LocationChooseAdapter.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
+    var pictureDB = PictureDB.getInstance(context,false) //인스턴스 생성
 
     private var selectedItemPosition: Int = 0
-    var checkSelected:Boolean=false
+    var checkSelected: Boolean = false
+
+    var fordb: Boolean = true
 
     interface OnItemClickListener {
-        fun onItemClick(locationlist: LocationChooseData,checkSelected:Boolean)
+        fun onItemClick(locationlist: LocationChooseData, checkSelected: Boolean)
+        fun clickLocation(locationName: String, picturNum: Int)
     }
 
     inner class ViewHolder(val binding: ItemLocationChooseBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun Dbadd() {
+            if (fordb) {
+                fordb = false
+                val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        for (i in 0 until locationlist.size) {
+                            locationlist[i].picutrNum =
+                                pictureDB!!.getPictureDao().getPictureNum(locationlist[i].locationName)//개수 가져와서 넣기
+                            itemClickListener.clickLocation(locationlist[i].locationName,locationlist[i].picutrNum)//개수 넘기기
+                        }
+                    }
+                }
+            } else {
+                return
+            }
+
+
+        }
 
         fun bind(locationlist: LocationChooseData, position: Int) {
             val gray3 = ContextCompat.getColor(binding.root.context, R.color.Gray3)
             val orange3 = ContextCompat.getColor(binding.root.context, R.color.Orange3)
-            /*if(selectedItemPosition!=position){
-                binding.btnRadio.setImageResource(R.drawable.radio_check_no)//ok로 바꿈
-                binding.cvOuter.setStrokeColor(gray3)
-                notifyDataSetChanged()
-            }*/
+            if(locationlist.picutrNum>0){
+                binding.ivCheck.setImageResource(R.drawable.checked)
+            }else{
+                binding.ivCheck.setImageResource(0)
+            }
+            Dbadd()
+            //TODO:왜 클릭 됐을떄죠 비동기인건 알겠는데...?
+
 
             Glide.with(context)
                 .load(locationlist.locationImage)
                 .into(binding.ivRegionImage)
 
-            binding.ivRegionImage.setImageResource(R.drawable.img)//여기 서버에서 받아오는 이미지로 대체
             binding.tvRegion.text = locationlist.locationName//이름
+
             binding.cvOuter.setOnClickListener {
-
-                //하나만 눌리게 하려면 다른것 false로 하고  notifychanged 하면 될 듯??
-
-                //만약 다시 눌린 경우->이게 안되네 흠
-                //일단 다 false라 눌리면 true 되어야 하는데 왜 이렇게 되는갸
+                //TODO:이상한게 건대 눌러도 왜 롯데마트가 가지지??
+                itemClickListener.clickLocation(locationlist.locationName, locationlist.picutrNum)
 
                 if (locationlist.selected) {//true->false
                     locationlist.selected = false
-                    checkSelected=false
+                    checkSelected = false
                     Log.d("soccer", locationlist.selected.toString())
                     binding.btnRadio.setImageResource(R.drawable.radio_check_no)//ok로 바꿈
                     binding.cvOuter.setStrokeColor(gray3)
 
                 } else {//false인게 눌린경우
-                    //TODO:Location 연동되면, 최대 갯수 및 체크표시 이미지 뀌게
-                    //TODO:하고 selectedposition에 있는 아이템은 다시 색 원래로 돌리고, selectedposition update 후 notify하기
-                    //이전꺼 false 이번꺼 true 되게
                     ChangeSelected()
                     locationlist.selected = true
-                    checkSelected=true
+                    checkSelected = true
                     selectedItemPosition = position
                     //position 업데이트
                 }
-                Log.d("isCliecked_ada",checkSelected.toString())
-
-                itemClickListener.onItemClick(locationlist,checkSelected)//하나의 객체 눌리게
+                itemClickListener.onItemClick(locationlist, checkSelected)//하나의 객체 눌리게
 
             }//왜 같은 것을 눌렀을 때 흠 이건 어케 해결하지
 

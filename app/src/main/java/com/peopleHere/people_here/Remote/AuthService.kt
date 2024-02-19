@@ -6,16 +6,16 @@ import android.util.Log
 import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.peopleHere.people_here.Data.ChatData
+import com.peopleHere.people_here.Data.PlaceData
+import com.peopleHere.people_here.Data.PostData
+import com.peopleHere.people_here.Data.PostResponseData
 import com.peopleHere.people_here.Data.ProfileData
-import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.Local.saveJwt
 import com.peopleHere.people_here.Login.LoginEmailNextActivity
 import com.peopleHere.people_here.Login.LoginPhoneNextActivity
 import com.peopleHere.people_here.Login.VerifyPhoneActivity
 import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.SignUp.SignUpActivity
-import okhttp3.Interceptor
-import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +25,7 @@ interface CheckEmailCallback {
     fun onEmailAvailable(isAvailable: Boolean)
 }
 
-class AuthService(private val context: Context)  {
+class AuthService(private val context: Context) {
 
     private val authService = ApplicationClass.retrofit.create(RetrofitInterface::class.java)
 
@@ -35,7 +35,7 @@ class AuthService(private val context: Context)  {
     private lateinit var courseContentsView: CourseContentsView
     private lateinit var upcomingDateView: UpcomingDateView
     private lateinit var bringCourseView: BringCourseView
-    private var changeWishView: ChangeWishView?= null
+    private var changeWishView: ChangeWishView? = null
     private lateinit var requestEnjoyView: RequestEnjoyView
     private lateinit var joinConfirmView: JoinConfirmView
     private lateinit var profileView: ProfileView
@@ -60,7 +60,6 @@ class AuthService(private val context: Context)  {
     }
 
 
-
     fun signin(id: String, pw: String) {
         val request = SignInRequest(id, pw)//email이랑 pw를 넘기겠지
         authService.singin(request)
@@ -83,9 +82,6 @@ class AuthService(private val context: Context)  {
                                         "Nickname: ${resp.result.userId}, Token: ${resp.result.jwtToken.accessToken}"
                                     )
                                     saveJwt(resp.result.jwtToken.accessToken)
-
-
-
 
 
                                     val intent = Intent(context, MainActivity::class.java)
@@ -298,6 +294,7 @@ class AuthService(private val context: Context)  {
             })
     }
 
+
     fun checkPhoneNumber(phoneNumber: String) {
         authService.checkPhoneNumber(phoneNumber)
             .enqueue(object : Callback<BaseResponse<CheckPhoneNumberResponse>> {
@@ -499,6 +496,40 @@ class AuthService(private val context: Context)  {
             })
     }
 
+    fun simpleProfileInfo() {
+        authService.simpleProfile()
+            .enqueue(object : Callback<BaseResponse<SimpleProfileResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<SimpleProfileResponse>>,
+                    response: Response<BaseResponse<SimpleProfileResponse>>
+                ) {
+                    Log.d("simpleProfile", response.toString())
+
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        when (resp!!.status) {
+
+                            200 -> {
+                                ApplicationClass.puserId = resp.result.userId//유저 아이디 확보 완료
+                                Log.d("APP_user_id",ApplicationClass.puserId.toString())
+                            }
+
+
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<SimpleProfileResponse>>,
+                    t: Throwable
+                ) {
+                    Log.d("CourseContents Failed", t.toString())
+                }
+
+            })
+    }
+
+
     fun upcomingDateInfo(tourId: Int) {
 //        mainView.MainLoading()
         authService.upcomingDateInfo(tourId)
@@ -625,6 +656,7 @@ class AuthService(private val context: Context)  {
 
             })
     }
+
     fun chatUpdate(tourId: Int) {
         authService.ChatUpdate(tourId)
             .enqueue(object : Callback<BaseResponse<ArrayList<ChatData>>> {
@@ -796,7 +828,7 @@ class AuthService(private val context: Context)  {
 
     fun addTourDateInfo(tourId: Int, date: String, time: TourTimeData?) {
 //        mainView.MainLoading()
-        val request = AddTourDateRequest(date,time)
+        val request = AddTourDateRequest(date, time)
         authService.addTourDateInfo(request, tourId)
             .enqueue(object : Callback<BaseResponse<String>> {
                 override fun onResponse(
@@ -855,6 +887,54 @@ class AuthService(private val context: Context)  {
             })
     }
 
+
+    fun postNewTourLast(
+        userId: Int,
+        tourName: String,
+        tourTime: Int,
+        tourContent: String,
+        categoryNames: MutableList<String>,
+        places: MutableList<PlaceData>
+    ) {
+        val postData = PostData(userId, tourName, tourTime, tourContent, categoryNames, places)
+
+        authService.postNewTour(postData)
+            .enqueue(object : Callback<BaseResponse<PostResponseData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<PostResponseData>>,
+                    response: Response<BaseResponse<PostResponseData>>
+                ) {
+                    Log.d("postNewTourLast response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("bringUser Response Body", resp.toString())
+//                        Log.d("bringUser Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> {
+
+                            }
+
+                            else -> {
+
+                            }
+                                 }
+                }
+
+                override fun onFailure(
+
+                    call: Call<BaseResponse<PostResponseData>>,
+                    t: Throwable
+                ) {
+                    Log.d("bringUser Failed", t.toString())
+                }
+
+            })
+    }
+                            
+                            
+
+                          
+                          
     fun blockTourInfo(tourDateId: Int, status : String) {
 //        mainView.MainLoading()
         authService.blockTourDateInfo(tourDateId,"BLOCKED")
@@ -931,11 +1011,13 @@ class AuthService(private val context: Context)  {
                         when (resp!!.status) {
                             200 -> recentSearchOutputView.RecentSearchOutputViewSuccess(resp.result)
                             else -> recentSearchOutputView.RecentSearchOutputViewFailure(resp.status, resp.message)
+
                         }
                     }
                 }
 
                 override fun onFailure(
+
                     call: Call<BaseResponse<ArrayList<RecentSearchResponse>>>,
                     t: Throwable
                 ) {
@@ -944,6 +1026,7 @@ class AuthService(private val context: Context)  {
 
             })
     }
+
 
 
 }

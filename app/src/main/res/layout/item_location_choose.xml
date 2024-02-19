@@ -37,9 +37,8 @@
 
                 <ImageView
                     android:id="@+id/iv_region_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:src="@drawable/img_example_place" />
 
             </androidx.cardview.widget.CardView>
@@ -60,6 +59,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageView
+                android:id="@+id/iv_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintDimensionRatio="1:1"

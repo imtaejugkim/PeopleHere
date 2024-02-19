@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.recyclerview.widget.RecyclerView
+import com.peopleHere.people_here.ApplicationClass
+import com.peopleHere.people_here.ApplicationClass.Companion.pcategoryNames
 import com.peopleHere.people_here.Data.CategoryData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ItemActivityCategoryBinding
@@ -43,12 +45,19 @@ class CategoryAdapter(val categorylist: List<CategoryData>, var CheckClicked:Int
                     CountItem--
                     itemClickListener.onItemNumChanged(CountItem)
                     categorylist.isClicked = false
+
+                    ApplicationClass.pcategoryNames?.remove(categorylist.name)
+
                 } else {
                     if (CountItem < 3) {
                         binding.cvRoadTour.setBackgroundResource(R.drawable.category_cv)
                         CountItem++
+
                         itemClickListener.onItemNumChanged(CountItem)
                         categorylist.isClicked = true
+
+                        ApplicationClass.pcategoryNames?.add(categorylist.name)
+                        Log.d("APP_pcate",ApplicationClass.pcategoryNames.toString())
                     } else {
                         val toastLayout = LayoutInflater.from(binding.root.context)
                             .inflate(

@@ -16,6 +16,9 @@ interface PictureDao {
     @Query("DELETE FROM PictureEntitytable WHERE pictureUri = :pictureUri")//만약 같으면 지우기
     fun deletePicture(pictureUri: String)
 
+    @Query("SELECT COUNT(*) FROM PictureEntitytable WHERE loactionName = :loactionName")//이걸 getProducts
+    fun getPictureNum(loactionName:String):Int//LiveData 껴야 하는지?
+
     @Query("SELECT*FROM PictureEntitytable")//이걸 getProducts
     fun getPicture():List<PictureEntity>//LiveData 껴야 하는지?
     @Update
@@ -24,5 +27,6 @@ interface PictureDao {
     suspend fun updatePictureOrders(vararg pictures: PictureEntity)
     @Query("SELECT * FROM PictureEntitytable ORDER BY 'order' ASC")
     suspend fun getAllPicturesOrdered(): List<PictureEntity>
-
+    @Query("DELETE FROM PictureEntitytable")
+    fun deleteAllPictures()
 }

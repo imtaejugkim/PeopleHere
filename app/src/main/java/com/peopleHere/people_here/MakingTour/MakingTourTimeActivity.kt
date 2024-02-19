@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.peopleHere.people_here.AddPicture.AddPictureActivity
+import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityMakingTourTimeBinding
 
@@ -52,8 +53,12 @@ class MakingTourTimeActivity : AppCompatActivity() {
             val minuteIndex = binding.npMinutePicker.value
             val minute = minuteValue[minuteIndex].toInt()
 
+
             val intent = Intent(this, AddPictureActivity::class.java)
             intent.putExtra("time",hour * 60 + minute)
+            ApplicationClass.ptourTime=hour * 60 + minute
+            Log.d("APP_ptour",ApplicationClass.ptourTime.toString())
+
             startActivity(intent)
         }
     }

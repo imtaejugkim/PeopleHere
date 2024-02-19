@@ -1,9 +1,11 @@
 package com.peopleHere.people_here.MakingTour
 
+import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +13,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.peopleHere.people_here.ApplicationClass
 import com.peopleHere.people_here.Data.MakingTourAddListData
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.DialogMakingTourAddListBinding
 import com.peopleHere.people_here.databinding.ItemMakingTourAddListPlace1Binding
 import java.util.Collections
 
-class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddListData>,
-                               val context: Context,
-                               private val itemCountChangedListener: OnItemCountChangedListener? = null
+class MakingTourAddListAdapter(
+    private val addListData: ArrayList<MakingTourAddListData>,
+    val context: Context,
+    private val itemCountChangedListener: OnItemCountChangedListener? = null
 ) : RecyclerView.Adapter<MakingTourAddListAdapter.ViewHolder>() {
 
     private var isEditMode: Boolean = false
@@ -45,6 +49,8 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
             }
         }
         notifyItemMoved(fromPosition, toPosition)
+
+
     }
 
     fun removeItem(position: Int) {
@@ -59,19 +65,25 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
         notifyItemChanged(selectedPosition)
     }
 
-    inner class ViewHolder(private val binding: ItemMakingTourAddListPlace1Binding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemMakingTourAddListPlace1Binding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(placeInfo: MakingTourAddListData, isSelected: Boolean, isEditMode: Boolean) {
             Glide.with(context)
                 .load(placeInfo.placeImage)
                 .into(binding.ivMakingTourAddListPlace)
 
+            ApplicationClass.pplaceAddress?.add(placeInfo.placeAddress)
+            Log.d("APP_pplaceAddress",ApplicationClass.pplaceAddress.toString())
+
+
             binding.tvMakingTourAddListPlaceName.text = placeInfo.placeName
-            binding.tvMakingTourListPlaceNumber.text = (adapterPosition+1).toString()
+            binding.tvMakingTourListPlaceNumber.text = (adapterPosition + 1).toString()
 
             when (adapterPosition) {
                 0 -> {
                     binding.tvMakingTourAddListPlaceFirst.visibility = View.VISIBLE
                 }
+
                 else -> {
                     binding.tvMakingTourAddListPlaceFirst.visibility = View.GONE
                 }
@@ -81,11 +93,13 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
                 selectItem(adapterPosition)
             }
 
-            val iconRes = if (isEditMode) R.drawable.making_tour_add_list_hamburger else R.drawable.ic_trash
+            val iconRes =
+                if (isEditMode) R.drawable.making_tour_add_list_hamburger else R.drawable.ic_trash
             binding.ivMakingTourAddListPlaceDots.setImageResource(iconRes)
             if (!isEditMode) {
                 binding.ivMakingTourAddListPlaceDots.setOnClickListener {
-                    val dialog = ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
+                    val dialog =
+                        ShowDialog(itemView.context, this@MakingTourAddListAdapter, adapterPosition)
                     dialog.show()
                 }
             } else {
@@ -95,7 +109,11 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemMakingTourAddListPlace1Binding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemMakingTourAddListPlace1Binding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ViewHolder(binding)
     }
 
@@ -105,8 +123,13 @@ class MakingTourAddListAdapter(private val addListData: ArrayList<MakingTourAddL
 
     override fun getItemCount(): Int = addListData.size
 
-    class ShowDialog(context: Context, private val adapter: MakingTourAddListAdapter, private val position: Int) : Dialog(context) {
-        lateinit var binding : DialogMakingTourAddListBinding
+    class ShowDialog(
+        context: Context,
+        private val adapter: MakingTourAddListAdapter,
+        private val position: Int
+    ) : Dialog(context) {
+        lateinit var binding: DialogMakingTourAddListBinding
+
         init {
             binding = DialogMakingTourAddListBinding.inflate(layoutInflater)
             setContentView(binding.root)

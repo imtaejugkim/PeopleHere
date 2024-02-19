@@ -1,6 +1,8 @@
 package com.peopleHere.people_here.Remote
 
 import com.peopleHere.people_here.Data.ChatData
+import com.peopleHere.people_here.Data.PostData
+import com.peopleHere.people_here.Data.PostResponseData
 import com.peopleHere.people_here.Data.ProfileData
 import retrofit2.Call
 import retrofit2.http.Body
@@ -21,6 +23,14 @@ interface RetrofitInterface {
     fun signinPhone(//로그인 함수 만들고
         @Body request:SignInPhoneRequest//토큰을 받아야하나?
     ): Call<BaseResponse<SignInPhoneResponse>>//이론때 핸던 것 중 call방식으로 받겠다
+
+
+    //TODO:이제 함수 만들기 Applciation에서 다 받고
+    @POST("api/tours/new")//login부분
+    fun postNewTour(//로그인 함수 만들고
+        @Body request: PostData//토큰을 받아야하나?
+    ): Call<BaseResponse<PostResponseData>>//이론때 핸던 것 중 call방식으로 받겠다
+
     @GET("api/tours")
     fun mainInfo(
         @Query("page") page: Int,
@@ -32,6 +42,9 @@ interface RetrofitInterface {
     fun courseContentsInfo(@Path("id") id : Int)
     : Call<BaseResponse<CourseContentsResponse>>
 
+    @GET("api/users/simple-profile")
+    fun simpleProfile()
+            : Call<BaseResponse<SimpleProfileResponse>>
 
     @GET("api/tour-dates/{tourId}/dates")
     fun upcomingDateInfo(@Path("tourId") tourId : Int)

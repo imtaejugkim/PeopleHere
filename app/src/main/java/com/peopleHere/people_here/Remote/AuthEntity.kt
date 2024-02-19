@@ -108,7 +108,11 @@ data class CourseContentsResponse (
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("updatedAt") val updatedAt: String
 )
-
+data class SimpleProfileResponse(
+    @SerializedName("userId") val userId: Int,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userImageUrl") val userImageUrl: String,
+)
 data class UpcomingDateResponse (
     @SerializedName("tourDateId") val tourDateId : String,
     @SerializedName("date") val date : String,

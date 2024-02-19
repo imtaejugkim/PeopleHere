@@ -4,22 +4,81 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.peopleHere.people_here.ApplicationClass
+import com.peopleHere.people_here.Data.PlaceData
+import com.peopleHere.people_here.Data.PlacesImageData
+
 import com.peopleHere.people_here.MainActivity
+
 import com.peopleHere.people_here.MakingTour.MakingTourCourseFinishActivity
 import com.peopleHere.people_here.R
+import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.databinding.ActivityIntroduceBinding
 
 class IntroduceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroduceBinding
+    private lateinit var authService: AuthService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
         ButtonOn()
+        authService = AuthService(this)
+
+        ApplicationClass.ptourContent = binding.etIntroduce.text.toString()
+        Log.d("APP_ptourContent",ApplicationClass.ptourContent.toString())
+
+        if (ApplicationClass.pencodingString != null && ApplicationClass.poriginalFileName != null) {
+            for (i in 0 until ApplicationClass.pencodingString!!.size) {
+                ApplicationClass.pplaceImage?.add(
+                    PlacesImageData(
+                        encodingString = ApplicationClass.pencodingString!![i],
+                        originalFileName = ApplicationClass.poriginalFileName!![i]
+                    )
+                )
+            }
+
+        }else{
+            for (i in 0 until 3) {
+                ApplicationClass.pplaceImage?.add(
+                    PlacesImageData(
+                        encodingString =" 123",
+                        originalFileName = "123"
+                    )
+                )
+            }
+        }
+
+
+
+        for (i in 0 until 1) {
+            ApplicationClass.pplaces?.add(
+                PlaceData(
+                    ApplicationClass.pplaceName!![i],
+                    mutableListOf(ApplicationClass.pplaceImage!![i]),
+                    ApplicationClass.pplaceAddress!![i],
+                    ApplicationClass.platLng!![i],
+                    i
+                )
+            )
+        }
+
+
         binding.btnNext.setOnClickListener {
-            val intent = Intent(this, MakingTourCourseFinishActivity::class.java)//화면전환
-            startActivity(intent)
+            //여기서 다 모아야 하는데 가능하냐??
+            authService.postNewTourLast(
+                ApplicationClass.puserId!!,
+                ApplicationClass.ptourName!!,
+                ApplicationClass.ptourTime!!,
+                ApplicationClass.ptourContent!!,
+                ApplicationClass.pcategoryNames!!,
+                ApplicationClass.pplaces!!
+            )
         }
 
         binding.ivCancel.setOnClickListener {
@@ -30,15 +89,19 @@ class IntroduceActivity : AppCompatActivity() {
 
 
 
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+
         setContentView(binding.root)
-
     }
-
 
 
     private fun ButtonOn() {
         binding.etIntroduce.addTextChangedListener(object : TextWatcher {
-            var maxtext=""
+            var maxtext = ""
             override fun beforeTextChanged(
                 charSequence: CharSequence,
                 i: Int,
@@ -49,7 +112,6 @@ class IntroduceActivity : AppCompatActivity() {
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
             }
-
 
 
             override fun afterTextChanged(editable: Editable) {

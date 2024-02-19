@@ -39,7 +39,11 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+
+import com.peopleHere.people_here.ApplicationClass
+
 import com.peopleHere.people_here.MainActivity
+
 import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
 
 class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, MakingTourAddListAdapter.OnItemCountChangedListener{
@@ -71,6 +75,8 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         Log.d("placeLongitude",placeLongitude.toString())
 
         location = LatLng(placeLatitude,placeLongitude)
+        ApplicationClass.platLng?.add(location!!)
+        Log.d("APP_platLng",ApplicationClass.platLng.toString())
 
         // 받은 데이터를 사용하여 RecyclerView 리스트 업데이트
         if (placeName != null && placeAddress != null && placeImage != null) {
@@ -82,29 +88,29 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
 
         setContentView(binding.root)
 
-//        activityResultLauncher = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) { result ->
-//            if (result.resultCode == Activity.RESULT_OK) {
-//                val data: Intent? = result.data
-//                // 받은 데이터로 리스트 업데이트
-//                val newPlaceImage = data?.getStringExtra("placeImage")
-//                val newPlaceName = data?.getStringExtra("placeName")
-//                val newPlaceAddress = data?.getStringExtra("placeAddress")
-//                val newPlaceLatitude = data?.getDoubleExtra("placeLatitude", 0.0) ?: 0.0
-//                val newPlaceLongitude = data?.getDoubleExtra("placeLongitude", 0.0) ?: 0.0
-//                Log.d("placeImage",placeImage.toString())
-//                Log.d("placeName",placeName.toString())
-//                Log.d("placeAddress",placeAddress.toString())
-//                Log.d("placeLatitude",placeLatitude.toString())
-//                Log.d("placeLongitude",placeLongitude.toString())
-//
-//                if (newPlaceName != null && newPlaceAddress != null) {
-//                    val newLocation = LatLng(newPlaceLatitude, newPlaceLongitude)
-//                    updateRecyclerView(newPlaceImage.toString(), newPlaceName, newPlaceAddress, newLocation)
-//                }
-//            }
-//        }
+
+        activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                // 받은 데이터로 리스트 업데이트
+                val newPlaceImage = data?.getStringExtra("placeImage")
+                val newPlaceName = data?.getStringExtra("placeName")
+                val newPlaceAddress = data?.getStringExtra("placeAddress")
+                val newPlaceLatitude = data?.getDoubleExtra("placeLatitude", 0.0) ?: 0.0
+                val newPlaceLongitude = data?.getDoubleExtra("placeLongitude", 0.0) ?: 0.0
+
+
+                ApplicationClass.platLng?.add(location!!)
+
+                if (newPlaceName != null && newPlaceAddress != null) {
+                    val newLocation = LatLng(newPlaceLatitude, newPlaceLongitude)
+                    updateRecyclerView(newPlaceImage.toString(), newPlaceName, newPlaceAddress, newLocation)
+                }
+            }
+        }
+
 
         initRecyclerView()
         setupItemTouchHelper()
@@ -259,6 +265,9 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         AddListDataManager.removeMarker(location) // 마커 제거
         AddListDataManager.addListData.removeAt(position)
         addListAdapter?.notifyItemRemoved(position)
+
+        ApplicationClass.platLng?.remove(location)
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

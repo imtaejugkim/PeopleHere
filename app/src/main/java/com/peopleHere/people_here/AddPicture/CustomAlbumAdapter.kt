@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,14 +13,15 @@ import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CustomAlbumData
 import com.peopleHere.people_here.databinding.ItemCustoAlbumBinding
 
-class CustomAlbumAdapter( private val context: Context,val picturelist: List<CustomAlbumData>) :
+class CustomAlbumAdapter( private val context: Context,val picturelist: List<CustomAlbumData>,var picturenum:Int) :
     RecyclerView.Adapter<CustomAlbumAdapter.ViewHolder>() {
     private lateinit var itemClickListener: OnItemClickListener
-    private var CountItem:Int=0
+    private var CountItem:Int=picturenum
 
     val uriList: ArrayList<String> = ArrayList()
     interface OnItemClickListener {
         fun onItemClick(picturelist: CustomAlbumData)
+        fun onPictureNum(picturNum:Int)
     }
     //조오옹졌당
     inner class ViewHolder(val binding: ItemCustoAlbumBinding) :
@@ -52,16 +54,18 @@ class CustomAlbumAdapter( private val context: Context,val picturelist: List<Cus
                     CountItem++;
                     binding.selectRatioBT.buttonTintList = color
                     uriList.add(picturelist.imageUrl)
-                    //TODO:issue: 쥰나 빠르게 하니까 6개가 되네 mutexlock??해야하나 설마 이렇게 빨리 누르는 사용자 없겠지^^
                     Log.d("countItem--",CountItem.toString())
                 }else{
                     binding.selectRatioBT.isChecked=false
                     CountItem--;
                     removeUri(picturelist.imageUrl)
                     // 이전에 저장한 초기 색상으로 복원
+                    //TODO:왜 숫자 안바낌?
 
                     Log.d("countItem++",CountItem.toString())
                 }
+                itemClickListener.onPictureNum(CountItem)
+
             }
         }
     }

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import com.peopleHere.people_here.databinding.FragmentSelectPictureBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class SelectPictureFragment() :  BottomSheetDialogFragment() {
+class SelectPictureFragment(var locationName:String,var pictureNum:Int) :  BottomSheetDialogFragment() {
 
     private var imageUri: Uri? = null
 
@@ -78,18 +79,25 @@ class SelectPictureFragment() :  BottomSheetDialogFragment() {
         else
             galleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
 
+
+
+
         binding.clFirst.setOnClickListener{
-            //갤러리 호출
-            //TODO: 왜 요청 개같이뜨나요?
             requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
 
             requestPermissions()
             //왜 한참뒤에 뜸?
             requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
 
+            Log.d("selectPicture",locationName.toString())
+            Log.d("selectPicture",pictureNum.toString())
+
+
             val intent = Intent(requireContext(), CustomAlbumActivity::class.java)
+            intent.putExtra("location",locationName)
+            intent.putExtra("pictureNum",pictureNum.toString())
+
             startActivity(intent)
-            requireActivity().finish()
 
 
             //TODO:권한 요청 좀 다듬기

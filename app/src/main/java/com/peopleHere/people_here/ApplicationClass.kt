@@ -3,6 +3,10 @@ package com.peopleHere.people_here
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.android.gms.maps.model.LatLng
+import com.peopleHere.people_here.Data.PlaceData
+import com.peopleHere.people_here.Data.PlacesImageData
+import com.peopleHere.people_here.Data.PostData
 import com.peopleHere.people_here.Remote.XAccessTokenInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -21,6 +25,27 @@ class ApplicationClass: Application() {
         const val BASE_URL : String = DEV_URL
         lateinit var retrofit : Retrofit
         lateinit var mSharedPreferencesManager: SharedPreferences//SharedPreferences받음 즉 전체에서 이거 사용 가능
+        //PostDat 앞에 다 p 붙임
+
+
+        var puserId: Int? = null
+        var ptourName: String? = null
+        var ptourTime: Int? = null
+        var ptourContent: String? = null
+        var pcategoryNames: MutableList<String>? =  mutableListOf()
+        var pplaces: MutableList<PlaceData>? = mutableListOf()
+        var pplaceName: MutableList<String>? = mutableListOf()
+        var pplaceImage: MutableList<PlacesImageData>? = mutableListOf()
+
+        var pencodingString: MutableList<String>? = mutableListOf()
+        var poriginalFileName: MutableList<String>? = mutableListOf()
+
+        var pplaceAddress: MutableList<String>? = mutableListOf()
+        var platLng: MutableList<LatLng>? = mutableListOf()
+
+
+
+
     }
     val client : OkHttpClient = OkHttpClient.Builder()
         .readTimeout(30000, TimeUnit.MILLISECONDS)

@@ -36,6 +36,9 @@ class AddPictureLocationAdapter(var addlocationlist: ArrayList<AddPicturLocation
     inner class ViewHolder(private val binding: ItemAddpictureLocationNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(addlocation: AddPicturLocationData) {
+
+
+
         }
 
 

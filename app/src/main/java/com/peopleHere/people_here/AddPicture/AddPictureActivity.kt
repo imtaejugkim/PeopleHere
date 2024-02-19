@@ -1,27 +1,19 @@
 package com.peopleHere.people_here.AddPicture
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.GridLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.play.integrity.internal.ad
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.AddPicture.PictureDB.PictureDB
 import com.peopleHere.people_here.AddPicture.PictureDB.PictureEntity
 import com.peopleHere.people_here.Data.AddPicturLocationData
-import com.peopleHere.people_here.Data.AddPictureData
 import com.peopleHere.people_here.TitleCategory.TitleActivity
 import com.peopleHere.people_here.databinding.ActivityAddPictureBinding
 import kotlinx.coroutines.Dispatchers
@@ -46,8 +38,8 @@ class AddPictureActivity : AppCompatActivity() {
 
         binding = ActivityAddPictureBinding.inflate(layoutInflater)
 
-        addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist)
-        binding.rvLocation.adapter=addLocationPictureAdapter
+        addLocationPictureAdapter = AddPictureLocationAdapter(addLocationlist)
+        binding.rvLocation.adapter = addLocationPictureAdapter
         binding.rvLocation.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 

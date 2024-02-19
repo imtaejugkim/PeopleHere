@@ -9,6 +9,7 @@ import com.peopleHere.people_here.AddPicture.AddPictureActivity
 import com.peopleHere.people_here.Data.MainCourseData
 import com.peopleHere.people_here.Data.MainData
 import com.peopleHere.people_here.Main.MainAdapter
+import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.databinding.ActivityMakingCourseFinishBinding
 import com.peopleHere.people_here.databinding.ActivityMakingTourTimeBinding
 
@@ -27,6 +28,11 @@ class MakingTourCourseFinishActivity : AppCompatActivity() {
 
         binding.clPreview.setOnClickListener {
             val intent = Intent(this, PreviewActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.ivOnBoardingCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         setContentView(binding.root)

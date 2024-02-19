@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.databinding.ActivityMakingCourseBinding
 
 class MakingCourseActivity : AppCompatActivity() {
@@ -20,7 +21,12 @@ class MakingCourseActivity : AppCompatActivity() {
         binding.btnAddPlace.setOnClickListener {
             val intent = Intent(this, MakingCourseSearchActivity::class.java)
             startActivity(intent)
+        }
 
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         setContentView(binding.root)

@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
 
 class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, MakingTourAddListAdapter.OnItemCountChangedListener{
@@ -114,6 +115,12 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         binding.btnAddListNext.setOnClickListener {
             val intent = Intent(this@MakingTourAddListActivity, MakingTourTimeActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

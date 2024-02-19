@@ -42,6 +42,9 @@ class AuthService(private val context: Context)  {
     private lateinit var messageView: MessageView
     private lateinit var addTourDateView: AddTourDateView
     private lateinit var bringUserView: BringUserView
+    private lateinit var blockTourDateView: BlockTourDateView
+    private lateinit var recentSearchView: RecentSearchView
+    private lateinit var recentSearchOutputView: RecentSearchOutputView
 
     // 본인 코드에서 사용할 함수 정의
 //    fun xxx(singUpView : SignUpView){
@@ -201,6 +204,19 @@ class AuthService(private val context: Context)  {
     fun sertBringUserView(bringUserView: BringUserView) {
         this.bringUserView = bringUserView
     }
+
+    fun setBlockTourDateView(blockTourDateView: BlockTourDateView) {
+        this.blockTourDateView = blockTourDateView
+    }
+
+    fun setRecentSearchView(recentSearchView: RecentSearchView) {
+        this.recentSearchView = recentSearchView
+    }
+
+    fun setRecentSearchOutputView(recentSearchOutputView: RecentSearchOutputView) {
+        this.recentSearchOutputView = recentSearchOutputView
+    }
+
 
     fun mainInfo() {
 //        mainView.MainLoading()
@@ -524,11 +540,11 @@ class AuthService(private val context: Context)  {
                     call: Call<BaseResponse<ArrayList<BringCourseResponse>>>,
                     response: Response<BaseResponse<ArrayList<BringCourseResponse>>>
                 ) {
-                    Log.d("BringCourse response", response.toString())
+//                    Log.d("BringCourse response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-                        Log.d("BringCourse Response Body", resp.toString())
-                        Log.d("BringCourse Response Body result", resp?.result.toString())
+//                        Log.d("BringCourse Response Body", resp.toString())
+//                        Log.d("BringCourse Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> bringCourseView.BringCourseSuccess(resp.result)
                             else -> bringCourseView.BringCourseFailure(
@@ -787,11 +803,11 @@ class AuthService(private val context: Context)  {
                     call: Call<BaseResponse<String>>,
                     response: Response<BaseResponse<String>>
                 ) {
-//                    Log.d("addTourDate response", response.toString())
+                    Log.d("addTourDate response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-//                        Log.d("addTourDate Response Body", resp.toString())
-//                        Log.d("addTourDate Response Body result", resp?.result.toString())
+                        Log.d("addTourDate Response Body", resp.toString())
+                        Log.d("addTourDate Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> addTourDateView.AddTourDateSuccess()
                             else -> addTourDateView.AddTourDateFailure(resp.status, resp.message)
@@ -834,6 +850,96 @@ class AuthService(private val context: Context)  {
                     t: Throwable
                 ) {
                     Log.d("bringUser Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun blockTourInfo(tourDateId: Int, status : String) {
+//        mainView.MainLoading()
+        authService.blockTourDateInfo(tourDateId,"BLOCKED")
+            .enqueue(object : Callback<BaseResponse<String>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<String>>,
+                    response: Response<BaseResponse<String>>
+                ) {
+//                    Log.d("blockTour response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("blockTour Response Body", resp.toString())
+//                        Log.d("blockTour Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> blockTourDateView.BlockTourDateSuccess()
+                            else -> blockTourDateView.BlockTourDateFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<String>>,
+                    t: Throwable
+                ) {
+//                    Log.d("bringUser Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun recentSearchInfo(placeId : String, placeName : String, placeAddress : String) {
+//        mainView.MainLoading()
+        authService.recentSearchInfo(placeId,placeName,placeAddress)
+            .enqueue(object : Callback<BaseResponse<String>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<String>>,
+                    response: Response<BaseResponse<String>>
+                ) {
+                    Log.d("recentSearch response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+                        Log.d("recentSearch Response Body", resp.toString())
+                        Log.d("recentSearch Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> recentSearchView.RecentSearchSuccess()
+                            else -> recentSearchView.RecentSearchFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<String>>,
+                    t: Throwable
+                ) {
+                    Log.d("recentSearch Failed", t.toString())
+                }
+
+            })
+    }
+
+    fun recentSearchOutputInfo() {
+//        mainView.MainLoading()
+        authService.recentSearchOutputInfo()
+            .enqueue(object : Callback<BaseResponse<ArrayList<RecentSearchResponse>>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ArrayList<RecentSearchResponse>>>,
+                    response: Response<BaseResponse<ArrayList<RecentSearchResponse>>>
+                ) {
+//                    Log.d("recentSearch response", response.toString())
+                    if (response.isSuccessful) {
+                        val resp = response.body()
+//                        Log.d("recentSearch Response Body", resp.toString())
+//                        Log.d("recentSearch Response Body result", resp?.result.toString())
+                        when (resp!!.status) {
+                            200 -> recentSearchOutputView.RecentSearchOutputViewSuccess(resp.result)
+                            else -> recentSearchOutputView.RecentSearchOutputViewFailure(resp.status, resp.message)
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ArrayList<RecentSearchResponse>>>,
+                    t: Throwable
+                ) {
+                    Log.d("recentSearch Failed", t.toString())
                 }
 
             })

@@ -33,31 +33,28 @@ class MainFragment : Fragment() , MainView, ChangeWishView {
         initRecyclerView()
         initDataManager()
 
-        binding.clTopSearchBar.setOnClickListener {
-            initSearchView()
-        }
+        //검색창
+//        binding.clTopSearchBar.setOnClickListener {
+//            initSearchView()
+//        }
 
-        binding.clSeeMap.setOnClickListener {
-            val intent = Intent(requireActivity(), MainCourseMapActivity::class.java)
-//                intent.putExtra("Key", tourListInfo)
-            startActivity(intent)
-        }
+        //지도
+//        binding.clSeeMap.setOnClickListener {
+//            val intent = Intent(requireActivity(), MainCourseMapActivity::class.java)
+////                intent.putExtra("Key", tourListInfo)
+//            startActivity(intent)
+//        }
 
         return binding.root
     }
 
     private fun initDataManager() {
-        val token = getJwt()
-        Log.d("token",token)
-        if(token.isNotEmpty()){
+        val authService = AuthService(requireContext())
+        authService.setMainView(this)
+        authService.setChangeWishView(this)
+        authService.mainInfo()
+        Log.d("token 오류","token 오류")
 
-            val authService = AuthService(requireContext())
-            authService.setMainView(this)
-            authService.setChangeWishView(this)
-            authService.mainInfo()
-        }else{
-            Log.d("token 오류","token 오류")
-        }
     }
 
     private fun initRecyclerView() {
@@ -68,6 +65,7 @@ class MainFragment : Fragment() , MainView, ChangeWishView {
 
         mainAdapter!!.setOnItemClickListener(object : MainAdapter.OnItemClickListener{
             override fun onItemClick(tourListInfo : MainData) {
+
                 val intent = Intent(requireActivity(), CourseContentsActivity::class.java)
                 Log.d("tourId",tourListInfo.tourId.toString())
                 intent.putExtra("key", tourListInfo.tourId)
@@ -89,10 +87,10 @@ class MainFragment : Fragment() , MainView, ChangeWishView {
         })
     }
 
-    private fun initSearchView() {
-        val intent = Intent(requireContext(), MainSearchActivity::class.java)
-        startActivity(intent)
-    }
+//    private fun initSearchView() {
+//        val intent = Intent(requireContext(), MainSearchActivity::class.java)
+//        startActivity(intent)
+//    }
 
     override fun onStop() {
         super.onStop()

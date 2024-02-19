@@ -70,7 +70,7 @@ class PossibleEnjoyActivity : AppCompatActivity() , UpcomingDateView {
             override fun onItemClick(dateInfo: UpcomingDateResponse) {
                 val intent = Intent(this@PossibleEnjoyActivity, RequestEnjoyActivity::class.java)
                 intent.putExtra("dates",dateInfo.date)
-                intent.putExtra("tourDatesId",dateInfo.id)
+                intent.putExtra("tourDatesId",dateInfo.tourDateId)
                 startActivity(intent)
             }
         })

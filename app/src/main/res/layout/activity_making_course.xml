@@ -11,128 +11,142 @@
         android:id="@+id/guide_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
-
+        app:layout_constraintGuide_percent="0.044"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
+        app:layout_constraintGuide_percent="0.956"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_my_tour_time_exit"
-        android:layout_width="100dp"
-        android:layout_height="28dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1225"/>
+
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/cv_my_tour_time_exit"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="28dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:cardCornerRadius="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="@id/guide_start"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_exit"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+
+<!--            android:layout_marginStart="7dp"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:text="@string/making_tour_exit"-->
+<!--            android:textSize="14sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/cv_exit" />-->
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_main_cancel"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"/>
+
 
         <TextView
-            android:id="@+id/tv_exit"
+            android:id="@+id/tv_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="3dp"
-            android:text="@string/making_tour_exit"
+            android:text="@string/making_tour_progress_1"
+            android:textColor="@color/Orange6"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cv_exit"/>
-    </androidx.cardview.widget.CardView>
+            android:fontFamily="@font/pretendard_medium"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintTop_toTopOf="@+id/iv_cancel"/>
+
+        <TextView
+            android:id="@+id/tv_my_tour_time_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:fontFamily="@font/suite_bold"
+            android:textSize="20sp"
+            android:textColor="@color/Gray8"
+            android:text="@string/making_tour_add_list_headline"
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_cancel"
+            app:layout_constraintStart_toStartOf="@id/guide_start"/>
+
+        <TextView
+            android:id="@+id/tv_my_tour_time_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/Gray5"
+            android:text="@string/making_tour_add_list_subtitle"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/pretendard_medium"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_headline"
+            app:layout_constraintStart_toStartOf="@id/guide_start"/>
 
 
-    <TextView
-        android:id="@+id/tv_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/making_tour_progress_1"
-        android:textColor="@color/Orange6"
-        android:textSize="14sp"
-        android:fontFamily="@font/pretendard_medium"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        app:layout_constraintTop_toTopOf="@+id/cv_my_tour_time_exit"/>
+        <View
+            android:id="@+id/view_course_img"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
 
-    <TextView
-        android:id="@+id/tv_my_tour_time_headline"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:fontFamily="@font/suite_bold"
-        android:textSize="20sp"
-        android:textColor="@color/Gray8"
-        android:text="@string/making_tour_add_list_headline"
-        android:layout_marginTop="18dp"
-        app:layout_constraintTop_toBottomOf="@id/cv_my_tour_time_exit"
-        app:layout_constraintStart_toStartOf="@id/guide_start"/>
-
-    <TextView
-        android:id="@+id/tv_my_tour_time_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="@color/Gray5"
-        android:text="@string/making_tour_add_list_subtitle"
-        android:layout_marginTop="6dp"
-        android:fontFamily="@font/pretendard_medium"
-        app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_headline"
-        app:layout_constraintStart_toStartOf="@id/guide_start"/>
-
-
-    <View
-        android:id="@+id/view_course_img"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-
-        android:background="@color/Gray2"
-        app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_subtitle"
-        />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/course_asset"
-        app:layout_constraintTop_toTopOf="@id/view_course_img"
-        app:layout_constraintBottom_toBottomOf="@id/view_course_img"
-        app:layout_constraintStart_toStartOf="@id/view_course_img"
-        app:layout_constraintEnd_toEndOf="@id/view_course_img"
-        />
-
-
-    <LinearLayout
-        android:id="@+id/btn_add_place"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/making_tour_add_list_dialog_delete"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:paddingTop="7dp"
-        android:paddingBottom="7dp"
-        app:layout_constraintStart_toStartOf="@id/guide_start"
-        app:layout_constraintTop_toBottomOf="@id/view_course_img"
-        app:layout_constraintEnd_toEndOf="@id/guide_end">
-
+            android:background="@color/Gray2"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_tour_time_subtitle"
+            />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_making_tour_plus"/>
+            android:src="@drawable/course_asset"
+            app:layout_constraintTop_toTopOf="@id/view_course_img"
+            app:layout_constraintBottom_toBottomOf="@id/view_course_img"
+            app:layout_constraintStart_toStartOf="@id/view_course_img"
+            app:layout_constraintEnd_toEndOf="@id/view_course_img"
+            />
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/btn_add_place"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/Orange5"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:textSize="16sp"
-            android:text="@string/making_tour_add_list_place_plus"/>
+            android:background="@drawable/making_tour_add_list_dialog_delete"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/view_course_img"
+            app:layout_constraintEnd_toEndOf="@id/guide_end">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_making_tour_plus"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Orange5"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="16sp"
+                android:text="@string/making_tour_add_list_place_plus"/>
+
+        </LinearLayout>
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

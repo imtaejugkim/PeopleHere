@@ -1,9 +1,11 @@
 package com.peopleHere.people_here.IntroduceCaution
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityCautionBinding
 
@@ -22,6 +24,12 @@ class CautionActivity : AppCompatActivity() {
 */
 
 
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
         setContentView(binding.root)
     }

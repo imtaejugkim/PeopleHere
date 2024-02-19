@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import com.peopleHere.people_here.MainActivity
 import com.peopleHere.people_here.MakingTour.MakingTourCourseFinishActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.databinding.ActivityIntroduceBinding
@@ -19,6 +20,12 @@ class IntroduceActivity : AppCompatActivity() {
         binding.btnNext.setOnClickListener {
             val intent = Intent(this, MakingTourCourseFinishActivity::class.java)//화면전환
             startActivity(intent)
+        }
+
+        binding.ivCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)//화면전환
+            startActivity(intent)
+            finish()
         }
 
 

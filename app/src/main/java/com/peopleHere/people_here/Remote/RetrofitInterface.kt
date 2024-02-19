@@ -5,6 +5,7 @@ import com.peopleHere.people_here.Data.ProfileData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -94,4 +95,21 @@ interface RetrofitInterface {
     @GET("api/users/{id}")
     fun bringUserInfo(@Path("id") userId : Int)
             : Call<BaseResponse<BringUserResponse>>
+
+    @PATCH("api/tour-dates/{tourDateId}/status")
+    fun blockTourDateInfo(
+        @Path("tourDateId") tourDateId : Int,
+        @Query("status") status : String)
+            : Call<BaseResponse<String>>
+
+    @POST("api/users/search-history")
+    fun recentSearchInfo(
+        @Query("placeKey") placeId : String,
+        @Query("placeName") placeName : String,
+        @Query("placeAddress") placeAddress : String)
+            : Call<BaseResponse<String>>
+
+    @GET("api/users/search-histories")
+    fun recentSearchOutputInfo()
+            : Call<BaseResponse<ArrayList<RecentSearchResponse>>>
 }

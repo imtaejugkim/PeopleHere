@@ -22,6 +22,8 @@ import com.peopleHere.people_here.AddPicture.PictureDB.PictureDB
 import com.peopleHere.people_here.AddPicture.PictureDB.PictureEntity
 import com.peopleHere.people_here.Data.AddPicturLocationData
 import com.peopleHere.people_here.Data.AddPictureData
+import com.peopleHere.people_here.Data.LocationChooseData
+import com.peopleHere.people_here.MakingTour.AddListDataManager
 import com.peopleHere.people_here.TitleCategory.TitleActivity
 import com.peopleHere.people_here.databinding.ActivityAddPictureBinding
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +39,7 @@ class AddPictureActivity : AppCompatActivity() {
     var pictureDB: PictureDB? = null//없으면 null 로
     var uriString: String? = null
     val picturelist = arrayListOf<PictureEntity>()
-    var addLocationlist = ArrayList<AddPicturLocationData>()
+    var addLocationlist : ArrayList<AddPicturLocationData> = arrayListOf()
     var itemsize = 0
     var nextButton: Boolean = false
 
@@ -46,7 +48,15 @@ class AddPictureActivity : AppCompatActivity() {
 
         binding = ActivityAddPictureBinding.inflate(layoutInflater)
 
-        addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist)
+        for(i in 0 until AddListDataManager.addListData.size){
+            addLocationlist.add(
+                AddPicturLocationData(
+                    AddListDataManager.addListData[i].placeName,
+                AddListDataManager.addListData[i].placeImage)
+            )
+        }
+
+        addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist, this)
         binding.rvLocation.adapter=addLocationPictureAdapter
         binding.rvLocation.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

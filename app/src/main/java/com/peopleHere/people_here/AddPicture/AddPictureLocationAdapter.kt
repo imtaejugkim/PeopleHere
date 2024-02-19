@@ -1,14 +1,17 @@
 package com.peopleHere.people_here.AddPicture
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.AddPicturLocationData
 import com.peopleHere.people_here.databinding.ItemAddpictureLocationNameBinding
 
-class AddPictureLocationAdapter(var addlocationlist: ArrayList<AddPicturLocationData>) :
+class AddPictureLocationAdapter(var addlocationlist: ArrayList<AddPicturLocationData>,
+    val context : Context) :
     RecyclerView.Adapter<AddPictureLocationAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -36,6 +39,7 @@ class AddPictureLocationAdapter(var addlocationlist: ArrayList<AddPicturLocation
     inner class ViewHolder(private val binding: ItemAddpictureLocationNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(addlocation: AddPicturLocationData) {
+            binding.tvLocation.text = addlocation.location
         }
 
 

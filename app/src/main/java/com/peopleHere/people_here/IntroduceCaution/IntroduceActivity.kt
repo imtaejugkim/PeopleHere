@@ -49,7 +49,6 @@ class IntroduceActivity : AppCompatActivity() {
                     )
                 )
             }
-
         }else{
             for (i in 0 until 3) {
                 ApplicationClass.pplaceImage?.add(
@@ -60,9 +59,6 @@ class IntroduceActivity : AppCompatActivity() {
                 )
             }
         }
-
-
-
         for (i in 0 until 1) {
             ApplicationClass.pplaces?.add(
                 PlaceData(
@@ -74,8 +70,6 @@ class IntroduceActivity : AppCompatActivity() {
                 )
             )
         }
-
-
         binding.btnNext.setOnClickListener {
             authService.postNewTourLast(
                 ApplicationClass.puserId!!,

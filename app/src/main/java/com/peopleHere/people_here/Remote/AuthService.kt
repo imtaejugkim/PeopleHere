@@ -257,6 +257,9 @@ class AuthService(private val context: Context) {
                                 val checkEmailResponse = it.result
                                 checkEmailResponse?.let { response ->
                                     if (response.emailAvailable) {
+                                        ApplicationClass.mSharedPreferencesManager.edit().remove("phoneNumber").commit()
+                                        ApplicationClass.mSharedPreferencesManager.edit().remove("phoneNumber_verification")
+                                            .commit()
                                         val intent = Intent(context, SignUpActivity::class.java)
                                         //intent.putExtra("email", binding.etEmail.text.toString())
                                         context.startActivity(intent)

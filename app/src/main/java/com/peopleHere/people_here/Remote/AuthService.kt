@@ -921,7 +921,6 @@ class AuthService(private val context: Context) {
                     }
                 }
                 override fun onFailure(
-
                     call: Call<BaseResponse<PostResponseData>>,
                     t: Throwable
                 ) {

@@ -15,6 +15,7 @@ class TitleActivity : AppCompatActivity() {
     var next:Boolean=false
     var time = 0
     var text : String ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTitleBinding.inflate(layoutInflater)
@@ -33,7 +34,6 @@ class TitleActivity : AppCompatActivity() {
         }
 
         time = intent.getIntExtra("time",0)
-
         ButtonOn()
         setContentView(binding.root)
         binding.btnBack.setOnClickListener {

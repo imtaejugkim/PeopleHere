@@ -12,7 +12,6 @@ import com.peopleHere.people_here.databinding.ActivityTitleBinding
 
 class TitleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTitleBinding
-    var next: Boolean = false
     var next:Boolean=false
     var time = 0
     var text : String ?= null

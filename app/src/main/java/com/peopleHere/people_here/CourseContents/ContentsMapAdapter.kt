@@ -13,21 +13,21 @@ import com.peopleHere.people_here.databinding.ItemMainSearchBinding
 class ContentsMapAdapter(private val reviewData: ArrayList<MainCourseData>) : RecyclerView.Adapter<ContentsMapAdapter.ViewHolder>(){
     inner class ViewHolder(val binding : ItemMainSearchBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(reviewInfo : MainCourseData){
-            binding.tvUserName.text = reviewInfo.userName
-            binding.tvUserNickname.text = reviewInfo.userNickName
-            Glide.with(context)
-                .load(reviewInfo.userImage)
-                .into(binding.ivReviewImage)
-            binding.tvReviewMonth.text = reviewInfo.reviewMonth.toString()
-            binding.tvReviewYear.text = reviewInfo.reviewYear.toString()
-            binding.tvReview.text = reviewInfo.reviewText
+//           binding.tvUserName.text = reviewInfo.userName
+////            binding.tvUserNickname.text = reviewInfo.userNickName
+////            Glide.with(context)
+////                .load(reviewInfo.userImage)
+////                .into(binding.ivReviewImage)
+////            binding.tvReviewMonth.text = reviewInfo.reviewMonth.toString()
+////            binding.tvReviewYear.text = reviewInfo.reviewYear.toString()
+////            binding.tvReview.text = reviewInfo.reviewText
         }
     }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ContentsMapAdapter.ViewHolder {
-        val binding = ItemCourseContentsReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+        val binding = ItemMainSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false )
         return ViewHolder(binding)
     }
 

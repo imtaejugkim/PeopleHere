@@ -31,13 +31,12 @@ class IntroduceActivity : AppCompatActivity() {
 
         time = intent.getIntExtra("time",0)
         text = intent.getStringExtra("text")
-        categoryNames = intent.getStringArrayListExtra("categoryNames")!!
 
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
         ButtonOn()
         authService = AuthService(this)
 
-        ApplicationClass.ptourContent = binding.etIntroduce.text.toString()
+        ApplicationClass.ptourContent = "시험텍스트"
         Log.d("APP_ptourContent",ApplicationClass.ptourContent.toString())
 
         if (ApplicationClass.pencodingString != null && ApplicationClass.poriginalFileName != null) {
@@ -50,16 +49,11 @@ class IntroduceActivity : AppCompatActivity() {
                 )
             }
         }else{
-            for (i in 0 until 3) {
-                ApplicationClass.pplaceImage?.add(
-                    PlacesImageData(
-                        encodingString =" 123",
-                        originalFileName = "123"
-                    )
-                )
-            }
+          Log.d("APP_ERR","여기가 빔 흠 ")
+            //OK
         }
-        for (i in 0 until 1) {
+
+        for (i in 0 until ApplicationClass.pencodingString!!.size) {
             ApplicationClass.pplaces?.add(
                 PlaceData(
                     ApplicationClass.pplaceName!![i],
@@ -70,7 +64,10 @@ class IntroduceActivity : AppCompatActivity() {
                 )
             )
         }
+
+
         binding.btnNext.setOnClickListener {
+
             authService.postNewTourLast(
                 ApplicationClass.puserId!!,
                 ApplicationClass.ptourName!!,
@@ -79,6 +76,7 @@ class IntroduceActivity : AppCompatActivity() {
                 ApplicationClass.pcategoryNames!!,
                 ApplicationClass.pplaces!!
             )
+
             val intent = Intent(this, MakingTourCourseFinishActivity::class.java)//화면전환
             introduce = binding.etIntroduce.text.toString()
             intent.putExtra("time",time)
@@ -86,6 +84,8 @@ class IntroduceActivity : AppCompatActivity() {
             intent.putExtra("categoryNames",categoryNames)
             intent.putExtra("introduce",introduce)
             startActivity(intent)
+
+
         }
 
         binding.ivCancel.setOnClickListener {

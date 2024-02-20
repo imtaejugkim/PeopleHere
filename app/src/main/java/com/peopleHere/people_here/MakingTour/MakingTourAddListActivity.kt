@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.play.integrity.internal.i
 
 import com.peopleHere.people_here.ApplicationClass
 

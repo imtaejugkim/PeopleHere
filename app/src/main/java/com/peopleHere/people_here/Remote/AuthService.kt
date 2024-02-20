@@ -257,8 +257,10 @@ class AuthService(private val context: Context) {
                                 val checkEmailResponse = it.result
                                 checkEmailResponse?.let { response ->
                                     if (response.emailAvailable) {
-                                        ApplicationClass.mSharedPreferencesManager.edit().remove("phoneNumber").commit()
-                                        ApplicationClass.mSharedPreferencesManager.edit().remove("phoneNumber_verification")
+                                        ApplicationClass.mSharedPreferencesManager.edit()
+                                            .remove("phoneNumber").commit()
+                                        ApplicationClass.mSharedPreferencesManager.edit()
+                                            .remove("phoneNumber_verification")
                                             .commit()
                                         val intent = Intent(context, SignUpActivity::class.java)
                                         //intent.putExtra("email", binding.etEmail.text.toString())
@@ -514,7 +516,7 @@ class AuthService(private val context: Context) {
 
                             200 -> {
                                 ApplicationClass.puserId = resp.result.userId//유저 아이디 확보 완료
-                                Log.d("APP_user_id",ApplicationClass.puserId.toString())
+                                Log.d("APP_user_id", ApplicationClass.puserId.toString())
                             }
 
 
@@ -896,8 +898,8 @@ class AuthService(private val context: Context) {
         tourName: String,
         tourTime: Int,
         tourContent: String,
-        categoryNames: MutableList<String>,
-        places: MutableList<PlaceData>
+        categoryNames: List<String>,
+        places: List<PlaceData>
     ) {
         val postData = PostData(userId, tourName, tourTime, tourContent, categoryNames, places)
 
@@ -908,10 +910,9 @@ class AuthService(private val context: Context) {
                     response: Response<BaseResponse<PostResponseData>>
                 ) {
                     Log.d("postNewTourLast response", response.toString())
+
                     if (response.isSuccessful) {
                         val resp = response.body()
-//                        Log.d("bringUser Response Body", resp.toString())
-//                        Log.d("bringUser Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> {
 
@@ -923,6 +924,7 @@ class AuthService(private val context: Context) {
                         }
                     }
                 }
+
                 override fun onFailure(
                     call: Call<BaseResponse<PostResponseData>>,
                     t: Throwable
@@ -932,14 +934,11 @@ class AuthService(private val context: Context) {
 
             })
     }
-                            
-                            
 
-                          
-                          
-    fun blockTourInfo(tourDateId: Int, status : String) {
 
-        authService.blockTourDateInfo(tourDateId,"BLOCKED")
+    fun blockTourInfo(tourDateId: Int, status: String) {
+
+        authService.blockTourDateInfo(tourDateId, "BLOCKED")
             .enqueue(object : Callback<BaseResponse<String>> {
                 override fun onResponse(
                     call: Call<BaseResponse<String>>,
@@ -952,7 +951,10 @@ class AuthService(private val context: Context) {
 //                        Log.d("blockTour Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> blockTourDateView.BlockTourDateSuccess()
-                            else -> blockTourDateView.BlockTourDateFailure(resp.status, resp.message)
+                            else -> blockTourDateView.BlockTourDateFailure(
+                                resp.status,
+                                resp.message
+                            )
                         }
                     }
                 }
@@ -967,9 +969,9 @@ class AuthService(private val context: Context) {
             })
     }
 
-    fun recentSearchInfo(placeId : String, placeName : String, placeAddress : String) {
+    fun recentSearchInfo(placeId: String, placeName: String, placeAddress: String) {
 //        mainView.MainLoading()
-        authService.recentSearchInfo(placeId,placeName,placeAddress)
+        authService.recentSearchInfo(placeId, placeName, placeAddress)
             .enqueue(object : Callback<BaseResponse<String>> {
                 override fun onResponse(
                     call: Call<BaseResponse<String>>,
@@ -1012,7 +1014,10 @@ class AuthService(private val context: Context) {
 //                        Log.d("recentSearch Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> recentSearchOutputView.RecentSearchOutputViewSuccess(resp.result)
-                            else -> recentSearchOutputView.RecentSearchOutputViewFailure(resp.status, resp.message)
+                            else -> recentSearchOutputView.RecentSearchOutputViewFailure(
+                                resp.status,
+                                resp.message
+                            )
 
                         }
                     }
@@ -1028,7 +1033,6 @@ class AuthService(private val context: Context) {
 
             })
     }
-
 
 
 }

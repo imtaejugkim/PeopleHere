@@ -72,6 +72,9 @@ class CategoryActivity : AppCompatActivity() {
 
                 authService.simpleProfileInfo()
                 val intent = Intent(this, IntroduceActivity::class.java)//화면전환
+                val categoryNames = arrayListOf<String>("거리 구경","쇼핑")
+                intent.putExtra("time",time)
+                intent.putExtra("text",text)
                 startActivity(intent)
             }
         } else {
@@ -108,12 +111,6 @@ class CategoryActivity : AppCompatActivity() {
                 binding.btnNext.setBackgroundResource(R.drawable.add_list_next_button)
                 binding.btnNext.setOnClickListener {
                     //확인하기 위해 이렇게 해놨습니다
-                    val intent = Intent(this, IntroduceActivity::class.java)//화면전환
-                    val categoryNames = arrayListOf<String>("거리 구경","쇼핑")
-                    intent.putExtra("time",time)
-                    intent.putExtra("text",text)
-                    intent.putExtra("categryNames",categoryNames)
-                    startActivity(intent)
                 }
             } else {
                 binding.btnNext.setBackgroundResource(R.drawable.category_next_btn)

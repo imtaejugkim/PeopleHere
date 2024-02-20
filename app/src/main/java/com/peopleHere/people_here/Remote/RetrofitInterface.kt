@@ -26,7 +26,7 @@ interface RetrofitInterface {
 
 
     //TODO:이제 함수 만들기 Applciation에서 다 받고
-    @POST("api/tours/new")//login부분
+    @POST("/api/tours/new")//login부분
     fun postNewTour(//로그인 함수 만들고
         @Body request: PostData//토큰을 받아야하나?
     ): Call<BaseResponse<PostResponseData>>//이론때 핸던 것 중 call방식으로 받겠다

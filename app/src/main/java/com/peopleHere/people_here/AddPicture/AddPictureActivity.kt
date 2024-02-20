@@ -91,9 +91,7 @@ class AddPictureActivity : AppCompatActivity() {
                 )
             )
 
-            ApplicationClass.pplaceName?.add(AddListDataManager.addListData[i].placeName)
-            Log.d("APP_pplace", ApplicationClass.pplaceName.toString())
-            //장소 이름 끝
+           //장소 이름 끝
 
         }
         var getlocation = intent?.getStringExtra("location")
@@ -140,11 +138,8 @@ class AddPictureActivity : AppCompatActivity() {
                         pictureDB!!.getPictureDao()
                             .addPicture(PictureEntity(uriString!!, getlocation!!, "jungan", 1, i))
 
-                        val uriByteArray: ByteArray = uriString!!.toByteArray(Charsets.UTF_8)
-                        val hi = Base64.encodeToString(uriByteArray, Base64.DEFAULT)
-
-                        ApplicationClass.pencodingString?.add("123")
-                        ApplicationClass.poriginalFileName?.add("123")
+                        ApplicationClass.pencodingString?.add("Y29udGVudDovL21lZGlhL2V4dGVybmFsL2ltYWdlcy9tZWRpYS8xMDAwMDAyNzE5")
+                        ApplicationClass.poriginalFileName?.add("abcd.jpg")
                         //TODO :얘네 인코딩 안되서 그냥 쓰레기 데이터 넣음
                         i++
                     }

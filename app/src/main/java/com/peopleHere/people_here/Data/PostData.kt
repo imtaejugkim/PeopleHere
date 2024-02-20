@@ -1,6 +1,5 @@
 package com.peopleHere.people_here.Data
 
-import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 data class PostData(
@@ -15,8 +14,13 @@ data class PlaceData(
     @SerializedName("placeName") val placeName: String,
     @SerializedName("placeImage") val placeImage: List<PlacesImageData>,
     @SerializedName("placeAddress") val placeAddress: String,
-    @SerializedName("latLng") val latLng: LatLng,
+    @SerializedName("latLng") val latLng: Latitude,
     @SerializedName("placeOrder") val placeOrder: Int,
+)
+
+data class Latitude(
+    @SerializedName("x") val x: Double?,
+    @SerializedName("y") val y: Double?
 )
 
 data class PlacesImageData(

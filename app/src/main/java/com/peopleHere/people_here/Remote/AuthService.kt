@@ -902,7 +902,7 @@ class AuthService(private val context: Context) {
         places: List<PlaceData>
     ) {
         val postData = PostData(userId, tourName, tourTime, tourContent, categoryNames, places)
-
+        Log.d("postnewTor",postData.toString())
         authService.postNewTour(postData)
             .enqueue(object : Callback<BaseResponse<PostResponseData>> {
                 override fun onResponse(

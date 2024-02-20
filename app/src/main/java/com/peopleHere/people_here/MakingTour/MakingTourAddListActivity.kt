@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -22,10 +21,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.peopleHere.people_here.Data.MakingTourAddListData
-import com.peopleHere.people_here.R
-import com.peopleHere.people_here.databinding.ActivityMakingTourAddListBinding
-import com.peopleHere.people_here.databinding.DialogMakingTourAddListSequenceBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -38,14 +33,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.play.integrity.internal.i
-
 import com.peopleHere.people_here.ApplicationClass
-
+import com.peopleHere.people_here.Data.MakingTourAddListData
 import com.peopleHere.people_here.MainActivity
-
 import com.peopleHere.people_here.MyTour.MakingCourseSearchActivity
+import com.peopleHere.people_here.R
+import com.peopleHere.people_here.databinding.ActivityMakingTourAddListBinding
+import com.peopleHere.people_here.databinding.DialogMakingTourAddListSequenceBinding
 
 class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, MakingTourAddListAdapter.OnItemCountChangedListener{
     lateinit var binding: ActivityMakingTourAddListBinding
@@ -76,7 +70,9 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         Log.d("placeLongitude",placeLongitude.toString())
 
         location = LatLng(placeLatitude,placeLongitude)
-        ApplicationClass.platLng?.add(location!!)
+        ApplicationClass.platLngx?.add(placeLatitude!!)
+        ApplicationClass.platLngy?.add(placeLongitude)
+
         Log.d("APP_platLng",ApplicationClass.platLng.toString())
 
         // 받은 데이터를 사용하여 RecyclerView 리스트 업데이트
@@ -103,7 +99,6 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
                 val newPlaceLongitude = data?.getDoubleExtra("placeLongitude", 0.0) ?: 0.0
 
 
-                ApplicationClass.platLng?.add(location!!)
 
                 if (newPlaceName != null && newPlaceAddress != null) {
                     val newLocation = LatLng(newPlaceLatitude, newPlaceLongitude)
@@ -267,7 +262,6 @@ class MakingTourAddListActivity : AppCompatActivity() , OnMapReadyCallback, Maki
         AddListDataManager.addListData.removeAt(position)
         addListAdapter?.notifyItemRemoved(position)
 
-        ApplicationClass.platLng?.remove(location)
 
     }
 

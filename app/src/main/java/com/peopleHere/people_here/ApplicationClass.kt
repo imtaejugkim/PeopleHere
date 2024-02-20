@@ -3,10 +3,9 @@ package com.peopleHere.people_here
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.android.gms.maps.model.LatLng
+import com.peopleHere.people_here.Data.Latitude
 import com.peopleHere.people_here.Data.PlaceData
 import com.peopleHere.people_here.Data.PlacesImageData
-import com.peopleHere.people_here.Data.PostData
 import com.peopleHere.people_here.Remote.XAccessTokenInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -41,7 +40,9 @@ class ApplicationClass: Application() {
         var poriginalFileName: MutableList<String>? = mutableListOf()
 
         var pplaceAddress: MutableList<String>? = mutableListOf()
-        var platLng: MutableList<LatLng>? = mutableListOf()
+        var platLng: MutableList<Latitude>? = mutableListOf()
+        var platLngx:MutableList<Double>?= mutableListOf()
+        var platLngy:MutableList<Double>?= mutableListOf()
 
 
 

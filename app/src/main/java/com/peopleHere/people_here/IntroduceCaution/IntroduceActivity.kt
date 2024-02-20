@@ -6,14 +6,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.peopleHere.people_here.ApplicationClass
+import com.peopleHere.people_here.Data.Latitude
 import com.peopleHere.people_here.Data.PlaceData
 import com.peopleHere.people_here.Data.PlacesImageData
-
 import com.peopleHere.people_here.MainActivity
-
 import com.peopleHere.people_here.MakingTour.MakingTourCourseFinishActivity
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
@@ -23,13 +20,13 @@ class IntroduceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroduceBinding
     private lateinit var authService: AuthService
     var time = 0
-    var text : String ?= null
-    private var categoryNames : ArrayList<String> = arrayListOf()
-    var introduce : String ?= null
+    var text: String? = null
+    private var categoryNames: ArrayList<String> = arrayListOf()
+    var introduce: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        time = intent.getIntExtra("time",0)
+        time = intent.getIntExtra("time", 0)
         text = intent.getStringExtra("text")
 
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
@@ -48,9 +45,14 @@ class IntroduceActivity : AppCompatActivity() {
                     )
                 )
             }
-        }else{
-          Log.d("APP_ERR","여기가 빔 흠 ")
-            //OK
+        }
+        for (i in 0 until 1) {
+            ApplicationClass.platLng?.add(
+                Latitude(
+                    ApplicationClass.platLngx!![i],
+                    ApplicationClass.platLngy!![i],
+                )
+            )
         }
 
         for (i in 0 until ApplicationClass.pencodingString!!.size) {
@@ -79,10 +81,10 @@ class IntroduceActivity : AppCompatActivity() {
 
             val intent = Intent(this, MakingTourCourseFinishActivity::class.java)//화면전환
             introduce = binding.etIntroduce.text.toString()
-            intent.putExtra("time",time)
-            intent.putExtra("text",text)
-            intent.putExtra("categoryNames",categoryNames)
-            intent.putExtra("introduce",introduce)
+            intent.putExtra("time", time)
+            intent.putExtra("text", text)
+            intent.putExtra("categoryNames", categoryNames)
+            intent.putExtra("introduce", introduce)
             startActivity(intent)
 
 

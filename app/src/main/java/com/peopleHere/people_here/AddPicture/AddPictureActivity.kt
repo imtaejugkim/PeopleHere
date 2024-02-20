@@ -92,8 +92,8 @@ class AddPictureActivity : AppCompatActivity() {
             )
 
             ApplicationClass.pplaceName?.add(AddListDataManager.addListData[i].placeName)
-            Log.d("APP_pplace",ApplicationClass.pplaceName.toString())
-        //장소 이름 끝
+            Log.d("APP_pplace", ApplicationClass.pplaceName.toString())
+            //장소 이름 끝
 
         }
         var getlocation = intent?.getStringExtra("location")
@@ -101,10 +101,10 @@ class AddPictureActivity : AppCompatActivity() {
             getlocation = "None"
         }
 
-        time = intent.getIntExtra("time",0)
+        time = intent.getIntExtra("time", 0)
 
-        addLocationPictureAdapter=AddPictureLocationAdapter(addLocationlist, this, getlocation)
-        binding.rvLocation.adapter=addLocationPictureAdapter
+        addLocationPictureAdapter = AddPictureLocationAdapter(addLocationlist, this, getlocation)
+        binding.rvLocation.adapter = addLocationPictureAdapter
         binding.rvLocation.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -129,6 +129,8 @@ class AddPictureActivity : AppCompatActivity() {
                     //TODO:여기가 CustomAlbum에서 받아와 지는 경우를 말한다.
                     var i = 0
                     var getlocation = intent.getStringExtra("location")
+                    //TODO:임의의 추가 부분
+
 
                     while (receivedIntent.hasExtra("uri_$i")) {
                         //TODO:애네도 어플리 케이션에 넣어야 함 픽쳐 ㅜㅊ가가
@@ -137,6 +139,7 @@ class AddPictureActivity : AppCompatActivity() {
                         Log.d("test1", uriString!!)
                         pictureDB!!.getPictureDao()
                             .addPicture(PictureEntity(uriString!!, getlocation!!, "jungan", 1, i))
+
                         val uriByteArray: ByteArray = uriString!!.toByteArray(Charsets.UTF_8)
                         val hi = Base64.encodeToString(uriByteArray, Base64.DEFAULT)
 
@@ -177,17 +180,6 @@ class AddPictureActivity : AppCompatActivity() {
                           }*/
 
 
-                if (products.size < 2) {//TODO:왜 비었다 뜨죵??
-                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_close)
-                    nextButton = false
-                } else {
-                    binding.btnNext.setBackgroundResource(R.drawable.making_tour_button_next)
-                    binding.btnNext.setOnClickListener {
-                        intent.putExtra("time",time)
-                        startActivity(intent)
-                    }
-                    nextButton = true
-                }
                 if (products.isEmpty()) {//앞에서 이미 회색 추가 해서 어림도 없다... 이 부분을 해결 어케하지??
                     pictureDB!!.getPictureDao()
                         .addPicture(
@@ -272,7 +264,6 @@ class AddPictureActivity : AppCompatActivity() {
                                 nextButton = true
                             }
 
-
                         }
                     }
                 }
@@ -300,9 +291,12 @@ class AddPictureActivity : AppCompatActivity() {
 
 
         binding.btnNext.setOnClickListener {
+            //TODO:고치기
+
             if (nextButton) {//TODO:왜 비었다 뜨죵??
+
                 val intent = Intent(this, TitleActivity::class.java)
-                intent.putExtra("time",time)
+                intent.putExtra("time", time)
                 startActivity(intent)
             }
             //finish()

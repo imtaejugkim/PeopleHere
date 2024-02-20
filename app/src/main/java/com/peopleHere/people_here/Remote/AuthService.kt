@@ -917,9 +917,9 @@ class AuthService(private val context: Context) {
                             else -> {
 
                             }
-                                 }
+                        }
+                    }
                 }
-
                 override fun onFailure(
 
                     call: Call<BaseResponse<PostResponseData>>,
@@ -936,7 +936,7 @@ class AuthService(private val context: Context) {
                           
                           
     fun blockTourInfo(tourDateId: Int, status : String) {
-//        mainView.MainLoading()
+
         authService.blockTourDateInfo(tourDateId,"BLOCKED")
             .enqueue(object : Callback<BaseResponse<String>> {
                 override fun onResponse(

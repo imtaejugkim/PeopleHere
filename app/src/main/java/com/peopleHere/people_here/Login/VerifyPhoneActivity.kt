@@ -1,11 +1,14 @@
 package com.peopleHere.people_here.Login
 
 import android.content.Intent
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.widget.Toast
 import com.peopleHere.people_here.SignUp.SignUpActivity
 import com.peopleHere.people_here.databinding.ActivityVerifyPhoneBinding
@@ -16,6 +19,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.peopleHere.people_here.ApplicationClass
+import com.peopleHere.people_here.R
 import java.util.concurrent.TimeUnit
 
 class VerifyPhoneActivity : AppCompatActivity() {
@@ -55,7 +59,7 @@ class VerifyPhoneActivity : AppCompatActivity() {
                 forceResendingToken: PhoneAuthProvider.ForceResendingToken
             ) {
                 Toast.makeText(this@VerifyPhoneActivity, "ㅇㅋ", Toast.LENGTH_SHORT).show()
-
+                Log.d("qwe","qwe")
 
                 this@VerifyPhoneActivity.verificationId = verificationId
                 Log.d("verify", verificationId)
@@ -87,6 +91,16 @@ class VerifyPhoneActivity : AppCompatActivity() {
                     val intent = Intent(this, SignUpActivity::class.java)
                     intent.putExtra("phone",phoneNumber)
                     startActivity(intent)
+                }else{
+                    val toastLayout = LayoutInflater.from(binding.root.context)
+                        .inflate(
+                            R.layout.toast_category,
+                            null
+                        ) // R.layout.custom_toast_layout은 사용자가 정의한 레이아웃 파일입니다.
+                    val toast = Toast(binding.root.context)
+                    toast.view = toastLayout
+                    toast.setGravity(Gravity.BOTTOM, 0, 80.dpToPx()) // 80dp 아래로
+                    toast.show()
                 }
                 signInWithPhoneAuthCredential(credential)//여기부터 다시
             }
@@ -140,5 +154,9 @@ class VerifyPhoneActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+    fun Int.dpToPx(): Int {
+        val scale = Resources.getSystem().displayMetrics.density
+        return (this * scale).toInt()
     }
 }

@@ -18,6 +18,8 @@ import com.peopleHere.people_here.Remote.AuthService
 class CategoryActivity : AppCompatActivity() {
     var isclicked: Int = 0
     var cardNumCheck: Int = 0
+    var time = 0
+    var text : String ?= null
     private lateinit var binding: ActivityCategoryBinding
     private var categorylist: ArrayList<CategoryData> = arrayListOf()
     private var categoryadapter: CategoryAdapter? = null
@@ -33,6 +35,9 @@ class CategoryActivity : AppCompatActivity() {
             finish()
         }
         authService = AuthService(this)
+
+        time = intent.getIntExtra("time",0)
+        text = intent.getStringExtra("text")
 
         categoryadapter = CategoryAdapter(categorylist, isclicked)
         binding.rvCategory.adapter = categoryadapter
@@ -104,6 +109,10 @@ class CategoryActivity : AppCompatActivity() {
                 binding.btnNext.setOnClickListener {
                     //확인하기 위해 이렇게 해놨습니다
                     val intent = Intent(this, IntroduceActivity::class.java)//화면전환
+                    val categoryNames = arrayListOf<String>("거리 구경","쇼핑")
+                    intent.putExtra("time",time)
+                    intent.putExtra("text",text)
+                    intent.putExtra("categryNames",categoryNames)
                     startActivity(intent)
                 }
             } else {

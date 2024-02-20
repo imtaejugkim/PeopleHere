@@ -228,6 +228,12 @@ class AddPictureActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this, TitleActivity::class.java)
+            intent.putExtra("time",time)
+            startActivity(intent)
+
+        }
 
         setContentView(binding.root)
     }

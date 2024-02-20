@@ -22,9 +22,16 @@ import com.peopleHere.people_here.databinding.ActivityIntroduceBinding
 class IntroduceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroduceBinding
     private lateinit var authService: AuthService
-
+    var time = 0
+    var text : String ?= null
+    private var categoryNames : ArrayList<String> = arrayListOf()
+    var introduce : String ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        time = intent.getIntExtra("time",0)
+        text = intent.getStringExtra("text")
+        categoryNames = intent.getStringArrayListExtra("categoryNames")!!
 
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
         ButtonOn()
@@ -70,7 +77,6 @@ class IntroduceActivity : AppCompatActivity() {
 
 
         binding.btnNext.setOnClickListener {
-            //여기서 다 모아야 하는데 가능하냐??
             authService.postNewTourLast(
                 ApplicationClass.puserId!!,
                 ApplicationClass.ptourName!!,
@@ -79,6 +85,13 @@ class IntroduceActivity : AppCompatActivity() {
                 ApplicationClass.pcategoryNames!!,
                 ApplicationClass.pplaces!!
             )
+            val intent = Intent(this, MakingTourCourseFinishActivity::class.java)//화면전환
+            introduce = binding.etIntroduce.text.toString()
+            intent.putExtra("time",time)
+            intent.putExtra("text",text)
+            intent.putExtra("categoryNames",categoryNames)
+            intent.putExtra("introduce",introduce)
+            startActivity(intent)
         }
 
         binding.ivCancel.setOnClickListener {

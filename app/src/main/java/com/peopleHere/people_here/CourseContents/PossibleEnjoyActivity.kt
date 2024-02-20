@@ -45,6 +45,7 @@ class PossibleEnjoyActivity : AppCompatActivity() , UpcomingDateView {
     override fun UpcomingDateSuccess(content: ArrayList<UpcomingDateResponse>) {
         upcomingData = content
         classifiedData = classifyDataByMonth(content)
+        Log.d("content",content.toString())
 
         binding.tvReviewCount.text = upcomingData.size.toString()
         enjoyAdapter?.notifyDataSetChanged()
@@ -70,7 +71,7 @@ class PossibleEnjoyActivity : AppCompatActivity() , UpcomingDateView {
             override fun onItemClick(dateInfo: UpcomingDateResponse) {
                 val intent = Intent(this@PossibleEnjoyActivity, RequestEnjoyActivity::class.java)
                 intent.putExtra("dates",dateInfo.date)
-                intent.putExtra("tourDatesId",dateInfo.tourDateId)
+                intent.putExtra("tourDateId",dateInfo.tourDateId.toInt())
                 startActivity(intent)
             }
         })

@@ -52,12 +52,12 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.menu_wish -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, MakingTourFragment())
-                        .commit()
-                    return@setOnItemSelectedListener true
-                }
+//                R.id.menu_wish -> {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frm, MakingTourFragment())
+//                        .commit()
+//                    return@setOnItemSelectedListener true
+//                }
 
                 R.id.menu_making_course -> {//코스 만들기 고쳤다아
                     if(checktoken == "null"){

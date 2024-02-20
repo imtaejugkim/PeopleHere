@@ -17,6 +17,7 @@ import com.peopleHere.people_here.Data.CourseReviewData
 import com.peopleHere.people_here.Data.CourseScheduleData
 import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.Main.MainCategoryAdapter
+import com.peopleHere.people_here.Profile.ProfileFirstFragment
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.BringUserResponse
@@ -42,6 +43,9 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     private var upcomingData : ArrayList<UpcomingDateResponse> ?= null
     private var tourTime : Int = 0
     private var bringUserData : BringUserResponse ?= null
+    private var reviewNum = 0
+    private var reviewUser : String ?= null
+    private var mapAdapter : ContentsMapAdapter ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,10 +67,15 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         }
 
         binding.btnPossibleEnjoy.setOnClickListener {
-            val intent = Intent(this, PossibleEnjoyActivity::class.java)
-            intent.putExtra("key",key)
-            intent.putExtra("tourTime",tourTime)
-            startActivity(intent)
+            if(key == 0){
+                val intent = Intent(this, ProfileFirstFragment::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, PossibleEnjoyActivity::class.java)
+                intent.putExtra("key",key)
+                intent.putExtra("tourTime",tourTime)
+                startActivity(intent)
+            }
         }
 
         setContentView(binding.root)
@@ -83,11 +92,11 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
 
         reviewData.addAll(
             arrayListOf(
-                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 1,"사장님이 최고에요!"),
-                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 2,"사장님이 나빠요!"),
-                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 3,"사장님이 최고에요!\n최고\n최고\n최고"),
-                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 4,"사장님이 최고에요!"),
-                CourseReviewData("https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_1280.jpg", "더미맨", "더미더미", 2023, 5,"사장님이 나빠요!")
+                CourseReviewData("https://cdn.pixabay.com/photo/2017/04/01/21/06/portrait-2194457_1280.jpg", "김태정", "머정", 2024, 2,"정말 완벽한 투어에요!\n한번 더 투어에 참여햘 예정이에요!"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2015/07/20/12/57/ambassador-852766_640.jpg", "전우진", "진땅", 2024, 2,"리더님께서 친절해요."),
+                CourseReviewData("https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_1280.jpg", "이동열", "동열", 2024, 2,"이 투어는 최고에요!\n최고!\n최고!\n최고!"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg", "황정안", "정안", 2024, 2,"리더님이 너무 친절하셨어요. 다음 투어도 참여할예정이에요!"),
+                CourseReviewData("https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_1280.jpg", "김지현", "지현", 2024, 2,"좋은 추억 쌓고 가요~")
             )
         )
     }
@@ -200,6 +209,7 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
             LinearLayoutManager.HORIZONTAL, false)
 
         // 코스 만나게 될 사람
+        reviewUser = courseData.userName
         binding.tvMeetingPeopleName.text = courseData.userName
         val userImageUrl = courseData.userImageUrl
         if (userImageUrl.startsWith("https://")) {
@@ -223,20 +233,23 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         }
 
         // 코스 후기
-        initReview(courseData)
-//        initMapView(courseData)
+        initReview(courseData, reviewUser!!)
+        initMapView(courseData)
     }
 
-//    private fun initMapView(courseData: CourseContentsResponse) {
-//        TODO("Not yet implemented")
-//    }
+    private fun initMapView(courseData: CourseContentsResponse) {
+        mapAdapter = ContentsMapAdapter(courseData.places)
+        binding.rvCategory.adapter = categoryAdapter
+        binding.rvCategory.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.HORIZONTAL, false)
+    }
 
-    private fun initReview(courseData: CourseContentsResponse) {
+    private fun initReview(courseData: CourseContentsResponse, reviewUser : String) {
         binding.tvReviewName.text = courseData.userName
         binding.tvReviewCount.text = reviewData.size.toString()
         binding.llReviewButton.setOnClickListener {
             val intent = Intent(this, ReviewActivity()::class.java)
-//            intent.putExtra("key",reviewData)
+            intent.putExtra("reviewUser", reviewUser)
             startActivity(intent)
         }
     }
@@ -335,16 +348,9 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     }
 
     private fun initDataManager(tourId : Int) {
-        val token = getJwt()
-        Log.d("token",token)
-        if(token.isNotEmpty()){
-            val authService = AuthService(this)
-            authService.setCourseContentsView(this)
-            Log.d("tourId",tourId.toString())
-            authService.courseContentsInfo(tourId)
-        }else{
-            Log.d("token 오류","token 오류")
-        }
+        val authService = AuthService(this)
+        authService.setCourseContentsView(this)
+        authService.courseContentsInfo(tourId)
     }
 
     private fun initUpcomingDataManager(tourId: Int) {

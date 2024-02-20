@@ -1,5 +1,6 @@
 package com.peopleHere.people_here.CourseContents
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.TourLeaderData
 import com.peopleHere.people_here.Local.getJwt
+import com.peopleHere.people_here.MainActivity
+import com.peopleHere.people_here.Profile.ProfileFragment
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.RequestEnjoyResponse
@@ -29,6 +32,18 @@ class SuccessRequestActivity : AppCompatActivity(), RequestEnjoyView{
         initDataManager(tourDatesId)
 
         super.onCreate(savedInstanceState)
+
+        binding.btnSeeMain.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        binding.btnSeeOther.setOnClickListener {
+            val intent = Intent(this, ProfileFragment::class.java)
+            startActivity(intent)
+            finish()
+        }
         setContentView(binding.root)
     }
 

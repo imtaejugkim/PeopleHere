@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.peopleHere.people_here.Data.CourseQuestionData
 import com.peopleHere.people_here.Data.CourseReviewData
 import com.peopleHere.people_here.Data.CourseScheduleData
@@ -238,10 +242,24 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     }
 
     private fun initMapView(courseData: CourseContentsResponse) {
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync { googleMap ->
+            if (courseData.places.isNotEmpty()) {
+                val firstPlace = courseData.places[0]
+                Log.d("first",firstPlace.toString())
+                Log.d("1",firstPlace.latLng.toString())
+                val location = LatLng(37.5821, 127.002) // 위도, 경도 설정
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+
+                googleMap.addMarker(MarkerOptions().position(location).title(firstPlace.placeName))
+            }
+        }
         mapAdapter = ContentsMapAdapter(courseData.places)
-        binding.rvCategory.adapter = categoryAdapter
-        binding.rvCategory.layoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.HORIZONTAL, false)
+        binding.rvMap.adapter = mapAdapter
+        binding.rvMap.layoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.VERTICAL, false)
     }
 
     private fun initReview(courseData: CourseContentsResponse, reviewUser : String) {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="12dp">
+    android:paddingBottom="20dp">
 
     <!--    <androidx.cardview.widget.CardView-->
     <!--        android:id="@+id/cv_main_tour_list_user_course"-->
@@ -23,6 +23,7 @@
     <!--    </androidx.cardview.widget.CardView>-->
 
     <ImageView
+        android:id="@+id/ic_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_main_marker_unclicked"
@@ -36,9 +37,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="null지역"
-        android:fontFamily="@font/pretendard_medium"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/pretendard_semibold"
         android:textSize="@dimen/main_search_recent_region"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ic_map"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_main_search_recent_place"/>
 
@@ -46,7 +48,7 @@
         android:id="@+id/tv_main_search_recent_place"
         app:layout_constraintStart_toStartOf="@id/tv_main_search_recent_region"
         app:layout_constraintTop_toBottomOf="@id/tv_main_search_recent_region"
-        android:fontFamily="@font/pretendard_medium"
+        android:fontFamily="@font/pretendard_regular"
         android:text="null장소"
         android:textColor="@color/Gray5"
         android:textSize="@dimen/main_search_recent_place"

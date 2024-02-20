@@ -7,27 +7,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.peopleHere.people_here.Data.CourseReviewData
 import com.peopleHere.people_here.Data.MainCourseData
+import com.peopleHere.people_here.databinding.ItemContentsMapBinding
 import com.peopleHere.people_here.databinding.ItemCourseContentsReviewBinding
 import com.peopleHere.people_here.databinding.ItemMainSearchBinding
 
 class ContentsMapAdapter(private val reviewData: ArrayList<MainCourseData>) : RecyclerView.Adapter<ContentsMapAdapter.ViewHolder>(){
-    inner class ViewHolder(val binding : ItemMainSearchBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(val binding : ItemContentsMapBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(reviewInfo : MainCourseData){
-//           binding.tvUserName.text = reviewInfo.userName
-////            binding.tvUserNickname.text = reviewInfo.userNickName
-////            Glide.with(context)
-////                .load(reviewInfo.userImage)
-////                .into(binding.ivReviewImage)
-////            binding.tvReviewMonth.text = reviewInfo.reviewMonth.toString()
-////            binding.tvReviewYear.text = reviewInfo.reviewYear.toString()
-////            binding.tvReview.text = reviewInfo.reviewText
+            binding.tvMainSearchRecentRegion.text = reviewInfo.placeName
+            binding.tvMainSearchRecentPlace.text = reviewInfo.placeAddress
+
         }
     }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ContentsMapAdapter.ViewHolder {
-        val binding = ItemMainSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false )
+        val binding = ItemContentsMapBinding.inflate(LayoutInflater.from(parent.context), parent, false )
         return ViewHolder(binding)
     }
 

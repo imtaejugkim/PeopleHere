@@ -59,14 +59,13 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-
                 R.id.menu_making_course -> {//코스 만들기 고쳤다아
-                    if(X_ACCESS_TOKEN=="Authorization"){
-                        val intent = Intent(this, MakingCourseActivity::class.java)
+                    if(checktoken == "null"){
+                        val intent = Intent(this, OnBoardingActivity::class.java)
                         startActivity(intent)
                         return@setOnItemSelectedListener true
                     }else{
-                        val intent = Intent(this, OnBoardingActivity::class.java)
+                        val intent = Intent(this, MakingCourseActivity::class.java)
                         startActivity(intent)
                         return@setOnItemSelectedListener true
                     }

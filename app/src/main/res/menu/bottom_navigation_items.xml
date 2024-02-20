@@ -3,9 +3,9 @@
     <item android:id="@+id/menu_home"
         android:title="@string/menu_search"
         android:icon="@drawable/selector_bnv_search" />
-    <item android:id="@+id/menu_wish"
-        android:title="@string/menu_wish"
-        android:icon="@drawable/selector_bnv_wish" />
+<!--    <item android:id="@+id/menu_wish"-->
+<!--        android:title="@string/menu_wish"-->
+<!--        android:icon="@drawable/selector_bnv_wish" />-->
     <item android:id="@+id/menu_making_course"
         android:title="@string/menu_making_course"
         android:icon="@drawable/selector_bnv_my_tour" />

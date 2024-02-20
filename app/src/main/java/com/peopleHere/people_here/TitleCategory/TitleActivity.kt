@@ -11,16 +11,23 @@ import com.peopleHere.people_here.databinding.ActivityTitleBinding
 class TitleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTitleBinding
     var next:Boolean=false
+    var time = 0
+    var text : String ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityTitleBinding.inflate(layoutInflater)
         binding.btnNext.setOnClickListener {
             if(next){
                 val intent = Intent(this, CategoryActivity::class.java)
+                text = binding.etIntroduce.text.toString()
+                intent.putExtra("text",text)
                 startActivity(intent)
             }
             //여기서 유형 띄우면 된다
         }
+
+        time = intent.getIntExtra("time",0)
+
         ButtonOn()
         setContentView(binding.root)
 
@@ -53,6 +60,7 @@ class TitleActivity : AppCompatActivity() {
                 }
                 binding.tvCountNum.setText("${binding.etIntroduce.length()} /30")
             }
+
         })
     }
 }

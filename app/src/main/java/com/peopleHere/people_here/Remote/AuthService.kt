@@ -707,11 +707,11 @@ class AuthService(private val context: Context)  {
                     call: Call<BaseResponse<RequestEnjoyResponse>>,
                     response: Response<BaseResponse<RequestEnjoyResponse>>
                 ) {
-//                    Log.d("RequestEnjoy response", response.toString())
+                    Log.d("RequestEnjoy response", response.toString())
                     if (response.isSuccessful) {
                         val resp = response.body()
-//                        Log.d("RequestEnjoy Response Body", resp.toString())
-//                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
+                        Log.d("RequestEnjoy Response Body", resp.toString())
+                        Log.d("RequestEnjoy Response Body result", resp?.result.toString())
                         when (resp!!.status) {
                             200 -> requestEnjoyView.RequestEnjoySuccess(resp.result)
                             else -> requestEnjoyView.RequestEnjoyFailure(resp.status, resp.message)

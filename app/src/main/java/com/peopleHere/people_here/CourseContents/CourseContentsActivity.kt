@@ -17,6 +17,7 @@ import com.peopleHere.people_here.Data.CourseReviewData
 import com.peopleHere.people_here.Data.CourseScheduleData
 import com.peopleHere.people_here.Local.getJwt
 import com.peopleHere.people_here.Main.MainCategoryAdapter
+import com.peopleHere.people_here.Profile.ProfileFirstFragment
 import com.peopleHere.people_here.R
 import com.peopleHere.people_here.Remote.AuthService
 import com.peopleHere.people_here.Remote.BringUserResponse
@@ -63,10 +64,15 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
         }
 
         binding.btnPossibleEnjoy.setOnClickListener {
-            val intent = Intent(this, PossibleEnjoyActivity::class.java)
-            intent.putExtra("key",key)
-            intent.putExtra("tourTime",tourTime)
-            startActivity(intent)
+            if(key == 0){
+                val intent = Intent(this, ProfileFirstFragment::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, PossibleEnjoyActivity::class.java)
+                intent.putExtra("key",key)
+                intent.putExtra("tourTime",tourTime)
+                startActivity(intent)
+            }
         }
 
         setContentView(binding.root)
@@ -335,16 +341,9 @@ class CourseContentsActivity : AppCompatActivity() , CourseContentsView, Upcomin
     }
 
     private fun initDataManager(tourId : Int) {
-        val token = getJwt()
-        Log.d("token",token)
-        if(token.isNotEmpty()){
-            val authService = AuthService(this)
-            authService.setCourseContentsView(this)
-            Log.d("tourId",tourId.toString())
-            authService.courseContentsInfo(tourId)
-        }else{
-            Log.d("token 오류","token 오류")
-        }
+        val authService = AuthService(this)
+        authService.setCourseContentsView(this)
+        authService.courseContentsInfo(tourId)
     }
 
     private fun initUpcomingDataManager(tourId: Int) {

@@ -88,6 +88,7 @@ class MakingCourseSearchActivity : AppCompatActivity() ,
             .setTypeFilter(TypeFilter.ESTABLISHMENT)
             .setSessionToken(token)
             .setQuery(query)
+            .setCountry("KR")
             .build()
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->

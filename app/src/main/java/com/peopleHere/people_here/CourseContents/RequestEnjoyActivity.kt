@@ -23,7 +23,7 @@ import java.util.Locale
 class RequestEnjoyActivity : AppCompatActivity() , RequestEnjoyView , JoinConfirmView {
     lateinit var binding : ActivityRequestEnjoyBinding
     private var dates : String ?= null
-    private var tourDatesId : Int = 0
+    private var tourDateId : Int = 0
     private var requestData : RequestEnjoyResponse? = null
     private var leaderData : TourLeaderData ?= null
     private var success : Boolean = false
@@ -33,12 +33,12 @@ class RequestEnjoyActivity : AppCompatActivity() , RequestEnjoyView , JoinConfir
         binding.tvService.text = Html.fromHtml("<u>피플히어의 서비스 정책<u>")
 
         dates = intent.getStringExtra("dates")
-        tourDatesId = intent.getIntExtra("tourDatesId", 0)
+        tourDateId = intent.getIntExtra("tourDateId", 0)
 
-        initDataManager(tourDatesId)
+        initDataManager(tourDateId)
 
         Log.d("dates",dates.toString())
-        Log.d("tourDatesId",tourDatesId.toString())
+        Log.d("tourDatesId",tourDateId.toString())
 
         binding.tvService.setOnClickListener {
             val intent = Intent(this, AppServiceActivity::class.java)
@@ -50,7 +50,7 @@ class RequestEnjoyActivity : AppCompatActivity() , RequestEnjoyView , JoinConfir
         }
 
         binding.btnPossibleEnjoy.setOnClickListener {
-            requestConfirmManager(tourDatesId)
+            requestConfirmManager(tourDateId)
         }
 
         super.onCreate(savedInstanceState)
@@ -171,7 +171,7 @@ class RequestEnjoyActivity : AppCompatActivity() , RequestEnjoyView , JoinConfir
         runOnUiThread {
             Log.d("성공했냐2","성공했냐2")
             val intent = Intent(this@RequestEnjoyActivity, SuccessRequestActivity::class.java)
-            intent.putExtra("tourDatesId", tourDatesId)
+            intent.putExtra("tourDatesId", tourDateId)
             startActivity(intent)
         }
     }

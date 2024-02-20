@@ -42,7 +42,6 @@ class IntroduceActivity : AppCompatActivity() {
                     )
                 )
             }
-
         }else{
             for (i in 0 until 3) {
                 ApplicationClass.pplaceImage?.add(
@@ -53,9 +52,6 @@ class IntroduceActivity : AppCompatActivity() {
                 )
             }
         }
-
-
-
         for (i in 0 until 1) {
             ApplicationClass.pplaces?.add(
                 PlaceData(
@@ -67,8 +63,6 @@ class IntroduceActivity : AppCompatActivity() {
                 )
             )
         }
-
-
         binding.btnNext.setOnClickListener {
             //여기서 다 모아야 하는데 가능하냐??
             authService.postNewTourLast(

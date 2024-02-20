@@ -131,16 +131,6 @@ class AddPictureActivity : AppCompatActivity() {
                     var getlocation = intent.getStringExtra("location")
                     //TODO:임의의 추가 부분
 
-                    pictureDB!!.getPictureDao()
-                        .addPicture(
-                            PictureEntity(
-                                "content://media/external/images/media/1000002719",
-                                "getlocation!!",
-                                "jungan",
-                                1,
-                                0
-                            )
-                        )
 
                     while (receivedIntent.hasExtra("uri_$i")) {
                         //TODO:애네도 어플리 케이션에 넣어야 함 픽쳐 ㅜㅊ가가
@@ -302,9 +292,6 @@ class AddPictureActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             //TODO:고치기
-            val intent = Intent(this, TitleActivity::class.java)
-            intent.putExtra("time", time)
-            startActivity(intent)
 
             if (nextButton) {//TODO:왜 비었다 뜨죵??
 

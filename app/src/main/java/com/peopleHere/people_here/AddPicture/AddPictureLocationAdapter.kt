@@ -58,8 +58,6 @@ class AddPictureLocationAdapter(
             val orange5 = ContextCompat.getColor(binding.root.context, R.color.Orange5)
             val gray5 = ContextCompat.getColor(binding.root.context, R.color.Gray5)
            //TODO:지우기
-            binding.tvLocation.setTextColor(orange5)
-            binding.ivCheck.setBackgroundResource(R.drawable.checked)
 
             //TODO:왜 둘 중 하나만 색이 생기나용???
             if (addlocation.pictureNum > 0) {

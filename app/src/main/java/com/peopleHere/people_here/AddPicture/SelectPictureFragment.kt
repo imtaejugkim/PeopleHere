@@ -89,14 +89,12 @@ class SelectPictureFragment(var locationName:String,var pictureNum:Int) :  Botto
             //왜 한참뒤에 뜸?
             requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
 
-            Log.d("selectPicture",locationName.toString())
-            Log.d("selectPicture",pictureNum.toString())
 
 
             val intent = Intent(requireContext(), CustomAlbumActivity::class.java)
             intent.putExtra("location",locationName)
             intent.putExtra("pictureNum",pictureNum.toString())
-
+            requireActivity().finish()
             startActivity(intent)
 
 
